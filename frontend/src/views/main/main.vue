@@ -17,6 +17,8 @@
   <login-dialog
     :open="loginDialogOpen"
     @closeLoginDialog="onCloseLoginDialog"/>
+  <test
+    :height="`70px`"/>
 </template>
 <style>
   @import "https://unpkg.com/element-plus/lib/theme-chalk/index.css";
@@ -30,6 +32,7 @@ import LoginDialog from './components/login-dialog'
 import MainHeader from './components/main-header'
 import MainSidebar from './components/main-sidebar'
 import MainFooter from './components/main-footer'
+import Test from './components/test'
 
 export default {
   name: 'Main',
@@ -37,7 +40,8 @@ export default {
     MainHeader,
     MainSidebar,
     MainFooter,
-    LoginDialog
+    LoginDialog,
+    Test
   },
   data () {
     return {

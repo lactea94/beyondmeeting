@@ -14,6 +14,7 @@
           </el-input>
         </div>
         <div class="button-wrapper">
+          <!-- <div class="g-signin2" data-onsuccess="onSignIn"></div> -->
           <el-button>회원가입</el-button>
           <el-button type="primary" @click="clickLogin">로그인</el-button>
         </div>
@@ -27,7 +28,6 @@
       <div class="mobile-sidebar-wrapper" v-if="!state.isCollapse">
         <div class="mobile-sidebar">
           <div class="mobile-sidebar-tool-wrapper">
-            <div class="logo-wrapper"><div class="ic ic-logo"/></div>
             <el-button type="primary" class="mobile-sidebar-btn login-btn" @click="clickLogin">로그인</el-button>
             <el-button class="mobile-sidebar-btn register-btn">회원가입</el-button>
           </div>
@@ -129,7 +129,7 @@ export default {
     position: relative;
     top: 14px;
   }
-  
+
   .main-header .hide-on-big .logo-wrapper {
     display: inline-block;
     margin: 0 calc(50% - 51px)

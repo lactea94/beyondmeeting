@@ -1,12 +1,13 @@
 package com.ssafy.api.controller;
 
+import com.ssafy.common.auth.OauthService;
+import com.ssafy.common.util.SocialLoginType;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.ssafy.api.request.UserLoginPostReq;
 import com.ssafy.api.response.UserLoginPostRes;
@@ -27,13 +28,17 @@ import io.swagger.annotations.ApiResponse;
  */
 @Api(value = "인증 API", tags = {"Auth."})
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/v1/auth")
+@Slf4j
 public class AuthController {
 	@Autowired
 	UserService userService;
 	
 	@Autowired
 	PasswordEncoder passwordEncoder;
+
+	private final OauthService oauthService;
 	
 	@PostMapping("/login")
 	@ApiOperation(value = "로그인", notes = "<strong>아이디와 패스워드</strong>를 통해 로그인 한다.") 
@@ -55,5 +60,30 @@ public class AuthController {
 		}
 		// 유효하지 않는 패스워드인 경우, 로그인 실패로 응답.
 		return ResponseEntity.status(401).body(UserLoginPostRes.of(401, "Invalid Password", null));
+	}
+
+	/**
+	 * 사용자로부터 SNS 로그인 요청을 Social Login Type 을 받아 처리
+	 * @param socialLoginType (GOOGLE, FACEBOOK, NAVER, KAKAO)
+	 */
+	@GetMapping(value = "/{socialLoginType}")
+	public void socialLoginType(
+			@PathVariable(name = "socialLoginType") SocialLoginType socialLoginType) {
+		log.info(">> 사용자로부터 SNS 로그인 요청을 받음 :: {} Social Login", socialLoginType);
+		oauthService.request(socialLoginType);
+	}
+
+	/**
+	 * Social Login API Server 요청에 의한 callback 을 처리
+	 * @param socialLoginType (GOOGLE, FACEBOOK, NAVER, KAKAO)
+	 * @param code API Server 로부터 넘어노는 code
+	 * @return SNS Login 요청 결과로 받은 Json 형태의 String 문자열 (access_token, refresh_token 등)
+	 */
+	@GetMapping(value = "/{socialLoginType}/callback")
+	public String callback(
+			@PathVariable(name = "socialLoginType") SocialLoginType socialLoginType,
+			@RequestParam(name = "code") String code) {
+		log.info(">> 소셜 로그인 API 서버로부터 받은 code :: {}", code);
+		return oauthService.requestAccessToken(socialLoginType, code);
 	}
 }

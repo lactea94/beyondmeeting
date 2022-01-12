@@ -1,3 +1,5 @@
+# 1월 11일
+
 ### 브레인 스토밍
 
 - 사용 단계 : 아이디어 회의, 과제(프로젝트) 초반
@@ -69,3 +71,109 @@
     
 
 etc. 손들기, 이모지,
+
+
+
+# 1월 12일
+
+### 와이어 프레임 제작 **페이지**
+
+- 메인페이지 - 상훈
+    
+    [main.vp](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/92f5719a-4187-41d1-9c7e-d0235bf784d9/main.vp)
+    
+    - 로그인 전
+        
+        ![loggedout.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6bebc36f-54b0-44ca-a9fa-81d32ae5c006/loggedout.png)
+        
+    - 로그인 후
+        
+        ![loggedin.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/530570e0-7d2f-4dd0-a811-0848bea03bb9/loggedin.png)
+        
+    - index
+        
+        ![main.png](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/c5f6efdd-a80a-4e5e-8871-b24e10c7071c/main.png)
+        
+- 회의관리 - 남수
+    - **회의관리 기본화면**
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/1c6622c5-9bbf-47e0-bfdd-d4e8d933dc58/Untitled.png)
+        
+    - **회의록 클릭 시**
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/97e9ff05-ff23-4db1-ac57-1b7fa76206fe/Untitled.png)
+        
+    - **회의 생성 클릭 시**
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/bbee4dea-6604-48af-832e-e0bca557ac6d/Untitled.png)
+        
+    
+- 팀 - 진주
+    
+    CRUD
+    
+    ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/e90dc735-3b69-49a4-b143-503e49e391e5/Untitled.png)
+    
+- 마이페이지 - 주윤
+    
+    [MY_PAGE_V1.0.1.vp](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/9fe8e1f7-cb7c-47bd-bc84-89fe20dee2cb/MY_PAGE_V1.0.1.vp)
+    
+    - 회원정보 및 미팅정보
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/6a6aaa8c-9bc9-4f44-8af2-f8cd75065562/Untitled.png)
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2a670be0-1be8-4a61-9c55-59ae3ef16f40/Untitled.png)
+        
+        ## Feed back (CALENDER & SCHEDULES)
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/311c3d69-380e-4190-9454-9a64efb7b05c/Untitled.png)
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/f0321c95-69ae-42cf-abac-1522f69f14ba/Untitled.png)
+        
+    - 회원정보 수정
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/5a060230-8a64-48f6-811c-a470f55b05b8/Untitled.png)
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/76d84d08-c0af-4775-a9c8-3f8fd9e227e4/Untitled.png)
+        
+- 화상채팅페이지 - 소은, 병완
+    
+    실제 회의 중 화면
+    
+    기법에 따라 화면구성이 다를 수 있음(일반/6모자/3룸)
+    
+    - 회의 기법 : 일반
+        1. 그냥
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3e6c2aae-f234-4575-a063-baeb5585e537/Untitled.png)
+            
+        2. 채팅 열었을 때
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8ca9c739-0396-4652-a896-a773be362b54/Untitled.png)
+            
+        3. 회의록 열었을 때
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/69209a48-1f85-4187-9e11-5e05c03b3da5/Untitled.png)
+            
+    - 회의 기법 : 3룸
+        1. 몽상가 방
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/55303116-11c4-49bc-bd54-8151eba25cad/Untitled.png)
+            
+        2. 현실가 방
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/445a350b-862d-4d72-9733-b4305d9cadcd/Untitled.png)
+            
+        3. 비평가 방
+            
+            ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/34d9a25b-b505-4cc2-bc68-2e2ebb9dfa6d/Untitled.png)
+            
+    - 회의 기법 : 6모자
+        
+        1안 - 현실성 무시
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/033a3083-ac59-4397-8dba-09ac7ef3f3a6/Untitled.png)
+        
+        2안 - 현실성 생각?ㅎ
+        
+        ![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/2365c1bc-201f-456d-88f8-0b524f80ba51/Untitled.png)
