@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router-dom'
 import { useState } from 'react';
-
+import LoginIcon from '@mui/icons-material/Login';
 export const Navbar = () => {
   const [logged, setLogged] = useState(true)
   
@@ -30,7 +30,7 @@ export const Navbar = () => {
         <div className='nav-div'>
           <NavLink to='profile'>Profile</NavLink>
           <NavLink to='team'>Team</NavLink>
-          <button onClick={() => setLogged(!logged)}>Logout</button>
+          <LoginIcon onClick={() => setLogged(!logged)}>Logout</LoginIcon>
         </div>
         ): (
         <div className='nav-div'>
