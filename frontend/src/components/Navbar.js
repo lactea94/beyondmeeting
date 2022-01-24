@@ -27,13 +27,15 @@ export const Navbar = () => {
     <nav>
       <NavLink to='/'>Home</NavLink>
       { logged ? (
-        <div>
+        <div className='nav-div'>
           <NavLink to='profile'>Profile</NavLink>
           <NavLink to='team'>Team</NavLink>
           <button onClick={() => setLogged(!logged)}>Logout</button>
         </div>
         ): (
+        <div className='nav-div'>
           <button onClick={() => setLogged(!logged)}>Login</button>
+        </div>
       )}
     </nav>
   );
