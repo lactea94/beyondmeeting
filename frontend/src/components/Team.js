@@ -7,9 +7,9 @@ export function Team() {
   const user = {
     leader: true,
     team: [
-      {id:0, name:'팀 1', leader: true, meeting: [1, 2,]},
-      {id:1, name:'팀 2', leader: false},
-      {id:2, name:'팀 3', leader: false}
+      {id:0, name:'팀 1', leader: true, meeting: ['a', 'b', 'c']},
+      {id:1, name:'팀 2', leader: false, meeting: ['z', 's']},
+      {id:2, name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
     ],
     nowTeam: 0
   }
@@ -36,13 +36,51 @@ export function Team() {
       names.push(user.team[index].name)
     }
     const nameList = names.map((name) =>
-      <Card sx={{m:1}}>
-        <CardContent>
-          {name}
-        </CardContent>
-      </Card>)
-    return (
       <Grid item>
+        <Card sx={{m:1}}>
+          <CardContent>
+            {name}
+          </CardContent>
+        </Card>
+      </Grid>
+    )
+    return (
+      <Grid
+      item
+      container
+      direction='column'
+      sx={{
+        width: '100%',
+        backgroundColor: '#fb8c00',
+        m: 1,
+      }}
+    >
+      {nameList}
+    </Grid>
+    )
+  }
+
+  function meetList() {
+    const meets = user.team[user.nowTeam].meeting
+    const nameList = meets.map((name) =>
+      <Grid item xs={4} sx={{p:'1'}}>
+        <Card sx={{m:1}}>
+          <CardContent>
+            {name}
+          </CardContent>
+        </Card>
+      </Grid>
+    )
+    return (
+      <Grid
+      item
+      container
+      sx={{
+        width: '100%',
+        backgroundColor: '#009688',
+        m: 1,
+      }}
+      >
         {nameList}
       </Grid>
     )
@@ -57,69 +95,14 @@ export function Team() {
         회의 목록
       </Grid>
       <Grid item xs={4} container>
-        <Grid
-          item
-          container
-          direction='column'
-          sx={{
-            width: '100%',
-            backgroundColor: '#fb8c00',
-            m: 1,
-          }}
-        >
-          {/* <Grid item>
-            <Card sx={{m:1}}>
-              <CardContent>
-                팀 이름
-              </CardContent>
-            </Card>
-          </Grid> */}
-          {teamList()}
-        </Grid>
+        {teamList()}
       </Grid>
       <Grid item xs={8}container>
-        <Grid
-          item
-          container
-          sx={{
-            width: '100%',
-            backgroundColor: '#009688',
-            m: 1,
-          }}
-        >
-          <Grid item xs={4} sx={{p:'8'}}>
-            <Card sx={{m:1}}>
-              <CardContent>
-                회의 1
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4} sx={{px:'1'}}>
-            <Card sx={{m:1}}>
-              <CardContent>
-                회의 2
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4} sx={{px:'1'}}>
-            <Card sx={{m:1}}>
-              <CardContent>
-                회의 3
-              </CardContent>
-            </Card>
-          </Grid>
-          <Grid item xs={4} sx={{px:'1'}}>
-            <Card sx={{m:1}}>
-              <CardContent>
-                회의 4
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
+        {meetList()}
       </Grid>
       <Grid item xs={4}>
-          <Button variant="contained" sx={{m:1}}>팀 생성</Button>
-        </Grid>
+        <Button variant="contained" sx={{m:1}}>팀 생성</Button>
+      </Grid>
       {CreateButton}
     </Grid>
   );
