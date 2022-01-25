@@ -13,9 +13,9 @@ export function Team() {
     ],
     nowTeam: 0
   }
-  let create
+  let CreateButton
   if (user.team[user.nowTeam].leader) {
-    create =
+    CreateButton =
       <Grid item xs={8}>
         <Box
           sx={{
@@ -29,12 +29,34 @@ export function Team() {
         </Box>
       </Grid>
   }
+
+  function teamList() {
+    const names = []
+    for (let index = 0; index < user.team.length; index++) {
+      names.push(user.team[index].name)
+    }
+    const nameList = names.map((name) =>
+      <Card sx={{m:1}}>
+        <CardContent>
+          {name}
+        </CardContent>
+      </Card>)
+    return (
+      <Grid item>
+        {nameList}
+      </Grid>
+    )
+  }
+
   return (
     <Grid container>
+      <Grid className='team-list-title' item xs={4}>
+        팀 목록
+      </Grid>
+      <Grid className='meeting-list-title' item xs={8}>
+        회의 목록
+      </Grid>
       <Grid item xs={4} container>
-        <Grid className='team-list-title' item>
-          <h1>팀 목록</h1>
-        </Grid>
         <Grid
           item
           container
@@ -45,26 +67,17 @@ export function Team() {
             m: 1,
           }}
         >
-          <Grid item>
+          {/* <Grid item>
             <Card sx={{m:1}}>
               <CardContent>
-                1팀
+                팀 이름
               </CardContent>
             </Card>
-          </Grid>
-          <Grid item>
-            <Card sx={{m:1}}>
-              <CardContent>
-                1팀
-              </CardContent>
-            </Card>
-          </Grid>
+          </Grid> */}
+          {teamList()}
         </Grid>
       </Grid>
       <Grid item xs={8}container>
-        <Grid className='meeting-list-title' item>
-          <h1>회의 목록</h1>
-        </Grid>
         <Grid
           item
           container
@@ -107,7 +120,7 @@ export function Team() {
       <Grid item xs={4}>
           <Button variant="contained" sx={{m:1}}>팀 생성</Button>
         </Grid>
-      {create}
+      {CreateButton}
     </Grid>
   );
 }
