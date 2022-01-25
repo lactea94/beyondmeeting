@@ -24,45 +24,48 @@ export function Profile() {
   function calSec(SToS) {
     return parseInt((SToS % 60)%60)
   }
+
+  function numRender() {
+    const result = [];
+    for (let i = 0; i < hatSpeakTime.length; i++) {
+      result.push(
+      <li>
+        <img src={"./img/모자" + i + ".png"} alt=""></img>
+        <p>Time Log : {calHour(hatSpeakTime[i]) } h {calMin(hatSpeakTime[i])} m {calSec(hatSpeakTime[i])}s</p>
+      </li>);
+    }
+    return result;
+  };
+
   
   return (
-  <div className="container2">
-    {/* <div className="item">A</div>
-    <div className="item">B</div>
-    <div className="item">C</div>
-    <div className="item">D</div>
-    <div className="item">E</div>
-    <div className="item">F</div>
-    <div className="item">G</div>
-    <div className="item">H</div>
-    <div className="item">I</div> */}
-      
+  <div className="container2">      
     <div className="profile-container">
-      <div>
-        {/* <button onClick={calHour}> click this </button> */}
-        { userImg ? (
-          <h1 className="profile-info">YOUR IMG IS HERE</h1>
-        ) : (
-          <div className="profRoundImg">
-            <img src="img/그림1.png" alt="우왕" />
-          </div>
-        )
-        }
-      </div>
+      {/* <button onClick={calHour}> click this </button> */}
+      { userImg ? (
+        <h1 className="profile-info">YOUR IMG IS HERE</h1>
+      ) : (
+        <div className="profRoundImg">
+          <img src="img/그림1.png" alt="우왕" />
+        </div>
+      )
+      }
       <div className="userInfo">
         <h1>name : {user.name}</h1>
         <h1>email : {user.email}</h1>
       </div>
     </div>
-    <div className="timeLog">
-      <h1>Time Log : {calHour(speakTime) } h {calMin(speakTime)} m {calSec(speakTime)} s</h1>
-    </div>
+    <div className="logDetail">
+      <div className="timeLog">
+        <h1>Time Log : {calHour(speakTime) } h {calMin(speakTime)} m {calSec(speakTime)} s</h1>
+      </div>
       <div>
         <h3> 모자 별 시간 </h3>
         <ul>
-          <li>
+          {numRender()}
+          {/* <li>
             <img src="./img/모자1.png" alt="검은중절모" />
-            <p>Time Log : {calHour(hatSpeakTime[0]) } h {calMin(hatSpeakTime[0])} m {calSec(hatSpeakTime[0])} s</p>
+            <p>Time Log : {calHour(hatSpeakTime[0]) } h {calMin(hatSpeakTime[0])} m {calSec(hatSpeakTime[0])}s</p>
           </li>
           <li>
             <img src="./img/모자2.png" alt="노란중절모" />
@@ -83,8 +86,9 @@ export function Profile() {
           <li>
             <img src="./img/모자6.png" alt="하양중절모" />
             <p>Time Log : {parseInt(hatSpeakTime[5] / 3600) } h {parseInt((hatSpeakTime[5]%3600)/60)} m {(hatSpeakTime[5]%60)%60} s</p>
-          </li>
+          </li> */}
         </ul>
+      </div>
     </div>
   </div>
   )
