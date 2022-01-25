@@ -1,0 +1,8 @@
+.container2 {
+	grid-template-columns: 50px;
+	grid-auto-columns: 1fr 2fr;
+  border: 5px;
+}
+.item:nth-child(1) { order: 3; } /* A */
+.item:nth-child(2) { order: 1; } /* B */
+.item:nth-child(3) { order: 2; } /* C */
