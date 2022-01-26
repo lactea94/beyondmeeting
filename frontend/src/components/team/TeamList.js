@@ -1,20 +1,22 @@
 import { Grid, Card, CardContent} from '@mui/material';
 
 function TeamList(props) {
-  const countTeam = props.user.team.length
-  const names = []
-  for (let index = 0; index < countTeam; index++) {
-    names.push(props.user.team[index].name)
+  const teams = props.user.team
+  const teamList = []
+  for (let index = 0; index < teams.length; index++) {
+    teamList.push(
+      <Grid item
+      key={teams[index].id}
+      >
+        <Card sx={{m:1}}>
+          <CardContent>
+            {teams[index].name}
+          </CardContent>
+        </Card>
+      </Grid> 
+    )
   }
-  const nameList = names.map((name) =>
-    <Grid item key={name}>
-      <Card sx={{m:1}}>
-        <CardContent>
-          {name}
-        </CardContent>
-      </Card>
-    </Grid>
-  )
+
   return (
     <Grid
       item
@@ -26,7 +28,7 @@ function TeamList(props) {
         m: 1,
       }}
       >
-      {nameList}
+      {teamList}
     </Grid>
   );
 };

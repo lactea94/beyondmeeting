@@ -1,7 +1,7 @@
 import { Grid, Card, CardContent} from '@mui/material';
 
 function MeetingList(props) {
-  const meets = props.user.team[props.user.nowTeamId].meeting
+  const meets = props.user.team[props.nowTeamIndex].meeting
   const nameList = meets.map((name) =>
   <Grid item xs={4} sx={{p:'1'}} key={name}>
       <Card sx={{m:1}}>

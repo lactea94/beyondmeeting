@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { Grid, Box } from '@mui/material';
 import TeamList from './TeamList'
 import MeetingList from './MeetingList'
@@ -10,16 +11,17 @@ export function Team() {
   const user = {
     id: 0,
     team: [
-      {id:0, name:'팀 1', leader: true, meeting: ['a : 회의 완료', 'b : 회의 완료', 'c : 회의 중']},
-      {id:1, name:'팀 2', leader: false, meeting: ['z', 's']},
-      {id:2, name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
+      {id:124120, name:'팀 1', leader: true, meeting: ['a : 회의 완료', 'b : 회의 완료', 'c : 회의 중']},
+      {id:1213, name:'팀 2', leader: false, meeting: ['z', 's']},
+      {id:2123, name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
     ],
-    nowTeamId: 0,
     leader: true
   }
   
+  const [nowTeamIndex, setNowTeamIndex] = useState(1)
+
   let manageTeamButtons
-  if (user.team[user.nowTeamId].leader) {
+  if (user.team[nowTeamIndex].leader) {
     manageTeamButtons =
       <Grid item xs={8}>
         <Box
@@ -44,10 +46,10 @@ export function Team() {
         회의 목록
       </Grid>
       <Grid item xs={4} container>
-        <TeamList user={user}/>
+        <TeamList user={user} nowTeamIndex={nowTeamIndex} setNowTeamIndex={setNowTeamIndex}/>
       </Grid>
       <Grid item xs={8} container>
-        <MeetingList user={user}/>
+        <MeetingList user={user} nowTeamIndex={nowTeamIndex}/>
       </Grid>
       {CreateTeam()}
       {manageTeamButtons}
