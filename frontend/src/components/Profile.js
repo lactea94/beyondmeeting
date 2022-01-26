@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Grid, Card } from '@mui/material';
 import './Profile.css';
 // https://studiomeal.com/archives/533
 export function Profile() {
@@ -39,8 +40,8 @@ export function Profile() {
 
   // css 좌측 길게 / 우측 상단 / 우측 하단 3파트로 나눠서 분류 (우측 하단이 중요(그래프 화))
   return (
-  <div className="container2">      
-    <div className="profile-container">
+  <Grid container columnSpacing={3}>
+    <Grid item xs={3}>
       { userImg ? (
         <h1 className="profile-info">YOUR IMG IS HERE</h1>
       ) : (
@@ -50,21 +51,25 @@ export function Profile() {
       )
       }
       <div className="userInfo">
-        <h1>name : {user.name}</h1>
-        <h1>email : {user.email}</h1>
+        <h3>name : {user.name}</h3>
+        <h3>email : {user.email}</h3>
       </div>
-    </div>
-    <div className="logDetail">
-      <div className="timeLog">
-        <h1>Time Log : {calHour(speakTime) } h {calMin(speakTime)} m {calSec(speakTime)} s</h1>
-      </div>
-      <div>
-        <h3> 모자 별 시간 </h3>
-        <ul>
-          {numRender()}
-        </ul>
-      </div>
-    </div>
-  </div>
+    </Grid>
+    <Grid item container xs={9} rowSpacing={5}>
+      <Grid item xs={12}>
+          <Card className="timeLog">
+            <h1>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
+          </Card>
+      </Grid>
+      <Grid item xs={12}>
+        <Card className="Card">
+          <h3> 모자 별 시간 </h3>
+          <ul>
+            {numRender()}
+          </ul>
+        </Card>
+      </Grid>
+    </Grid>
+  </Grid>
   )
 };

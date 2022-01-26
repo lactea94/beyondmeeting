@@ -32,3 +32,21 @@ li p{
 .profile-info {
   text-align: left;
 }
+.userInfo {
+  text-align: center;
+}
+
+.timeLog h1 {
+  text-align: center;
+}
+
+.Card h3 {
+  text-align: center;
+  padding-top: 10px;
+
+}
+
+img {
+  max-width: 350px;
+  height: auto !important;
+}
