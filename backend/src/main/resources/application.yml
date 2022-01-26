@@ -45,20 +45,16 @@ server:
       password: ssafyssafy
 
 
-##Namsoo / LOGGING / 2021.01.25
-## LOGGING
-#logging:
-#  level:
-#    root: INFO
-#    org:
-#      apache: WARN
-#      springframework: WARN
-#      kurento: info
-#        tutorial: debug
-
-## LOGGING
-#  logging.level.org.kurento=INFO
-#  logging.level.org.kurento.tutorial=debug
+#Namsoo / LOGGING / 2021.01.25
+# LOGGING
+logging:
+  level:
+    root: INFO
+    org:
+      apache: WARN
+      springframework: WARN
+      kurento: info
+      kurento.tutorial: debug
 
 app:
   auth:
