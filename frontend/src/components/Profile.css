@@ -15,7 +15,9 @@ li img {
 }
 li p{
 	display: inline-block;
-	padding: 100px;
+	padding-left: 100px;
+  padding-right: 10px;
+  padding-top: 80px;
 }
 
 .profRoundImg {
@@ -47,6 +49,23 @@ li p{
 }
 
 img {
-  max-width: 350px;
+  max-width: 100%;
   height: auto !important;
+}
+
+.text-avatar {
+  width: 200px;
+  height: 200px;
+  margin-bottom: 100px;
+  margin: 100px auto;
+  vertical-align: middle;
+  text-align: center;
+  border-radius: 50%;
+  background: #46b5e5;
+  background-image: linear-gradient(45deg,#46b5e5 1%,#1e88e5 64%,#40baf5 97%);
+}
+.text-avatar span {
+  line-height: 200px;
+  color: #fff;
+  font-size: 3em;
 }

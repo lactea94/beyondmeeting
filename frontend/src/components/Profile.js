@@ -41,19 +41,24 @@ export function Profile() {
   // css 좌측 길게 / 우측 상단 / 우측 하단 3파트로 나눠서 분류 (우측 하단이 중요(그래프 화))
   return (
   <Grid container columnSpacing={3}>
-    <Grid item xs={3}>
-      { userImg ? (
-        <h1 className="profile-info">YOUR IMG IS HERE</h1>
-      ) : (
-        <div className="profRoundImg">
-          <img src="img/그림1.png" alt="우왕" />
+    <Grid item container xs={3}>
+      <Grid item xs={12}>
+        { userImg ? (
+          <h1>YOUR IMG IS HERE</h1>
+        ) : (
+          <div className="text-avatar">
+            <span>Avatar</span>
+          </div>
+        )
+        }
+        <Grid item xs={12}>
+        <div className="userInfo">
+          <h3>name : {user.name}</h3>
+          <h3>email : {user.email}</h3>
         </div>
-      )
-      }
-      <div className="userInfo">
-        <h3>name : {user.name}</h3>
-        <h3>email : {user.email}</h3>
-      </div>
+        </Grid>
+      </Grid>
+      
     </Grid>
     <Grid item container xs={9} rowSpacing={5}>
       <Grid item xs={12}>
@@ -61,7 +66,7 @@ export function Profile() {
             <h1>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
           </Card>
       </Grid>
-      <Grid item xs={12}>
+      <Grid item xs={3}>
         <Card className="Card">
           <h3> 모자 별 시간 </h3>
           <ul>
