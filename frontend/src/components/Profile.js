@@ -37,11 +37,10 @@ export function Profile() {
     return result;
   };
 
-  
+  // css 좌측 길게 / 우측 상단 / 우측 하단 3파트로 나눠서 분류 (우측 하단이 중요(그래프 화))
   return (
   <div className="container2">      
     <div className="profile-container">
-      {/* <button onClick={calHour}> click this </button> */}
       { userImg ? (
         <h1 className="profile-info">YOUR IMG IS HERE</h1>
       ) : (
@@ -63,30 +62,6 @@ export function Profile() {
         <h3> 모자 별 시간 </h3>
         <ul>
           {numRender()}
-          {/* <li>
-            <img src="./img/모자1.png" alt="검은중절모" />
-            <p>Time Log : {calHour(hatSpeakTime[0]) } h {calMin(hatSpeakTime[0])} m {calSec(hatSpeakTime[0])}s</p>
-          </li>
-          <li>
-            <img src="./img/모자2.png" alt="노란중절모" />
-            <p>Time Log : {parseInt(hatSpeakTime[1] / 3600) } h {parseInt((hatSpeakTime[1]%3600)/60)} m {(hatSpeakTime[1]%60)%60} s</p>
-          </li>
-          <li>
-            <img src="./img/모자3.png" alt="빨간중절모" />
-            <p>Time Log : {parseInt(hatSpeakTime[2] / 3600) } h {parseInt((hatSpeakTime[2]%3600)/60)} m {(hatSpeakTime[2]%60)%60} s</p>
-          </li>
-          <li>
-            <img src="./img/모자4.png" alt="초록중절모" />
-            <p>Time Log : {parseInt(hatSpeakTime[3] / 3600) } h {parseInt((hatSpeakTime[3]%3600)/60)} m {(hatSpeakTime[3]%60)%60} s</p>
-          </li>
-          <li>
-            <img src="./img/모자5.png" alt="파랑중절모" />
-            <p>Time Log : {parseInt(hatSpeakTime[4] / 3600) } h {parseInt((hatSpeakTime[4]%3600)/60)} m {(hatSpeakTime[4]%60)%60} s</p>
-          </li>
-          <li>
-            <img src="./img/모자6.png" alt="하양중절모" />
-            <p>Time Log : {parseInt(hatSpeakTime[5] / 3600) } h {parseInt((hatSpeakTime[5]%3600)/60)} m {(hatSpeakTime[5]%60)%60} s</p>
-          </li> */}
         </ul>
       </div>
     </div>
