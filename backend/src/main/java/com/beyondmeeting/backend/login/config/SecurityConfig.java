@@ -101,6 +101,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                     .and()
                 .authorizeRequests()
                     .antMatchers("/",
+                            "/**/", //모든 url 접근 가능
                         "/error",
                         "/favicon.ico",
                         "/**/*.png",
