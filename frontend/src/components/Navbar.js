@@ -30,7 +30,7 @@ export const Navbar = () => {
       { logged ? (
         <div className='nav-div'>
           <NavLink to='profile'>Profile</NavLink>
-          <NavLink to='team'>Team</NavLink>
+          <NavLink to='teamlist'>Team</NavLink>
           <LogoutIcon onClick={() => setLogged(!logged)}>Logout</LogoutIcon>
         </div>
         ): (
