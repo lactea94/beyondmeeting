@@ -1,7 +1,14 @@
 import { NavLink, Outlet } from 'react-router-dom'
-import { Grid, Card, CardContent} from '@mui/material';
+import {
+  Grid,
+  List,
+  ListItem,
+  ListItemButton,
+} from '@mui/material';
+import CreateTeam from './CreateTeam'
 
-export function TeamList () {
+
+export function TeamList() {
   const user = {
     id: 0,
     teams: [
@@ -13,28 +20,35 @@ export function TeamList () {
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`
     return(
-      <Grid item xs={4} key={team.id}>
-        <NavLink
-          to={{
-            pathname: url,
-            state: {
-              team: {team}
-            }
-          }}
-        >
-          <Card>
-            <CardContent>
-              {team.name}
-            </CardContent>
-          </Card>
-        </NavLink>
-      </Grid>
+      <ListItem key={team.id}>
+        <ListItemButton>
+          <NavLink
+            to={{
+              pathname: url,
+              state: {
+                team: {team}
+              }
+            }}
+          >
+            {team.name}
+          </NavLink>
+        </ListItemButton>
+      </ListItem>
     )
   })
   return (
-    <Grid container>
-      <Grid item container>
-        {teamList}
+    <Grid container spacing={2}>
+      <Grid
+        item xs={4}
+        container
+        direction={'column'}
+      >
+        <Grid item>
+          <List>
+            {teamList}
+          </List>
+        </Grid>
+        {CreateTeam()}
       </Grid>
       <Outlet/>
     </Grid>

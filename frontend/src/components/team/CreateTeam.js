@@ -17,7 +17,7 @@ function CreateTeam() {
   const handleClose = () => setOpen(false);
 
   return (
-    <Grid item xs={4}>
+    <Grid item>
       <Button onClick={handleOpen} variant="contained" sx={{m:1}}>팀 생성</Button>
       <Modal
         open={open}
