@@ -5,7 +5,7 @@ export function Home () {
     <div className="img_">
       <img src="img/그림1.png" alt="karina" />
     </div>
-
+    <button onClick={() => window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")}>meetingroom</button>
   </div>
   )
 };
