@@ -15,19 +15,8 @@
  *
  */
 
-package com.beyondmeeting.backend.groupcall;
+package org.kurento.tutorial.groupcall;
 
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonPrimitive;
-import org.kurento.client.Continuation;
-import org.kurento.client.MediaPipeline;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.socket.WebSocketSession;
-
-import javax.annotation.PreDestroy;
 import java.io.Closeable;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -35,6 +24,19 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
+
+import javax.annotation.PreDestroy;
+
+import org.kurento.client.Continuation;
+import org.kurento.client.MediaPipeline;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.socket.WebSocketSession;
+
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonPrimitive;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)
