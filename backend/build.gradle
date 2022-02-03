@@ -33,11 +33,6 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'org.springframework.security:spring-security-test'
 
-	// https://mvnrepository.com/artifact/org.kurento/kurento-utils-js
-	implementation group: 'org.kurento', name: 'kurento-utils-js', version: '6.15.0'
-	// https://mvnrepository.com/artifact/org.kurento/kurento-client
-	implementation group: 'org.kurento', name: 'kurento-client', version: '6.15.0'
-
 	// login 추가 - 진주 / 0125
 	implementation 'io.jsonwebtoken:jjwt:0.9.0'
 }
