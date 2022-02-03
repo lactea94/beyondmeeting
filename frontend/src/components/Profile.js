@@ -30,7 +30,7 @@ export function Profile() {
     const result = [];
     for (let i = 0; i < hatSpeakTime.length; i++) {
       result.push(
-      <li>
+      <li key={`모자${i}`}>
         <img src={"./img/모자" + i + ".png"} alt=""></img>
         <p>Time Log : {calHour(hatSpeakTime[i]) } h {calMin(hatSpeakTime[i])} m {calSec(hatSpeakTime[i])}s</p>
       </li>);
