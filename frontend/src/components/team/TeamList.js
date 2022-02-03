@@ -20,20 +20,17 @@ export function TeamList() {
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`
     return(
-      <ListItem key={team.id}>
-        <ListItemButton>
-          <NavLink
-            to={{
-              pathname: url,
-              state: {
-                team: {team}
-              }
-            }}
-          >
-            {team.name}
-          </NavLink>
-        </ListItemButton>
-      </ListItem>
+      <NavLink
+        key={team.id}
+        to={url}
+        state={{team: team}}
+      >
+        <ListItem>
+          <ListItemButton>
+              {team.name}
+          </ListItemButton>
+        </ListItem>
+      </NavLink>
     )
   })
   return (
