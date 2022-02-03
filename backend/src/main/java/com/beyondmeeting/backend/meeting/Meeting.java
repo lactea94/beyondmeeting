@@ -18,14 +18,14 @@ public class Meeting extends TimeStamped {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long meetingId;
+    private Long id;
 
     private String topic;
 
     private boolean defaultType; // 기본회의, 6모자 중 선택
 
-    public Meeting(Long meetingId) {
-        this.meetingId = meetingId;
+    public Meeting(Long i) {
+        this.id =id;
     }
 
     public Meeting(String topic, boolean defaultType) {

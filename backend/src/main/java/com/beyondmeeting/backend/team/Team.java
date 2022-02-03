@@ -13,13 +13,13 @@ import javax.persistence.*;
 public class Team {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long teamId;    // sql에서는 bigint
+    private Long id;    // sql에서는 bigint
 
     @Column(nullable = false)
     private String teamName;
 
-    public Team(Long teamId, String teamName) {
-        this.teamId = teamId;
+    public Team(Long id, String teamName) {
+        this.id = id;
         this.teamName = teamName;
     }
 }
