@@ -5,17 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="433875e9-1eed-445d-bf65-5855e9075a8b" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/resources/keystore/ssafy.p12" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/CallHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/CallHandler.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/GroupCallApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/GroupCallApp.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/Room.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/Room.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/UserRegistry.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/UserRegistry.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/UserSession.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/kurento/tutorial/groupcall/UserSession.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/static/js/conferenceroom.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/static/js/conferenceroom.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kurento-hello-world/src/main/java/org/kurento/tutorial/helloworld/Application.java" beforeDir="false" afterPath="$PROJECT_DIR$/../kurento-hello-world/src/main/java/org/kurento/tutorial/helloworld/Application.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../kurento-hello-world/src/main/resources/static/js/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/../kurento-hello-world/src/main/resources/static/js/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -49,7 +39,7 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$/../../S06P12C101/backend/build.gradle" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../backend/build.gradle" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -81,6 +71,7 @@
       <workItem from="1642662847748" duration="26216000" />
       <workItem from="1642985699799" duration="40951000" />
       <workItem from="1643607952585" duration="772000" />
+      <workItem from="1643864983349" duration="644000" />
     </task>
     <servers />
   </component>
