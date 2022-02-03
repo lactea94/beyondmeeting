@@ -15,15 +15,15 @@
  *
  */
 
-package com.beyondmeeting.backend.groupcall;
+package org.kurento.tutorial.groupcall;
+
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 import org.kurento.client.KurentoClient;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * @author Ivan Gracia (izanmail@gmail.com)

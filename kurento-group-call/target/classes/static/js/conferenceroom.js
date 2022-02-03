@@ -74,6 +74,7 @@ function onNewParticipant(request) {
 }
 
 function receiveVideoResponse(result) {
+	console.log("receiveVideoResponse : "+result);
 	participants[result.name].rtcPeer.processAnswer (result.sdpAnswer, function (error) {
 		if (error) return console.error (error);
 	});
@@ -107,10 +108,17 @@ function onExistingParticipants(msg) {
 	var video = participant.getVideoElement();
 
 	var options = {
-	      localVideo: video,
-	      mediaConstraints: constraints,
-	      onicecandidate: participant.onIceCandidate.bind(participant)
-	    }
+						localVideo: video,
+						mediaConstraints: constraints,
+						onicecandidate: participant.onIceCandidate.bind(participant),
+						// configuration:{
+						// 	iceServers:[{
+						// 		"urls": 'turn:13.124.242.194:3478?transport=udp',
+						// 		"username": 'username1',
+						// 		"credential":'password1'
+						// 	}]
+						// }
+	    			}
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
 		function (error) {
 		  if(error) {
@@ -143,12 +151,14 @@ function receiveVideo(sender) {
 	var video = participant.getVideoElement();
 
 	var options = {
-      remoteVideo: video,
-      onicecandidate: participant.onIceCandidate.bind(participant),
+		remoteVideo: video,
+		onicecandidate: participant.onIceCandidate.bind(participant),
 		configuration:{
-		  "urls": 'turn:13.124.242.194:3478?transport=udp',
-			"username": 'username1',
-			"credential":'password1'
+			iceServers:[{
+				"urls": 'turn:13.124.242.194:3478?transport=udp',
+				"username": 'username1',
+				"credential":'password1'
+			}]
 		}
     }
 
@@ -158,7 +168,7 @@ function receiveVideo(sender) {
 				  return console.error(error);
 			  }
 			  this.generateOffer (participant.offerToReceiveVideo.bind(participant));
-	});;
+	});
 }
 
 function onParticipantLeft(request) {
