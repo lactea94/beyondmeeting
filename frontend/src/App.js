@@ -3,7 +3,9 @@ import {Routes, Route} from 'react-router-dom'
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home'
 import { Profile } from './components/Profile';
-import { Team } from './components/Team';
+import { TeamList } from './components/team/TeamList';
+import { DeafultMeetingList } from './components/team/DeafultMeetingList';
+import { MeetingList } from './components/team/MeetingList';
 
 function App() {
   return (
@@ -12,7 +14,10 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='profile' element={<Profile/>}></Route>
-        <Route path='team' element={<Team/>}></Route>
+        <Route path='teamlist' element={<TeamList/>}>
+          <Route index element={<DeafultMeetingList/>}></Route>
+          <Route path=':teamId' element={<MeetingList/>}></Route>
+        </Route>
       </Routes>
     </div>
   );
