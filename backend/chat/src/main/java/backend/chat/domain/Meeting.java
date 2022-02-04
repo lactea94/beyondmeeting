@@ -1,5 +1,6 @@
 package backend.chat.domain;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -21,4 +22,9 @@ public class Meeting {
 
     @OneToOne(mappedBy = "meeting")
     private ChatRoom chatroom;
+
+    // meeting id 가져옴
+    public Meeting(Long id){
+        this.id = id;
+    }
 }
