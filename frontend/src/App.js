@@ -2,7 +2,7 @@ import './App.css';
 import { Routes, Route } from 'react-router-dom'
 import { Navbar } from './components/Navbar';
 import { Home } from './components/Home'
-import { Profile } from './components/Profile/Profile';
+import { Profile } from './components/profile/Profile';
 import { TeamList } from './components/team/TeamList';
 import { DefaultMeetingList } from './components/team/DefaultMeetingList';
 import { MeetingList } from './components/team/MeetingList';
