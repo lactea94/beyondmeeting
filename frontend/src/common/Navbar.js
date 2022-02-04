@@ -1,4 +1,5 @@
 import './Navbar.css';
+import { GOOGLE_AUTH_URL } from '../constants';
 import { NavLink } from 'react-router-dom'
 import { useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
@@ -19,6 +20,7 @@ export const Navbar = () => {
         </div>
         ): (
         <div className='nav-div'>
+          <a href={GOOGLE_AUTH_URL}>login</a>
           <LoginIcon onClick={() => setLogged(!logged)}/>
           <GoogleIcon onClick={() => setLogged(!logged)}/>
         </div>
