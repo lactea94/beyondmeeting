@@ -1,14 +1,14 @@
 package com.beyondmeeting.backend.domain;
 
+import com.beyondmeeting.backend.domain.dto.TeamDto;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
-//setter 는 지양.. 이유는?! 찾아볼것
 @Getter
 @Entity
 @NoArgsConstructor
@@ -20,12 +20,19 @@ public class Team {
     @Column(nullable = false)
     private String teamName;
 
-    public Team(Long id, String teamName) {
-        this.id = id;
-        this.teamName = teamName;
-    }
-
     // userHasTeam 의 team
+    @JsonIgnore
     @OneToMany(mappedBy = "team")
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
+
+    public Team(TeamDto teamDto){
+        this.teamName = teamDto.getTeamName();
+    }
+
+    public Team(Long id){
+        this.id = id;
+    }
+
+//    @OneToMany(mappedBy = "team")
+//    private UserHasTeam userHasTeam;
 }

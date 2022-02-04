@@ -2,6 +2,7 @@ package com.beyondmeeting.backend.login.model;
 import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -20,6 +21,7 @@ import java.util.List;
 // getter, setter 롬복으로 리팩토링
 @Setter
 @Getter
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -46,7 +48,16 @@ public class User {
 
     private String providerId;
 
+    public User(Long id) {
+        this.id = id;
+    }
+
+//    @OneToMany(mappedBy = "user")
+//    private UserHasTeam userHasTeam;
     // userHasTeam 의 user
+    @JsonIgnore
     @OneToMany(mappedBy = "user")
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
+
+
 }

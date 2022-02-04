@@ -1,9 +1,15 @@
 package com.beyondmeeting.backend;
 
-import com.beyondmeeting.backend.domain.dto.UserHasTeamDto;
+import com.beyondmeeting.backend.domain.Team;
+import com.beyondmeeting.backend.domain.UserHasTeam;
+import com.beyondmeeting.backend.domain.dto.TeamDto;
 import com.beyondmeeting.backend.login.config.AppProperties;
 import com.beyondmeeting.backend.domain.Meeting;
+import com.beyondmeeting.backend.login.model.User;
+import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.MeetingRepository;
+import com.beyondmeeting.backend.repository.TeamRepository;
+import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -22,22 +28,41 @@ public class BackendApplication {
 		SpringApplication.run(BackendApplication.class, args);
 	}
 	@Bean
-	public CommandLineRunner demo(MeetingRepository meetingRepository) {
+	public CommandLineRunner demo(MeetingRepository meetingRepository, TeamRepository teamRepository, UserHasTeamRepository userHasTeamRepository, UserRepository userRepository) {
 		return (args) -> {
 			/*****************************Insert****************************************/
 
 
 			// insert
-			meetingRepository.save(new Meeting("전철우 사거리 맛집", true));
+//			meetingRepository.save(new Meeting("전철우 사거리 맛집", true));
+//			teamRepository.save(new Team("BeyondMeeting"));
+//			teamRepository.save(new Team("BehindMeeting"));
+
+//			userHasTeamRepository.save(new UserHasTeam(teamRepository.getById(28L),userRepository.getById(4L),"팀장"));
+
+			// 팀추가 test
+//			teamRepository.save(new Team(new TeamDto("하이")));
+
+			// 팀원추가 test
+//			Team team = new Team(28L);
+//			User user = new User(1L);
+//			UserHasTeam userHasTeam = new UserHasTeam(team,user,true);
+//			userHasTeamRepository.save(userHasTeam);
 
 			// select
-			List<Meeting> meetingList = meetingRepository.findAll();
-			for (int i=0; i<meetingList.size(); i++) {
-				Meeting meeting = meetingList.get(i);
-				System.out.println(meeting.getId());
-				System.out.println(meeting.getTopic());
-				System.out.println(meeting.isDefaultType()); // boolean 형은 get아니고 is
-			}
+//			List<Meeting> meetingList = meetingRepository.findAll();
+//			for (int i=0; i<meetingList.size(); i++) {
+//				Meeting meeting = meetingList.get(i);
+//				System.out.println(meeting.getId());
+//				System.out.println(meeting.getTopic());
+//				System.out.println(meeting.isDefaultType()); // boolean 형은 get아니고 is
+//			}
+//			List<Team> teamList = teamRepository.findAll();
+//			for (int i=0; i<teamList.size(); i++) {
+//				Team team = teamList.get(i);
+//				System.out.println(team.getId());
+//				System.out.println(team.getTeamName());
+//			}
 
 // 데이터 하나 조회하기
 //			Course course = repository.findById(1L).orElseThrow(
@@ -48,7 +73,8 @@ public class BackendApplication {
 			// service 에서 만들어줘야함
 
 			// delete
-			meetingRepository.deleteAll();
+			//meetingRepository.deleteAll();
+			//teamRepository.deleteById(27L);
 			/******************************End*****************************************/
 		};
 	}

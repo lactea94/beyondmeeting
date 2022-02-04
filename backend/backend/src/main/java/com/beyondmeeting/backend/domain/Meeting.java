@@ -3,10 +3,7 @@ package com.beyondmeeting.backend.domain;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 
 @NoArgsConstructor // 기본생성자를 대신해줌
 @Getter
@@ -30,4 +27,5 @@ public class Meeting extends TimeStamped {
         this.topic = topic;
         this.defaultType = defaultType;
     }
+
 }

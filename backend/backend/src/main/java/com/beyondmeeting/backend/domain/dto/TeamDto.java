@@ -4,11 +4,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@Getter
 @Setter
+@Getter
 @NoArgsConstructor
-public class UserHasTeamDto {
-    private Long team;
-    private Long user;
-    private Boolean role;
+public class TeamDto {
+    private String teamName;
 }
