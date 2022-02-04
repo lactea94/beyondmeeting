@@ -31,17 +31,15 @@ public class MessageRepository implements IMessageRepository{
 
     /** 메시지 조회
      *
-     * @param chatroom
-     * @param message
+     * @param chatroomId
      * @return
      */
     @Override
-    public List<Message> findAll(Long messageId, Long chatroomId) {
-        return em.createQuery("select m from message m join m.chatroom c" +
-                "where m.messageId = :messageId" +
-                "and c.chatroomId = :chatroomId", Message.class)
-                .setParameter("messageId", messageId)
-                .setParameter("chatroomId", chatroomId)
-                .getResultList();
+    public List<Message> findAll(Long chatroomId) {
+        return em.createQuery("select m " +
+                        "from Message m join m.chatroom c " +
+                        "where c.id = :chatroomId", Message.class)
+                        .setParameter("chatroomId", chatroomId)
+                        .getResultList();
     }
 }

@@ -22,9 +22,14 @@ public class ChatRoomController {
     private final IChatRoomService chatroomService;
     private final IMessageService messageService;
 
-    final int PAGE = 10;
+    // paging
+    //final int PAGE = 10;
 
-    // 특정 채팅방 타이틀 가져오기
+    /** 특정 채팅방 제목 가져오기
+     *
+     * @param id
+     * @return
+     */
     @GetMapping("/room/{id}")
     public ResponseEntity<String> roomTitle(@PathVariable long id) {
         String roomTitle = chatroomService.findTitle(id);
@@ -33,7 +38,10 @@ public class ChatRoomController {
         return ResponseEntity.status(HttpStatus.OK).body(roomTitle);
     }
 
-    // 모든 채팅방 목록 반환
+    /** 모든 채팅방 목록 가져오기
+     *
+     * @return
+     */
     @GetMapping("/rooms")
     public ResponseEntity<List<ChatRoom>> room() {
         List<ChatRoom> rooms = chatroomService.findRooms();
@@ -43,7 +51,11 @@ public class ChatRoomController {
 
     }
 
-    // 방 생성
+    /** 채팅방 생성하기
+     *
+     * @param newRoom
+     * @return
+     */
     @PostMapping("/room")
     public ResponseEntity<Long> createRoom(@RequestBody ChatRoom newRoom) {
         long resultOfCreation = chatroomService.saveRoom(newRoom);
@@ -52,11 +64,17 @@ public class ChatRoomController {
         else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Long.MIN_VALUE);
     }
 
-    // 특정 채팅방 의 메세지 최근 10개
-    @GetMapping("/room/message/{chatroomid}/{messageid}")
-    public ResponseEntity<List<Message>> roomInfo(@PathVariable long messageid, @PathVariable long chatroomid, @RequestParam(value = "page", defaultValue = "0") String page) {
+    /** 특정 채팅방 아이디를 가진 메시지 모두 가져오기
+     *
+     * @param id
+     * @return
+     */
+    @GetMapping("/room/message/{id}") // id : message.chatroom_id
+    public ResponseEntity<List<Message>> roomInfo(@PathVariable long id) {
+        // paging (특정 채팅방 의 메세지 최근 10개만 가져옴)
+        // , @RequestParam(value = "page", defaultValue = "0") String page
         //long idx = page.equals("0") ? 0 : Integer.parseInt(page) * PAGE + 1;
-        List<Message> msgList = messageService.findMessages(messageid, chatroomid);
+        List<Message> msgList = messageService.findMessages(id);
         return ResponseEntity.status(HttpStatus.OK).body(msgList);
     }
 }
