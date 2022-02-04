@@ -1,0 +1,13 @@
+.meetingbox {
+  margin: 20px;
+}
+
+.facegrid {
+  width: 100vw;
+  height: 50vh;
+}
+
+.face {
+  width: 23vw;
+  height: 45vh;
+}
