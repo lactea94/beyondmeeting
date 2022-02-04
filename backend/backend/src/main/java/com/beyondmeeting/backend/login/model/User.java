@@ -1,4 +1,5 @@
 package com.beyondmeeting.backend.login.model;
+import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.Setter;
@@ -6,6 +7,8 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 // 데이터베이스 엔터티 만들기
 // AuthProvider 포함 ( Enum - google,,)
@@ -42,5 +45,8 @@ public class User {
     private AuthProvider provider;
 
     private String providerId;
-    
+
+    // userHasTeam 의 user
+    @OneToMany(mappedBy = "user")
+    private List<UserHasTeam> userHasTeamList = new ArrayList<>();
 }
