@@ -19,22 +19,6 @@ export function TeamList() {
       {id:'2123', name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
     ],
   }
-  // const [ testTeam, setTestTeam ] = useState({});
-
-  // function callback(dic) {
-  //   setTestTeam(dic);
-  // }
-
-  // useEffect(
-  //   () => {
-  //     axios({
-  //       url: '/team',
-  //       method: 'GET'
-  //     }).then((res) => {
-  //       callback(res.data);
-  //     })
-  //   }, []
-  // );
   
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`

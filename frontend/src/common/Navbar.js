@@ -1,7 +1,9 @@
+import './Navbar.css';
 import { NavLink } from 'react-router-dom'
 import { useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
+import GoogleIcon from '@mui/icons-material/Google';
 
 export const Navbar = () => {
   const [logged, setLogged] = useState(true)
@@ -17,7 +19,8 @@ export const Navbar = () => {
         </div>
         ): (
         <div className='nav-div'>
-          <LoginIcon onClick={() => setLogged(!logged)}>Login</LoginIcon>
+          <LoginIcon onClick={() => setLogged(!logged)}/>
+          <GoogleIcon onClick={() => setLogged(!logged)}/>
         </div>
       )}
     </nav>
