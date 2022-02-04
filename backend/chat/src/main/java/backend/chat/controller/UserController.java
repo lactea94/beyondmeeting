@@ -8,11 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin(origins = "*")
+//@CrossOrigin(origins = "*")
 @Slf4j
-@RequestMapping("/api/chat")
+//@RequestMapping("/api/chat")
 @RequiredArgsConstructor
-@RestController
+//@RestController
 public class UserController {
 
     private final IUserService userService;
@@ -22,7 +22,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/user")
+    //@PostMapping("/user")
     public ResponseEntity<User> joinUser(@RequestBody User user) {
         long resultOfCreation = userService.join(user);
         if (resultOfCreation >= 0)
@@ -35,7 +35,7 @@ public class UserController {
      * @param user
      * @return
      */
-    @PostMapping("/login")
+    //@PostMapping("/login")
     public ResponseEntity<String> loginUser(@RequestBody User user) {
         boolean resultOfLogin = userService.login(user);
         if (resultOfLogin)

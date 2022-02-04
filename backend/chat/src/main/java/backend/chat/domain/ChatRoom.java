@@ -20,15 +20,15 @@ public class ChatRoom { // 주체
 
     private String title;
 
-    private Long masterId;
+    private Long master_id;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
     // Meeting.id 가 ChatRoom 테이블에서 외래키, 연관관계의 주인
 
-    @OneToOne(mappedBy = "chatroom")
-    private Message message;
+//    @OneToMany(mappedBy = "chatroom")
+//    private Message message;
     // ChatRoom.id 가 Message 테이블에서 외래키, 연관관계의 거울
     // chatroom 이 delete 되면 message 도 cascade
 }

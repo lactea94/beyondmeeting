@@ -22,18 +22,18 @@ public class MessageService implements IMessageService{
      * @return
      */
     @Override
+    @Transactional(readOnly = false)
     public Message saveMessage(Message message) {
         return messageRepository.save(message);
     }
 
     /** 메시지 전체 조회
      *
-     * @param messageId
      * @param chatroomId
      * @return
      */
     @Override
-    public List<Message> findMessages(Long messageId, Long chatroomId) {
-        return messageRepository.findAll(messageId, chatroomId);
+    public List<Message> findMessages(Long chatroomId) {
+        return messageRepository.findAll(chatroomId);
     }
 }

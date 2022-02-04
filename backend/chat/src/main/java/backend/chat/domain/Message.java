@@ -22,7 +22,7 @@ public class Message {
 
     private String content;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @ManyToOne(targetEntity = ChatRoom.class, fetch = FetchType.LAZY)
     @JoinColumn(name = "chatroom_id")
     private ChatRoom chatroom;
 

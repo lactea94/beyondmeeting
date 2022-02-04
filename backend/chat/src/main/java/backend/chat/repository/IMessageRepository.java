@@ -7,7 +7,6 @@ import java.util.List;
 
 public interface IMessageRepository {
     public Message save(Message message);
-    public List<Message> findAll(Long messageId, Long chatroomId);
-    //List<Message> getMessagesByChatroomId(@Param("roomId") long roomId, @Param("idx") long idx);
+    public List<Message> findAll(Long chatroomId);
 }
 

@@ -19,6 +19,7 @@ public class UserService implements IUserService{
      * @return
      */
     @Override
+    @Transactional(readOnly = false)
     public Long join(User user) {
         return userRepository.save(user).getId();
     }

@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class ChatRoomService implements IChatRoomService{
 
@@ -21,6 +21,7 @@ public class ChatRoomService implements IChatRoomService{
      * @return
      */
     @Override
+    @Transactional(readOnly = false)
     public Long saveRoom(ChatRoom chatroom) {
         return chatroomRepository.save(chatroom).getId();
     }

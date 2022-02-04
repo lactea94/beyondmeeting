@@ -34,7 +34,7 @@ public class ChatRoomRepository implements IChatRoomRepository{
      */
     @Override
     public List<ChatRoom> findAll() {
-        return em.createQuery("select c from chatroom c",ChatRoom.class)
+        return em.createQuery("select c from ChatRoom c",ChatRoom.class)
                 .getResultList();
     }
 

@@ -7,5 +7,5 @@ import java.util.List;
 
 public interface IMessageService {
     public Message saveMessage(Message message);
-    public List<Message> findMessages(Long messageId, Long chatroomId);
+    public List<Message> findMessages(Long chatroomId);
 }
