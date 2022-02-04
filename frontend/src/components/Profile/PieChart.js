@@ -26,7 +26,7 @@ const PieChart = () => (
         argumentField="country"
       />
       <Title
-        text="Area of Countries"
+        text="Hats"
       />
       <Animation />
     </Chart>
