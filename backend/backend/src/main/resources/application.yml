@@ -48,3 +48,16 @@ app:
       - https://13.124.242.194:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
+
+#LeeNamSoo 02.04 https사용을 위한 인증서
+server:
+  port: 8080
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore/ssafy.p12
+    key-store-password: ssafyssafy
+    key-alias: ssafy
+trust:
+  store: classpath:keystore/ssafy.p12
+  store.password: ssafyssafy
