@@ -1,6 +1,7 @@
 package backend.chat.controller;
 
 import backend.chat.domain.ChatRoom;
+import backend.chat.domain.Meeting;
 import backend.chat.domain.Message;
 import backend.chat.service.IChatRoomService;
 import backend.chat.service.IMessageService;
@@ -53,12 +54,21 @@ public class ChatRoomController {
 
     /** 채팅방 생성하기
      *
-     * @param newRoom
+     * @param form
      * @return
      */
     @PostMapping("/room")
-    public ResponseEntity<Long> createRoom(@RequestBody ChatRoom newRoom) {
-        long resultOfCreation = chatroomService.saveRoom(newRoom);
+    public ResponseEntity<Long> createRoom(@RequestBody ChatRoomForm form) {
+
+        Meeting meeting = new Meeting(form.getMeeting_id());
+
+        ChatRoom chatRoom = new ChatRoom();
+        chatRoom.setId(form.getId());
+        chatRoom.setTitle(form.getTitle());
+        chatRoom.setMaster_id(form.getMaster_id());
+        chatRoom.setMeeting(meeting);
+
+        long resultOfCreation = chatroomService.saveRoom(chatRoom);
         if (resultOfCreation >= 0)
             return ResponseEntity.status(HttpStatus.OK).body(resultOfCreation);
         else return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Long.MIN_VALUE);

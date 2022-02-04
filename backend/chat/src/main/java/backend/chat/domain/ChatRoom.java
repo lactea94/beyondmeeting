@@ -22,7 +22,7 @@ public class ChatRoom { // 주체
 
     private Long master_id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
     // Meeting.id 가 ChatRoom 테이블에서 외래키, 연관관계의 주인
