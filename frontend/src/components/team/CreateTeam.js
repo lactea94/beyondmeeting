@@ -52,6 +52,7 @@ function CreateTeam() {
               event.preventDefault()
               setUserList([...userList, { id: nextId.current, email: event.target.email.value}])
               nextId.current += 1
+              event.target.email.value = ''
             }}
           >
             <TextField
