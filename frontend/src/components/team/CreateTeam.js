@@ -1,4 +1,4 @@
-import React from 'react';
+import { useState, useRef } from 'react';
 import {
   Grid,
   Button,
@@ -11,7 +11,6 @@ import {
   TableContainer,
   TableRow,
   Paper,
-  Checkbox
 } from '@mui/material'
 
 function CreateTeam() {
@@ -25,10 +24,15 @@ function CreateTeam() {
     p: 4,
   };
 
-  const [open, setOpen] = React.useState(false);
+  const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const userList = ['dannyp0930@gmail.com', 'dannyp0930@daum.net', 'dannyp95@naver.com']
+  const [userList, setUserList] = useState([])
+  const nextId = useRef(0)
+
+  function onRemove (id) {
+    setUserList(userList.filter(user => user.id !== id))
+  }
 
   return (
     <Grid item>
@@ -40,7 +44,29 @@ function CreateTeam() {
         <Card sx={modalStyle}>
           <h3>팀 생성</h3>
           <hr></hr>
-          <TextField label="이름" variant="outlined" />
+          <TextField label="이름" size="small" variant="outlined" />
+          <br></br>
+          <br></br>
+          <form
+            onSubmit={function (event) {
+              event.preventDefault()
+              setUserList([...userList, { id: nextId.current, email: event.target.email.value}])
+              nextId.current += 1
+            }}
+          >
+            <TextField
+              label="이메일"
+              name="email"
+              size="small"
+              variant="outlined"
+            />
+            <Button
+              variant="contained"
+              type="submit"
+            >
+              추가
+            </Button>
+          </form>
           <br></br>
           <br></br>
           <TableContainer component={Paper}>
@@ -48,17 +74,14 @@ function CreateTeam() {
               <TableBody>
                 {userList.map((user) => (
                   <TableRow
+                    key={user.id}
                     sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                   >
-                    <TableCell>{user}</TableCell>
-                    <TableCell padding="checkbox">
-                      <Checkbox
-                        color="primary"
-                        // checked={isItemSelected}
-                        // inputProps={{
-                        //   'aria-labelledby': labelId,
-                        // }}
-                      />
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Button
+                        onClick={() => onRemove(user.id)}
+                      >삭제</Button>
                     </TableCell>
                   </TableRow>
                 ))}
@@ -67,7 +90,7 @@ function CreateTeam() {
           </TableContainer>
           <br></br>
           <br></br>
-          <Button>생성</Button>
+          <Button variant="contained">생성</Button>
         </Card>
       </Modal>
     </Grid>
