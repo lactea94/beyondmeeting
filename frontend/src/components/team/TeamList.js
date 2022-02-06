@@ -7,7 +7,7 @@ import {
   ListItem,
   ListItemButton,
 } from '@mui/material';
-import CreateTeam from './CreateTeam'
+import CreateTeam from './modal/CreateTeam'
 
 
 export function TeamList() {
