@@ -59,10 +59,10 @@ public class TeamConroller {
     }
 
     //팀원수정
-    @PutMapping("/team/member/{id}")
-    public Long updateTeam(@PathVariable Long id, @RequestBody UserHasTeamDto userHasTeamDto){
-        return 
-    }
+//    @PutMapping("/team/member/{id}")
+//    public Long updateTeam(@PathVariable Long id, @RequestBody UserHasTeamDto userHasTeamDto){
+//       // return
+//    }
 
     @GetMapping("/team")
     public List<Team> getTeam(){
