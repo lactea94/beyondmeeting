@@ -86,6 +86,10 @@ public class CallHandler extends TextWebSocketHandler {
           user.addCandidate(cand, jsonMessage.get("name").getAsString());//유저세션에 접속가능한 주소 추가
         }
         break;
+      case "chat":
+        System.out.println("jsonMessage.get(\"data\") = " + jsonMessage.get("data"));
+        sendMessage(user, jsonMessage.get("data").getAsString());
+        break;
       default:
         break;
     }
@@ -111,6 +115,14 @@ public class CallHandler extends TextWebSocketHandler {
   private void leaveRoom(UserSession user) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
     room.leave(user);//유저를 방에서 내보낸다.
+    if (room.getParticipants().isEmpty()) {//방에 남아있는 참가자가 없다면
+      roomManager.removeRoom(room);//방을 삭제한다.
+    }
+  }
+
+  private void sendMessage(UserSession user, String chatData) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
+    room.sendMsg(user,chatData);//유저를 방에서 내보낸다.
     if (room.getParticipants().isEmpty()) {//방에 남아있는 참가자가 없다면
       roomManager.removeRoom(room);//방을 삭제한다.
     }
