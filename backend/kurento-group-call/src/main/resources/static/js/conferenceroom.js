@@ -18,7 +18,15 @@
 var ws = new WebSocket('wss://' + location.host + '/groupcall');
 var participants = {};
 var name;
+//----------------------
 
+var chanId = 0;
+
+
+function getChannelName () {
+	return "TestChannel" + chanId++;
+}
+//----------------------
 window.onbeforeunload = function() {
 	ws.close();
 };
@@ -48,6 +56,9 @@ ws.onmessage = function(message) {
 	        }
 	    });
 	    break;
+	case 'sendChat':
+		onReceiveMsg(parsedMessage);
+		break;
 	default:
 		console.error('Unrecognized message', parsedMessage);
 	}
@@ -60,13 +71,28 @@ function register() {
 	document.getElementById('room-header').innerText = 'ROOM ' + room;
 	document.getElementById('join').style.display = 'none';
 	document.getElementById('room').style.display = 'block';
+	//--------------------------------------------------------------
+	var dataChannelSend = document.getElementById('dataChannelSend');
+	var sendButton = document.getElementById('send');
+	sendButton.addEventListener("click", function() {
+		var data = {
+			id : "chat",
+			data : dataChannelSend.value
+		};
+		console.log("Send button pressed. Sending data " + data);
+		// webRtcPeer.send(data);
+		sendMessage(data);
+		dataChannelSend.value = "";
+	});
 
+	//--------------------------------------------------------------
 	var message = {
 		id : 'joinRoom',
 		name : name,
 		room : room,
 	}
 	sendMessage(message);
+
 }
 
 function onNewParticipant(request) {
@@ -111,13 +137,14 @@ function onExistingParticipants(msg) {
 						localVideo: video,
 						mediaConstraints: constraints,
 						onicecandidate: participant.onIceCandidate.bind(participant),
-						// configuration:{
-						// 	iceServers:[{
-						// 		"urls": 'turn:13.124.242.194:3478?transport=udp',
-						// 		"username": 'username1',
-						// 		"credential":'password1'
-						// 	}]
-						// }
+		//----------------------
+						dataChannelConfig: {
+							id : getChannelName(),
+							onopen : onOpen,
+							onclose : onClosed
+						},
+						dataChannels : true,
+		//----------------------
 	    			}
 	participant.rtcPeer = new kurentoUtils.WebRtcPeer.WebRtcPeerSendonly(options,
 		function (error) {
@@ -129,7 +156,16 @@ function onExistingParticipants(msg) {
 
 	msg.data.forEach(receiveVideo);
 }
+function onOpen(event) {
+	dataChannelSend.disabled = false;
+	dataChannelSend.focus();
+	$('#send').attr('disabled', false);
+}
 
+function onClosed(event) {
+	dataChannelSend.disabled = true;
+	$('#send').attr('disabled', true);
+}
 function leaveRoom() {
 	sendMessage({
 		id : 'leaveRoom'
@@ -176,6 +212,14 @@ function onParticipantLeft(request) {
 	var participant = participants[request.name];
 	participant.dispose();
 	delete participants[request.name];
+}
+
+function onReceiveMsg(request) {
+	console.log('receive from ' + request.name);
+	console.log('msg : ' + request.data);
+	// var participant = participants[request.name];
+	// participant.dispose();
+	// delete participants[request.name];
 }
 
 function sendMessage(message) {

@@ -30,6 +30,15 @@
 			<div id="room" style="display: none;">
 				<h2 id="room-header"></h2>
 				<div id="participants"></div>
+				<!--	------------------------------------------------------		-->
+				<br> <label class="control-label" for="dataChannelSend">Text
+				to be sent</label><br>
+				<textarea id="dataChannelSend" class="form-control" disabled
+						  style="height: 100px;" placeholder="Enter the text to send">채팅테스트!</textarea>
+				<a id="send" href="#" class="btn btn-primary"> <span
+						class="glyphicon glyphicon-forward"></span> Send
+				</a>
+				<!--	------------------------------------------------------		-->
 				<input type="button" id="button-leave" onmouseup="leaveRoom();"
 					value="Leave room">
 			</div>
