@@ -154,7 +154,6 @@ public class Room implements Closeable {
   public void sendMsg(UserSession user, String chatData) throws IOException {
     log.debug("PARTICIPANT {}: send massage room {}", user.getName(), this.name);
     this.sendMsgParticipant(user.getName(), chatData);//유저를 방에서 내보낸다.
-    user.close();
   }
   private void sendMsgParticipant(String name, String chatData) throws IOException {
     log.debug("ROOM {}: notifying all users that {} is leaving the room", this.name, name);

@@ -122,9 +122,6 @@ public class CallHandler extends TextWebSocketHandler {
 
   private void sendMessage(UserSession user, String chatData) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
-    room.sendMsg(user,chatData);//유저를 방에서 내보낸다.
-    if (room.getParticipants().isEmpty()) {//방에 남아있는 참가자가 없다면
-      roomManager.removeRoom(room);//방을 삭제한다.
-    }
+    room.sendMsg(user,chatData);
   }
 }
