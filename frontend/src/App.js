@@ -5,7 +5,6 @@ import { Home } from './components/Home'
 import { Profile } from './components/Profile';
 import { Team } from './components/Team';
 import { Meetingroom } from './meetingrooms/Meetingroom';
-import { NoMatch } from './errorpage/NoMatch';
 
 function App() {
   const location = useLocation();
@@ -18,7 +17,6 @@ function App() {
         <Route path='profile' element={<Profile/>}></Route>
         <Route path='team' element={<Team/>}></Route>
         <Route path='meetingroom' element={<Meetingroom />} />
-        <Route path='*' element={<NoMatch />} />
       </Routes>
 
     </div>

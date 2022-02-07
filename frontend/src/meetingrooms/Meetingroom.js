@@ -1,50 +1,67 @@
 import React from 'react';
 // import Carousel from 'react-bootstrap/Carousel';
-import { styled }  from '@mui/material/styles';
-import Paper from '@mui/material/Paper'
 import Grid from '@mui/material/Grid'
-import "./Meetingroom.css"
+import Box from '@mui/material/Box'
 
-const Item = styled(Paper) (({ theme }) => ({
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: 'center',
-  color: theme.palette.text.secondary,
-
-}))
 
 export const Meetingroom = () => {
+  const totalBox = {
+    my : 1/2,
+  }
+
   return (
-    <Grid direction={"row"} container className='meetingbox'>
-      <Grid item container xs={2} direction="column" justifyContent="center" alignItems="center">
-        <Grid item>
-          <Item>
-            모자걸이
-          </Item>
-        </Grid>
-        <Grid Item>
-          <Item>
-            상세정보
-          </Item>
-        </Grid>
-      </Grid>
-      <Grid item container xs={7} spacing={10}>
-        {Array.from(Array(6)).map((_, index) => (
-          <Grid item xs={2} sm={4} md={4} key={index} className="facegrid">
-            <Item className="face">화면</Item>
+    <Grid container direction="column" spacing={2} sx={totalBox}>
+      <Grid item container className='meetingbox' spacing={2}>
+        <Grid item container xs={2} direction="column" justifyContent="center" alignItems="center">
+          <Grid item>
+            <Box>
+              모자걸이
+            </Box>
           </Grid>
-        ))}
-      </Grid>
-      <Grid item container xs={3} direction="column" justifyContent="center" alignItems="center">
-        <Grid item>
-          <Item>
-            회의 목표
-          </Item>
+          <Grid Item>
+            <Box>
+              상세정보
+            </Box>
+          </Grid>
         </Grid>
-        <Grid item>
-          <Item>
-            아이디어보드
-          </Item>
+        <Grid item container xs={7}>
+          {Array.from(Array(6)).map((_, index) => (
+            <Grid item xs={2} sm={4} md={4} key={index} className="facegrid">
+              <Box className="face">화면</Box>
+            </Grid>
+          ))}
+        </Grid>
+        <Grid item container xs={3} direction="column" justifyContent="center" alignItems="center">
+          <Grid item xs={5}>
+            <Box textAlign="center">
+              회의 목표
+            </Box>
+          </Grid>
+          <Grid item xs={7}>
+            <Box textAlign="center">
+              아이디어보드
+            </Box>
+          </Grid>
+        </Grid>
+      </Grid>
+      <Grid container item>
+        <Grid item xs={2} textAlign="center">
+          imoge
+        </Grid>
+        <Grid item xs={2} textAlign="center">
+          음소거
+        </Grid>
+        <Grid item xs={2} textAlign="center"> 
+          화면공유
+        </Grid>
+        <Grid item xs={2} textAlign="center">
+          회의 종료
+        </Grid>
+        <Grid item xs={2} textAlign="center">
+          주제
+        </Grid>
+        <Grid item xs={2} textAlign="center">
+          채팅
         </Grid>
       </Grid>
     </Grid>
