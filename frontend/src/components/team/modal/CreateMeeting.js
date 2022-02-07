@@ -1,17 +1,8 @@
 import React from 'react';
 import { Grid, Button, Modal, Card } from '@mui/material'
+import ModalStyle from './ModalStyle';
 
 function CreateMeeting() {
-  const modalStyle = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    bgcolor: 'background.paper',
-    boxShadow: 24,
-    p: 4,
-  };
-
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -23,7 +14,7 @@ function CreateMeeting() {
         open={open}
         onClose={handleClose}
         >
-        <Card sx={modalStyle}>
+        <Card sx={ModalStyle()}>
           회의 생성
         </Card>
       </Modal>

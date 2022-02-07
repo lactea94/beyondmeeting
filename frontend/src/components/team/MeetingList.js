@@ -4,8 +4,8 @@ import {
     Card,
     CardContent,
 } from '@mui/material';
-import ManageTeam from './ManageTeam'
-import CreateMeeting from './CreateMeeting'
+import ManageTeam from './modal/ManageTeam'
+import CreateMeeting from './modal/CreateMeeting'
 
 export function MeetingList() {
   const { state } = useLocation()
