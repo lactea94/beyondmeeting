@@ -22,3 +22,15 @@
 - graph 상에 표기
     - 명령어 : git push origin {작업브랜치 명}
     - 그래프상에 작업브랜치를 표기
+
+# workbench
+- 13.124.242.194
+- https://i6c101.p.ssafy.io:8081/api/chat/room
+```{
+    "title": "안녕하세요",
+    "master_id": 1234,
+    "meeting_id": 12345
+}
+```
+
+
