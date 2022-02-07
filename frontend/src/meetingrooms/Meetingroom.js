@@ -5,12 +5,17 @@ import Box from '@mui/material/Box'
 
 
 export const Meetingroom = () => {
+  var member = 6;
+
   const totalBox = {
     my : 1/2,
-  }
+  };
 
   return (
     <Grid container direction="column" spacing={2} sx={totalBox}>
+      <Grid item textAlign="center">
+        회의목표
+      </Grid>
       <Grid item container className='meetingbox' spacing={2}>
         <Grid item container xs={2} direction="column" justifyContent="center" alignItems="center">
           <Grid item>
@@ -34,7 +39,7 @@ export const Meetingroom = () => {
         <Grid item container xs={3} direction="column" justifyContent="center" alignItems="center">
           <Grid item xs={5}>
             <Box textAlign="center">
-              회의 목표
+              참여자
             </Box>
           </Grid>
           <Grid item xs={7}>

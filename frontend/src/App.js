@@ -1,8 +1,8 @@
 import './App.css';
 import { Routes, Route, useLocation } from 'react-router-dom'
-import { Navbar } from './components/Navbar';
-import { Home } from './components/Home'
-import { Profile } from './components/Profile';
+import { Navbar } from './common/Navbar';
+import { Home } from './components/home/Home'
+import { Profile } from './components/profile/Profile';
 import { Meetingroom } from './meetingrooms/Meetingroom';
 import { TeamList } from './components/team/TeamList';
 import { DefaultMeetingList } from './components/team/DefaultMeetingList';
