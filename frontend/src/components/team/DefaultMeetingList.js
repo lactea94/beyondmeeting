@@ -1,4 +1,4 @@
-export function DeafultMeetingList() {
+export function DefaultMeetingList() {
   return (
     <div>
       팀을 선택하세요
