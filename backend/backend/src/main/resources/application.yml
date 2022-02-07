@@ -44,7 +44,18 @@ app:
     # We're not using cookies because they won't work well in mobile clients.
     # 13.124.242.194
     authorizedRedirectUris:
-      - http://13.124.242.194:3000/oauth2/redirect
-      - https://13.124.242.194:3000/oauth2/redirect
+      - https://i6c101.p.ssafy.io:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
+
+#https 사용을 위한 추가 NamSoo 21.02.07
+server:
+  ssl:
+    enabled: true
+    key-store-type: PKCS12
+    key-store: classpath:keystore/ssafy.p12
+    key-store-password: ssafyssafy
+    key-alias: ssafy
+trust:
+  store: classpath:keystore/ssafy.p12
+  store.password: ssafyssafy

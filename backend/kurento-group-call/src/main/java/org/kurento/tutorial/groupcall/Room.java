@@ -151,6 +151,35 @@ public class Room implements Closeable {
     return participants.get(name);
   }
 
+  public void sendMsg(UserSession user, String chatData) throws IOException {
+    log.debug("PARTICIPANT {}: send massage room {}", user.getName(), this.name);
+    this.sendMsgParticipant(user.getName(), chatData);//유저를 방에서 내보낸다.
+  }
+  private void sendMsgParticipant(String name, String chatData) throws IOException {
+    log.debug("ROOM {}: notifying all users that {} is leaving the room", this.name, name);
+
+    final List<String> unnotifiedParticipants = new ArrayList<>();
+    final JsonObject participantLeftJson = new JsonObject();
+    participantLeftJson.addProperty("id", "sendChat");
+    participantLeftJson.addProperty("name", name);
+    participantLeftJson.addProperty("data", chatData);
+    for (final UserSession participant : participants.values()) {
+      if(!participant.getName().equals(name)){
+        try {
+          participant.sendMessage(participantLeftJson);//
+        } catch (final IOException e) {
+          unnotifiedParticipants.add(participant.getName());
+          }
+        }
+      }
+
+    if (!unnotifiedParticipants.isEmpty()) {
+      log.debug("ROOM {}: The users {} could not be notified that {} left the room", this.name,
+              unnotifiedParticipants, name);
+    }
+
+  }
+
   @Override
   public void close() {
     for (final UserSession user : participants.values()) {

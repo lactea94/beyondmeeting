@@ -9,6 +9,7 @@ import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.TeamRepository;
 import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -26,17 +27,24 @@ public class TeamConroller {
 
     private final TeamRepository teamRepository;
     private final UserHasTeamRepository userHasTeamRepository;
-
+    private final UserRepository userRepository;
     // 팀추가
     @PostMapping("/team")
     public Team createTeam(@RequestBody TeamDto teamDto){
         Team team = new Team(teamDto);
         return teamRepository.save(team);
     }
+    // 팀원조회
+//    @GetMapping("/team/member")
+//    public String createForm(Model model){
+//        model.addAttribute("form",new UserHasTeam());
+//        return "team/createUserHasTeamForm";
+//    }
 
     // 팀원추가
     @PostMapping("/team/member")
-    public UserHasTeam createTeamMember(@RequestBody UserHasTeamDto userHasTeamDto){
+    public UserHasTeam createTeamMember( @RequestBody UserHasTeamDto userHasTeamDto){
+
 //        Team team = new Team(teamDto);
 //        return teamRepository.save(team);
 
@@ -47,7 +55,14 @@ public class TeamConroller {
 
         UserHasTeam userHasTeam = new UserHasTeam(team,user,userHasTeamDto.getRole());
         return userHasTeamRepository.save(userHasTeam);
+
     }
+
+    //팀원수정
+//    @PutMapping("/team/member/{id}")
+//    public Long updateTeam(@PathVariable Long id, @RequestBody UserHasTeamDto userHasTeamDto){
+//       // return
+//    }
 
     @GetMapping("/team")
     public List<Team> getTeam(){
