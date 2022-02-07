@@ -8,5 +8,6 @@ import lombok.Setter;
 @Getter
 @NoArgsConstructor
 public class TeamDto {
+    private Long id;
     private String teamName;
 }

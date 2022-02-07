@@ -2,6 +2,7 @@ package com.beyondmeeting.backend.domain;
 
 import com.beyondmeeting.backend.domain.dto.TeamDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.List;
 
 @Getter
 @Entity
+@AllArgsConstructor
 @NoArgsConstructor
 public class Team {
     @Id
@@ -32,6 +34,8 @@ public class Team {
     public Team(Long id){
         this.id = id;
     }
+
+
 
 //    @OneToMany(mappedBy = "team")
 //    private UserHasTeam userHasTeam;
