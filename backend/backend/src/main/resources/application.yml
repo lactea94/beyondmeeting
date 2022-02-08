@@ -50,6 +50,7 @@ app:
 
 #https 사용을 위한 추가 NamSoo 21.02.07
 server:
+  port: 8082
   ssl:
     enabled: true
     key-store-type: PKCS12
@@ -59,3 +60,4 @@ server:
 trust:
   store: classpath:keystore/ssafy.p12
   store.password: ssafyssafy
+

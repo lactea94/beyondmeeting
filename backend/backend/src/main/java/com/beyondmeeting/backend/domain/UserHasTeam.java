@@ -30,12 +30,22 @@ public class UserHasTeam {
     private User user;
 
     // 팀장인지
-    private Boolean role;
+    @Enumerated(EnumType.STRING)
+    private RoleType roleType;
 
-    public UserHasTeam(Team team, User user, Boolean role) {
-        this.team = team;
+    public UserHasTeam(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
+    public UserHasTeam( User user,Team team, RoleType roleType) {
         this.user = user;
-        this.role = role;
+        this.team = team;
+        this.roleType = roleType;
+    }
+
+    // 팀장변경
+    public void update(UserHasTeamDto userHasTeamDto) {
+        this.roleType = userHasTeamDto.getRoleType();
     }
 
 //    public UserHasTeam(UserHasTeamDto userHasTeamDto) {
