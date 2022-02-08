@@ -26,10 +26,12 @@ public class Team {
     private String teamName;
 
     // meeting table 과 일대다 관계를 위한 meetings 추가 - 소은
+    @JsonIgnore
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private List<Meeting> meetings = new ArrayList<>();
 
     // userHasTeam 의 team
+    @JsonIgnore
     @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
 
