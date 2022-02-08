@@ -22,7 +22,7 @@
   padding-top: 10px;
 }
 
-.divideLine {
+.logoLine {
   width : 83%;
   border : solid 2px;
   color : white;
@@ -45,7 +45,7 @@
 }
 
 .introBox {
-  margin-top: 150px;
+  margin-top: 200px;
 }
 
 .meetingImage {
@@ -60,10 +60,68 @@
   font-weight: bold;
 }
 
+.introSixHat {
+  text-align: start;
+  color : white;
+  font: Helvetica;
+  font-weight: bold;
+}
+
 .title {
-  font-size: 40px;
+  font-size: 44px;
 }
 
 .content {
   font-size: 24px;
+}
+
+.contentHat {
+  font-size: 20px;
+}
+
+.introSixHatBox {
+  margin-top: 200px;
+  padding-bottom: 200px;
+}
+
+.hatBox {
+  margin: auto;
+}
+
+.redHat {
+  -webkit-filter: opacity(0.4) drop-shadow(0 0 0 red);
+  filter: opacity(0.4) drop-shadow(0 0 0 red);
+}
+.blueHat {
+  -webkit-filter: opacity(0.5) drop-shadow(0 0 0 blue);
+  filter: opacity(0.5) drop-shadow(0 0 0 blue);
+}
+.yellowHat {
+  -webkit-filter: opacity(0.5) drop-shadow(0 0 0 yellow);
+  filter: opacity(0.5) drop-shadow(0 0 0 yellow);
+}
+.blackHat {
+  -webkit-filter: opacity(0.5) drop-shadow(0 0 0 black);
+  filter: opacity(0.5) drop-shadow(0 0 0 black);
+}
+.whiteHat {
+  -webkit-filter: opacity(0.5) drop-shadow(0 0 0 white);
+  filter: opacity(0.5) drop-shadow(0 0 0 white);
+}
+.greenHat {
+  -webkit-filter: opacity(0.5) drop-shadow(0 0 0 green);
+  filter: opacity(0.5) drop-shadow(0 0 0 green);
+}
+
+.hatBox {
+  color : white;
+  font-size: 18px;
+  font : helvetica;
+  font-weight: bold;
+  padding-left: 5%;
+  padding-top: 5%;
+}
+
+.hatIntro {
+  margin-bottom: 3px;
 }

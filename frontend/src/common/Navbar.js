@@ -18,6 +18,7 @@ export const Navbar = () => {
         <div className='nav-div'>
           <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
           <NavLink className='nav-decoration' to='teamlist' style={{ textDecoration : 'none' }}>Team</NavLink>
+          {/* <NavLink className='nav-decoration' to='' style={{ textDecoration : 'none' }} onClick={() => window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")}>Meetingroom</NavLink> */}
           <LogoutIcon onClick={() => setLogged(!logged)}>Logout</LogoutIcon>
         </div>
         ): (
