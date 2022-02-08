@@ -1,5 +1,5 @@
 nav {
-  background-color: aliceblue;
+  background-color: rgb(102, 103, 171);
   padding: 16px 32px;
 }
 .nav-div {
@@ -8,4 +8,21 @@ nav {
 
 nav a {
   margin-right: 16px;
+}
+
+.navLogoImage {
+  width: 50px;
+  height: auto;
+}
+
+.active {
+  color : rgb(146, 208, 80) !important
+}
+
+.nav-decoration {
+  color : white
+}
+
+.nav-decoration:hover {
+  color: rgb(146, 208, 80)
 }

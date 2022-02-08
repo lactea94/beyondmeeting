@@ -8,19 +8,21 @@ import GoogleIcon from '@mui/icons-material/Google';
 
 export const Navbar = () => {
   const [logged, setLogged] = useState(true)
-  
+
   return (
     <nav>
-      <NavLink to='/'>Home</NavLink>
+      <NavLink to='/'>
+        <img className='navLogoImage' src={require("./img/보라로고.png")} alt="logo"></img>
+      </NavLink>
       { logged ? (
         <div className='nav-div'>
-          <NavLink to='profile'>Profile</NavLink>
-          <NavLink to='teamlist'>Team</NavLink>
+          <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
+          <NavLink className='nav-decoration' to='teamlist' style={{ textDecoration : 'none' }}>Team</NavLink>
           <LogoutIcon onClick={() => setLogged(!logged)}>Logout</LogoutIcon>
         </div>
         ): (
         <div className='nav-div'>
-          <a href={GOOGLE_AUTH_URL}>login</a>
+          <a className='nav-decoration' href={GOOGLE_AUTH_URL} style={{ textDecoration : 'none' }}>login</a>
           <LoginIcon onClick={() => setLogged(!logged)}/>
           <GoogleIcon onClick={() => setLogged(!logged)}/>
         </div>
