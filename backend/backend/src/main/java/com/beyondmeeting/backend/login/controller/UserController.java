@@ -26,8 +26,14 @@ public class UserController {
     private UserRepository userRepository;
     private UserHasTeamRepository userHasTeamRepository;
 
+//    @GetMapping("/user/me")
+//    @PreAuthorize("hasRole('USER')") //hasRole([role]) : 현재 사용자의 권한이 파라미터의 권한과 동일한 경우 true
+//    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+//        return userRepository.findById(userPrincipal.getId())
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+//    }
+
     @GetMapping("/user/me")
-    @PreAuthorize("hasRole('USER')") //hasRole([role]) : 현재 사용자의 권한이 파라미터의 권한과 동일한 경우 true
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));

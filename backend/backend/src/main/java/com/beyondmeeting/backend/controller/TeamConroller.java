@@ -1,14 +1,20 @@
 package com.beyondmeeting.backend.controller;
 
+import com.beyondmeeting.backend.domain.RoleType;
 import com.beyondmeeting.backend.domain.Team;
 import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.beyondmeeting.backend.domain.dto.TeamDto;
+import com.beyondmeeting.backend.domain.dto.UserDto;
 import com.beyondmeeting.backend.domain.dto.UserHasTeamDto;
+import com.beyondmeeting.backend.login.exception.ResourceNotFoundException;
 import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
+import com.beyondmeeting.backend.login.security.CurrentUser;
+import com.beyondmeeting.backend.login.security.UserPrincipal;
 import com.beyondmeeting.backend.repository.TeamRepository;
 import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,11 +34,23 @@ public class TeamConroller {
     private final TeamRepository teamRepository;
     private final UserHasTeamRepository userHasTeamRepository;
     private final UserRepository userRepository;
+
     // 팀추가
     @PostMapping("/team")
-    public Team createTeam(@RequestBody TeamDto teamDto){
+    public UserHasTeam createTeam(@RequestBody TeamDto teamDto,@CurrentUser UserPrincipal userPrincipal){
         Team team = new Team(teamDto);
-        return teamRepository.save(team);
+
+        // 로그인된사람이 팀장
+        //User user = userRepository.findById(userPrincipal.getId()).get();
+        //UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
+
+        // 일단 테스트용으로 user 아무거나
+        User user = userRepository.findById(1L).get();
+
+        UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
+        teamRepository.save(team);
+
+        return userHasTeamRepository.save(userHasTeam);
     }
     // 팀원조회
 //    @GetMapping("/team/member")
@@ -50,7 +68,7 @@ public class TeamConroller {
 
         Team team = teamRepository.findById(userHasTeamDto.getTeam()).get();
         User user = userRepository.findById(userHasTeamDto.getUser()).get();
-        UserHasTeam userHasTeam = new UserHasTeam(team,user,userHasTeamDto.getRole());
+        UserHasTeam userHasTeam = new UserHasTeam(user, team, userHasTeamDto.getRoleType());
 
         return userHasTeamRepository.save(userHasTeam);
 
@@ -67,11 +85,12 @@ public class TeamConroller {
         return teamRepository.findAll();
     }
 
-    //cascade 추가할것..
+    //cascade 추가할것.. flag 처리 .. transaction
     @DeleteMapping("/team/{id}")
-    public Long deleteTeam(@PathVariable Long id) {
+    public String deleteTeam(@PathVariable Long id) {
+        String teamName = teamRepository.findById(id).get().getTeamName();
         teamRepository.deleteById(id);
-        return id;
+        return teamName;
     }
 
 

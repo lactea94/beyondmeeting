@@ -1,2 +1,5 @@
-package com.beyondmeeting.backend.domain;public enum RoleType {
+package com.beyondmeeting.backend.domain;
+
+public enum RoleType {
+    LEADER, MEMBER
 }

@@ -1,2 +1,5 @@
-package com.beyondmeeting.backend.domain;public class HatColor {
+package com.beyondmeeting.backend.domain;
+
+public enum HatColor {
+    NORMAL, RED, GREEN, BLUE, BLACK, WHITE, YELLOW
 }
