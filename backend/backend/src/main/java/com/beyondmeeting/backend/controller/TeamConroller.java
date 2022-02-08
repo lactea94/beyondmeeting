@@ -48,17 +48,15 @@ public class TeamConroller {
 //        Team team = new Team(teamDto);
 //        return teamRepository.save(team);
 
-        // dto를 래퍼클래스타입으로 바꿔주기 위해..
-        // 추후 수정사항 .. but 새로운 팀과 유저를 생성시키는게 아니기때문에 이미 가지고 있는 id를 찾아서 insert해야함
-        Team team = new Team(userHasTeamDto.getTeam());
-        User user = new User(userHasTeamDto.getUser());
-
+        Team team = teamRepository.findById(userHasTeamDto.getTeam()).get();
+        User user = userRepository.findById(userHasTeamDto.getUser()).get();
         UserHasTeam userHasTeam = new UserHasTeam(team,user,userHasTeamDto.getRole());
+
         return userHasTeamRepository.save(userHasTeam);
 
     }
 
-    //팀원수정
+    //팀장수정 - userHasTeam repo 가 변경되어야함
 //    @PutMapping("/team/member/{id}")
 //    public Long updateTeam(@PathVariable Long id, @RequestBody UserHasTeamDto userHasTeamDto){
 //       // return

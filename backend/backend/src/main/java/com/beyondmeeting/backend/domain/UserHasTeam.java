@@ -38,6 +38,11 @@ public class UserHasTeam {
         this.role = role;
     }
 
+    // 팀장변경
+    public void update(UserHasTeamDto userHasTeamDto) {
+        this.role = userHasTeamDto.getRole();
+    }
+
 //    public UserHasTeam(UserHasTeamDto userHasTeamDto) {
 //        //추가ㅏㅏㅏ
 //        this.team = userHasTeamDto.getTeam();
