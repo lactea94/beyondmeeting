@@ -33,4 +33,8 @@
 }
 ```
 
+# 0207
 
+  // "hat_color": [1,2,3,4,5,6](api - user has meeting) ex(meetingId/userId/Hat - get)
+
+  // speakingtime - idea
