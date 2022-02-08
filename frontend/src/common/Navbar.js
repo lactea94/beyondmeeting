@@ -12,7 +12,7 @@ export const Navbar = () => {
   return (
     <nav>
       <NavLink to='/'>
-        <img className='navLogoImage' src={require("./img/보라로고.png")} alt="logo"></img>
+        <img className='navLogoImage' src={require("./img/보라로고시안.png")} alt="logo"></img>
       </NavLink>
       { logged ? (
         <div className='nav-div'>
