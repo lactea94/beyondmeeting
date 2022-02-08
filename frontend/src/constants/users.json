@@ -1,0 +1,67 @@
+[
+  {
+    "userId": 0,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "https://lh3.googleusercontent.com/a/AATXAJwjE7P1fnKrz2CMMGgRF4cg5BPKufMrH4e0sXyKKw=s96-c",
+    "teamId": [0, 2],
+    "meetingId": [0, 1, 2, 6, 7, 8]
+  },
+  {
+    "userId": 1,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teamId": [1],
+    "meetingId": [3,4,5]
+  },
+  {
+    "userId": 2,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teamId": [0,2],
+    "meetingId": [0,1,2,6,7,8]
+  },
+  {
+    "userId": 3,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teamId": [1],
+    "meetingId": [3,4,5]
+  },
+  {
+    "userId": 4,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teamId": [0, 1],
+    "meetingId": [0,1,2,3,4,5]
+  },
+  {
+    "userId": 5,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teamId": [2],
+    "meetingId": [6,7,8]
+  },
+  {
+    "userId": 6,
+    "name": "park",
+    "email": "pjyc17@gmail.com",
+    "imageUrl": "",
+    "teams": [{
+      "teamId": 0,
+      "meetingId": [0,1,2],
+      "name" : "power"
+    },
+    {
+      "teamId": 0,
+      "meetingId": [0,1,2],
+      "name" : "power"
+    }
+    ]
+  }
+]

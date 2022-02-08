@@ -1,0 +1,23 @@
+[
+  {
+    "teamId": 0,
+    "meetingId": [0,1,2],
+    "name" : "power",
+    "users" : [0,2,4],
+    "role": 0
+  },
+  {
+    "teamId": 1,
+    "meetingId": [3,4,5],
+    "name" : "asdf",
+    "users":[1,3,4],
+    "role": 1
+  },
+  {
+    "teamId": 2,
+    "meetingId": [6,7,8],
+    "name" : "offer",
+    "users":[0,2,5],
+    "role": 0
+  }
+]
