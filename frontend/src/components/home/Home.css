@@ -1,0 +1,10 @@
+.mainLogoGrid {
+  text-align: center;
+  margin: 50px;
+}
+.mainLogoImage {
+  width: 60%;
+  height: auto;
+  padding-left: 30px;
+  padding-top: 10px;
+}
