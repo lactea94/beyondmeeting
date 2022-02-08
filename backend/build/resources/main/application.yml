@@ -1,11 +1,17 @@
 spring:
   datasource:
+<<<<<<< HEAD
+    url: jdbc:mysql://13.124.242.194:3306/bmt_test?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    username: ssafy
+    password: ssafy
+=======
 #    url: jdbc:mysql://13.124.242.194:3306/bmt_test?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
     url: jdbc:mysql://localhost:3306/bmt_test?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
 #    username: ssafy
     username: root
 #    password: ssafy
     password: parkjy17!&
+>>>>>>> 12c291d141ee8da7413779b63b5caaffa114a240
     driver-class-name: com.mysql.cj.jdbc.Driver
   jpa:
     show-sql: true
