@@ -1,6 +1,7 @@
 package com.beyondmeeting.backend.controller;
 
 import com.beyondmeeting.backend.domain.Meeting;
+import com.beyondmeeting.backend.domain.MeetingType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -9,7 +10,7 @@ public class MeetingController {
 
     @GetMapping("/meeting")
     public Meeting getMeetings(){
-        Meeting meeting = new Meeting("오늘의 맛집", true);
+        Meeting meeting = new Meeting("오늘의 맛집", MeetingType.NORMAL);
         return meeting;
     }
     /*
