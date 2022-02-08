@@ -1,3 +1,16 @@
+.middleLetter {
+  color: white;
+  text-align : center;
+  font: Helvetica;
+  font-size: 50px;
+  margin-top: 50px;
+  transition: color 0.5s;
+}
+
+.middleLetter:hover {
+  color: rgb(146, 208, 80);
+}
+
 .mainLogoGrid {
   text-align: center;
   margin: 50px;
@@ -8,3 +21,26 @@
   padding-left: 30px;
   padding-top: 10px;
 }
+
+.divideLine {
+  width : 90%;
+  border : solid 2px;
+  color : white;
+  margin : 10px auto;
+}
+
+.better {
+  width: 25%;
+  color: rgb(102, 103, 171);
+  font : Helvetica;
+  font-weight: bold;
+  font-size: 36px;
+  text-align: end;
+  margin-left: 70%;
+  transition: color 0.5s;
+}
+
+.better:hover {
+  color : rgb(255,255,255);
+}
+
