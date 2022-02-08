@@ -33,9 +33,6 @@ public class UserHasTeam {
     @Enumerated(EnumType.STRING)
     private RoleType roleType;
 
-    public UserHasTeam(RoleType roleType) {
-        this.roleType = roleType;
-    }
 
     public UserHasTeam( User user,Team team, RoleType roleType) {
         this.user = user;
@@ -43,10 +40,16 @@ public class UserHasTeam {
         this.roleType = roleType;
     }
 
-    // 팀장변경
+    public void update(RoleType roleType) {
+        this.roleType = roleType;
+    }
+
     public void update(UserHasTeamDto userHasTeamDto) {
         this.roleType = userHasTeamDto.getRoleType();
     }
+
+    // 팀장변경
+
 
 //    public UserHasTeam(UserHasTeamDto userHasTeamDto) {
 //        //추가ㅏㅏㅏ

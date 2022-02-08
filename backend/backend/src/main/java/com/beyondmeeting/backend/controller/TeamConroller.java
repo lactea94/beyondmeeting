@@ -4,9 +4,7 @@ import com.beyondmeeting.backend.domain.RoleType;
 import com.beyondmeeting.backend.domain.Team;
 import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.beyondmeeting.backend.domain.dto.TeamDto;
-import com.beyondmeeting.backend.domain.dto.UserDto;
 import com.beyondmeeting.backend.domain.dto.UserHasTeamDto;
-import com.beyondmeeting.backend.login.exception.ResourceNotFoundException;
 import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.login.security.CurrentUser;
@@ -15,13 +13,12 @@ import com.beyondmeeting.backend.repository.TeamRepository;
 import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import com.beyondmeeting.backend.service.TeamService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.ui.Model;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Lazy
 @RequiredArgsConstructor
 @RestController
 public class TeamConroller {
@@ -31,6 +28,7 @@ public class TeamConroller {
     private final UserRepository userRepository;
     private final TeamService teamService;
 
+    // ------------------------------------ CREATE ---------------------------------------
     // 팀추가 - success
     // 로그인만 테스트남음
     @PostMapping("/team")
@@ -64,15 +62,6 @@ public class TeamConroller {
         return userHasTeamRepository.save(userHasTeam);
     }
 
-    // 팀원조회 - success
-    // id : 팀 id로 팀접근해서 구성원 찾기
-    @GetMapping("/team/member/{id}")
-    public List getTeamUsers(@PathVariable Long id){
-        Team team = teamRepository.findById(id).get();
-
-        return team.getUserHasTeamList();
-    }
-
     // 팀원추가 - success
     @PostMapping("/team/member")
     public UserHasTeam createTeamMember( @RequestBody UserHasTeamDto userHasTeamDto){
@@ -85,28 +74,60 @@ public class TeamConroller {
 
     }
 
+    // ------------------------------------ READ ---------------------------------------
 
-    //팀장수정 - userHasTeam repo 가 변경되어야함
-    // 팀장의 userId를 받고, body에 userHasTeam팀장이 될 userId를
-//    @PutMapping("/team/member/leader/{id}")
-//    public Long updateTeam(@PathVariable Long id, @RequestBody UserHasTeamDto userHasTeamDto){
-//        return teamService.
-//        // return
-//    }
-
-    @GetMapping("/team")
+    // 팀조회
+    @GetMapping("/teams")
     public List<Team> getTeam(){
         return teamRepository.findAll();
     }
 
-    //cascade 추가할것.. flag 처리 .. transaction
-    @DeleteMapping("/team/{id}")
-    public String deleteTeam(@PathVariable Long id) {
-        String teamName = teamRepository.findById(id).get().getTeamName();
-        teamRepository.deleteById(id);
+    // 팀원조회 - success
+    // id : 팀 id로 팀접근해서 구성원 찾기
+    @GetMapping("/team/member/{teamId}")
+    public List getTeamUsers(@PathVariable Long teamId){
+        Team team = teamRepository.findById(teamId).get();
+
+        return team.getUserHasTeamList();
+    }
+
+    // ------------------------------------ UPDATE ---------------------------------------
+    // 팀정보 수정
+
+
+    // 팀장수정 - success
+    // 팀 Id를 받고, 팀장이 될 사람의 userHasTeamDto Body에 바꿀내용 보내기
+    @PutMapping("/team/leader/{teamId}")
+    public Team updateTeam(@PathVariable Team teamId, @RequestBody UserHasTeamDto userHasTeamDto){
+        return teamService.update(teamId,userHasTeamDto);
+    }
+
+    // ------------------------------------ DELETE ---------------------------------------
+    // 추후에 데이터 삭제하지 않고 flag 처리 ..
+
+    //팀삭제
+    @DeleteMapping("/team/{teamId}")
+    public String deleteTeam(@PathVariable Long teamId) {
+        String teamName = teamRepository.findById(teamId).get().getTeamName();
+        teamRepository.deleteById(teamId);
         return teamName;
     }
 
+    // 팀원삭제
+    @DeleteMapping("/team/member/{teamId}/{userId}")
+    public String deleteMember(@PathVariable Long teamId,@PathVariable Long userId){
+        // userHasTeam 에서 찾기
+        Team team = teamRepository.findById(teamId).get();
+        User user = userRepository.findById(userId).get();
+        
+        UserHasTeam userHasTeam = userHasTeamRepository.findAllByTeamAndUser(team,user);
+        if(userHasTeam.getRoleType() == RoleType.MEMBER){
+            Long userHasTeamId = userHasTeam.getId();
+            userHasTeamRepository.deleteById(userHasTeamId);
+            return user.getName();
+        }
+        else return "팀장은 삭제 불가";
 
+    }
 
 }
