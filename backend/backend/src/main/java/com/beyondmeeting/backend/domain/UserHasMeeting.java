@@ -21,18 +21,18 @@ public class UserHasMeeting {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(targetEntity = Meeting.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
     // ERD 수정 : UserHasMeeting.team_id 칼럼 삭제
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;
