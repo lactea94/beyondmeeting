@@ -6,6 +6,8 @@ import lombok.*;
 
 import javax.persistence.*;
 import java.lang.annotation.Target;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -20,17 +22,18 @@ public class UserHasMeeting {
     private Long id;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;
 
     @JsonIgnore
-    @ManyToOne(targetEntity = Meeting.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Meeting.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "meeting_id")
     private Meeting meeting;
 
+    // ERD 수정 : UserHasMeeting.team_id 칼럼 삭제
     @JsonIgnore
-    @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER,cascade = CascadeType.ALL)
+    @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;
 

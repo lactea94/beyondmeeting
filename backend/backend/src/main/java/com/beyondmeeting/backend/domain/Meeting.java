@@ -41,6 +41,10 @@ public class Meeting extends TimeStamped {
     @JoinColumn(name = "team_id")
     private Team team;
 
+    @JsonIgnore
+    @OneToMany(mappedBy = "meeting")
+    private List<Message> messageList = new ArrayList<>();
+
     // https://localhost:8080/meeting/2 에서 넣어도 돌아감 안넣어도 돌아가는데 굳이 필요 없어서 빼봤는데도 돌아감
 //    @OneToMany(mappedBy = "meeting", cascade = CascadeType.PERSIST)
 //    private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
