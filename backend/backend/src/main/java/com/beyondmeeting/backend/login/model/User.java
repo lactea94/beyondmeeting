@@ -1,4 +1,5 @@
 package com.beyondmeeting.backend.login.model;
+import com.beyondmeeting.backend.domain.Message;
 import com.beyondmeeting.backend.domain.UserHasMeeting;
 import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,6 +62,11 @@ public class User {
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
 
     // 연관관계를 위해 추가 - 소은
+    @JsonIgnore
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    private List<Message> messageList = new ArrayList<>();
 }

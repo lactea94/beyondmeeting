@@ -117,7 +117,7 @@
   color : white;
   font-size: 18px;
   font : helvetica;
-  font-weight: bold;
+  /* font-weight: bold; */
   padding-left: 5%;
   padding-top: 5%;
 }

@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -39,36 +40,33 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 
-//    @GetMapping("/user/{id}")
-//    public ResponseEntity getUser(@PathVariable Long id) {
-//        User getuser = userRepository.findById(id).get();
-//        if(getuser == null)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        return ResponseEntity.status(HttpStatus.OK).body(getuser);
-//    }
-
-
     // 내 정보 조회
     @GetMapping("/user/{id}")
-    public ResponseEntity getUser(@PathVariable Long id) {
+    public UserDto getUser(@PathVariable Long id) {
 
         User user = userRepository.findById(id).get();
-
-        //UserDto userDto = new UserDto(userRepository.findById(id).get(),userHasTeamRepository.findByTeam(id));
 
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUserName(user.getName());
         userDto.setUserEmail(user.getEmail());
         userDto.setUserImage(user.getImageUrl());
-
-        // 팀아이디 추가하기 ....
+        userDto.setUserHasTeamList(user.getUserHasTeamList());
+        userDto.setUserHasMeetingList(user.getUserHasMeetingList());
         
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return userDto;
     }
 
-        @GetMapping("/users")
+    @GetMapping("/users")
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+
+    // 추후에 데이터 삭제하지 않고 flag 처리 ..
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@PathVariable Long id){
+        String userName = userRepository.findById(id).get().getName();
+        userRepository.deleteById(id);
+        return userName;
     }
 }

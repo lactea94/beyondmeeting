@@ -36,14 +36,18 @@ public class Meeting extends TimeStamped {
     // SOLUTION 2 : cascade = CascadeType.ALL 추가
     // ERROR 3 : Cannot call sendError() after the response has been committed
     // SOLUTION : add @JsonIgnore
-    @JsonIgnore
+    //@JsonIgnore
     @ManyToOne(targetEntity = Team.class, fetch = FetchType.EAGER)
     @JoinColumn(name = "team_id")
     private Team team;
 
-    // https://localhost:8080/meeting/2 에서 넣어도 돌아감 안넣어도 돌아가는데 굳이 필요 없어서 빼봤는데도 돌아감
-//    @OneToMany(mappedBy = "meeting", cascade = CascadeType.PERSIST)
-//    private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "meeting")
+    private List<Message> messageList = new ArrayList<>();
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "meeting")
+    private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
 
     // 아래 코드를 대신해서 cascade 를 작성한다 (parent : Meeting, child : UserHasMeeting)
     //public void addUserHasMeeting(UserHasMeeting userHasMeeting){
