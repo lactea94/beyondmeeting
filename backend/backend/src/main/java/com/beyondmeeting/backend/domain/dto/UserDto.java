@@ -1,5 +1,7 @@
 package com.beyondmeeting.backend.domain.dto;
 
+import com.beyondmeeting.backend.domain.Message;
+import com.beyondmeeting.backend.domain.UserHasMeeting;
 import com.beyondmeeting.backend.domain.UserHasTeam;
 import com.beyondmeeting.backend.login.model.AuthProvider;
 import com.beyondmeeting.backend.login.model.User;
@@ -25,9 +27,9 @@ public class UserDto {
     private String userEmail;
     private String userImage;
 
-    private List<Long> teamIdList;
-    private List<Long> meetingIdList;
-
+    private List<UserHasTeam> userHasTeamList;
+    private List<UserHasMeeting> userHasMeetingList;
+    private List<Message> messageList;
 
 //    public UserDto(User user, List<UserHasTeam> teamIdList, List<UserHasMeeting> meetingIdList) {
 //        this.id = user.getId();
