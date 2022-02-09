@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Lazy
 @RequiredArgsConstructor
 @RestController
 public class TeamConroller {
@@ -36,22 +35,13 @@ public class TeamConroller {
         Team team = new Team(teamDto);
 
         // 로그인된사람이 팀장
+        //System.out.printf("---------------------------------------여기다아아아ㅏㅏㅏ-----------------");
+        //System.out.printf(String.valueOf(userPrincipal.getId()));
         //User user = userRepository.findById(userPrincipal.getId()).get();
-        //UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
-        // 팀장은 한명만?
-        /*
-        팀생성하면 무조건 팀장
-팀원추가되면 팀원
-팀장 변경을 위해선
-팀장이 될사람이 팀원인지 확인하고
-팀장이 팀장인지 확인하고
-팀원이 팀장 되고
-팀장이 팀원 된다
-역할 추가 가능성 때문에 int형으로 하기
-         */
+        //System.out.printf(user.getName());
 
         // 일단 테스트용으로 user 아무거나
-        User user = userRepository.findById(1L).get();
+        User user = userRepository.findById(6L).get();
 
         UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
         teamRepository.save(team);
