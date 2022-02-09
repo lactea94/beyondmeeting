@@ -1,12 +1,46 @@
 import './Home.css';
 import { Grid } from '@mui/material';
+import { useState, useEffect } from "react"
+
+function getWindowDimensions() {
+  const { innerWidth: width, innerHeight: height } = window;
+  return {
+    width,
+    height
+  };
+}
+
+export default function useWindowDimensions() {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
+  return windowDimensions;
+}
+
 
 export function Home () {
+  const width = useWindowDimensions().width;
+  // const [customSM, setCustomSM] = useState(false)
+
+  // if (width >= 600) {
+  //   setCustomSM(customSM = true)
+  // } else {
+  //   setCustomSM(customSM = false)
+  // }
+  
 
   return (
   <div>
     <Grid>
-      <h2 className='middleLetter'>지금부터 회의를 시작합니다.</h2>
+      <h2 className='middleLetter'>지금부터 회의를 시작합니다.{width} </h2>
     </Grid>
     <Grid className="mainLogoGrid">
       <img className="mainLogoImage" src={require("./img/검정로고2.png")} alt="logoimage"></img>
@@ -19,11 +53,11 @@ export function Home () {
     </Grid>
     
     <Grid className='introBox' container>
-      <Grid item xs={1}/>
-      <Grid item xs={5}>
+      <Grid item sm={12} md={1}/>
+      <Grid item sm={12} md={5}>
         <img className='meetingImage' src={require('./img/회의일러스트.png')} alt="meeting"></img>
       </Grid>
-      <Grid className='introLetter' item xs={5}>
+      <Grid className='introLetter' item sm={12} md={5}>
         <br></br>
         <div className='title'>
           회의가 성공으로 가는 지름길
@@ -55,12 +89,12 @@ export function Home () {
           쉽고 간편하게 밖으로 이끌어 보세요.
         </div>
       </Grid>
-      <Grid item xs={1}/>
+      <Grid item xs={12} sm={1} />
     </Grid>
 
     <Grid className='introSixHatBox' container>
-      <Grid item xs={1}/>
-      <Grid className='introSixHat' item xs={5}>
+      <Grid item sm={12} md={1} />
+      <Grid className='introSixHat' item sm={12} md={5}>
         <div className='title'>
           여섯 색깔 모자 기법
         </div>
@@ -72,7 +106,7 @@ export function Home () {
           창의적 사고와 사고를 기술로 직접 가르치는 분야의 권위자인 
         </div>
         <div className='contentHat'>
-          에드워드 드 보노(Edward de Bono)박사가 제안한
+          <span style={{ color: 'rgb(102, 103, 171)' }}>에드워드 드 보노(Edward de Bono)박사</span>가 제안한
         </div>
         <div className='contentHat'>
           창의적 사고를 위한 회의 기법입니다.
@@ -103,14 +137,15 @@ export function Home () {
           빠르고 쉽게 결론에 다다를 수 있습니다.
         </div>
       </Grid>
-      <Grid container item xs={5}>
+      {/* {customSM ? null : <Grid item sm={12} />} */}
+      <Grid container item sm={12} md={5}>
         <Grid container item xs={6}>
           <Grid item xs={4} className='hatBox'>
             <img className='redHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 직관주의자입니다.
+              - 당신은 <span style={{ color: 'rgb(240, 60, 60)', fontWeight: 'bold' }}>직관주의자</span>입니다.
             </div>
             <div>
               - 방금 떠오르는 생각을 
@@ -129,7 +164,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 사회자입니다.
+              - 당신은 <span style={{ color: 'rgb(65, 65, 220)', fontWeight: 'bold' }}>사회자</span>입니다.
             </div>
             <div>
               - 다른 사람의 이야기를 듣고
@@ -148,7 +183,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 아이디어뱅크입니다.
+              - 당신은 <span style={{ color: 'rgb(146, 208, 80)', fontWeight: 'bold' }}>아이디어뱅크</span>입니다.
             </div>
             <div>
               - 창의성과 새로운 아이디어를
@@ -167,7 +202,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 분석가입니다.
+              - 당신은 <span style={{ textDecoration: 'underline', fontWeight: 'bold' }}>분석가</span>입니다.
             </div>
             <div>
               - 항상 중립적으로 떨어져서
@@ -186,7 +221,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 비평가입니다.
+              - 당신은 <span style={{ color: 'rgb(102, 103, 171)', fontWeight: 'bold'  }}>비평가</span>입니다.
             </div>
             <div>
               - 아이디어의 약점을 찾아보며
@@ -205,7 +240,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 낙관주의자입니다.
+              - 당신은 <span style={{ color: 'yellow', fontWeight: 'bold'  }}>낙관주의자</span>입니다.
             </div>
             <div>
               - 항상 아이디어의 희망과
@@ -219,7 +254,7 @@ export function Home () {
           </Grid>
         </Grid>
       </Grid>
-      <Grid item xs={1}/>
+      <Grid item sm={12} md={1}/>
     </Grid>
   </div>
   );
