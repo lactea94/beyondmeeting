@@ -9,7 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class UserHasTeamDto {
-    private Long team;
     private Long user;
-    private RoleType roleType;
+    private Long team;
+    private RoleType roleType = RoleType.MEMBER;
+
 }
