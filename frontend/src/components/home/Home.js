@@ -2,7 +2,6 @@ import './Home.css';
 import { Grid } from '@mui/material';
 
 export function Home () {
-
   return (
   <div>
     <Grid>
@@ -72,7 +71,7 @@ export function Home () {
           창의적 사고와 사고를 기술로 직접 가르치는 분야의 권위자인 
         </div>
         <div className='contentHat'>
-          에드워드 드 보노(Edward de Bono)박사가 제안한
+          <span style={{ color: 'rgb(102, 103, 171)' }}>에드워드 드 보노(Edward de Bono)박사</span>가 제안한
         </div>
         <div className='contentHat'>
           창의적 사고를 위한 회의 기법입니다.
@@ -110,7 +109,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 직관주의자입니다.
+              - 당신은 <span style={{ color: 'rgb(255, 50, 50)' }}>직관주의자</span>입니다.
             </div>
             <div>
               - 방금 떠오르는 생각을 
@@ -129,7 +128,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 사회자입니다.
+              - 당신은 <span style={{ color: 'rgb(30, 30, 255)' }}>사회자</span>입니다.
             </div>
             <div>
               - 다른 사람의 이야기를 듣고
@@ -148,7 +147,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 아이디어뱅크입니다.
+              - 당신은 <span style={{ color: 'green' }}>아이디어뱅크</span>입니다.
             </div>
             <div>
               - 창의성과 새로운 아이디어를
@@ -167,7 +166,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 분석가입니다.
+              - 당신은 <span style={{ textDecoration: 'underline' }}>분석가</span>입니다.
             </div>
             <div>
               - 항상 중립적으로 떨어져서
@@ -186,7 +185,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 비평가입니다.
+              - 당신은 <span style={{ color: 'rgb(102, 103, 171)' }}>비평가</span>입니다.
             </div>
             <div>
               - 아이디어의 약점을 찾아보며
@@ -205,7 +204,7 @@ export function Home () {
           </Grid>
           <Grid className='hatBox' item xs={8}>
             <div className='hatIntro'>
-              - 당신은 낙관주의자입니다.
+              - 당신은 <span style={{ color: 'yellow' }}>낙관주의자</span>입니다.
             </div>
             <div>
               - 항상 아이디어의 희망과
