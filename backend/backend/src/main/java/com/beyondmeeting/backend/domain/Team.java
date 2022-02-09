@@ -47,4 +47,7 @@ public class Team {
         this.id = id;
     }
 
+    public void update(TeamDto teamDto) {
+        this.teamName = teamDto.getTeamName();
+    }
 }

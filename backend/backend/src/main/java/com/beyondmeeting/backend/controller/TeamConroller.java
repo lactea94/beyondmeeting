@@ -93,13 +93,17 @@ public class TeamConroller {
 
     // ------------------------------------ UPDATE ---------------------------------------
     // 팀정보 수정
-
+    @PutMapping("/team/{teamId}")
+    public String updateTeamName(@PathVariable Long teamId, @RequestBody TeamDto teamDto){
+        return teamService.updateTeamName(teamId,teamDto);
+    }
 
     // 팀장수정 - success
     // 팀 Id를 받고, 팀장이 될 사람의 userHasTeamDto Body에 바꿀내용 보내기
     @PutMapping("/team/leader/{teamId}")
-    public Team updateTeam(@PathVariable Team teamId, @RequestBody UserHasTeamDto userHasTeamDto){
-        return teamService.update(teamId,userHasTeamDto);
+    public Long updateTeam(@PathVariable Team teamId, @RequestBody UserHasTeamDto userHasTeamDto){
+        teamService.updateLeader(teamId,userHasTeamDto);
+        return userHasTeamDto.getUser();
     }
 
     // ------------------------------------ DELETE ---------------------------------------
@@ -119,7 +123,7 @@ public class TeamConroller {
         // userHasTeam 에서 찾기
         Team team = teamRepository.findById(teamId).get();
         User user = userRepository.findById(userId).get();
-        
+
         UserHasTeam userHasTeam = userHasTeamRepository.findAllByTeamAndUser(team,user);
         if(userHasTeam.getRoleType() == RoleType.MEMBER){
             Long userHasTeamId = userHasTeam.getId();
