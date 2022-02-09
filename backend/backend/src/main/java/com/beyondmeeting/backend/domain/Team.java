@@ -36,8 +36,9 @@ public class Team {
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
 
     // 연결 엔티티인 UserHasMeeting 과의 일대다 관계를 위한 추가 - 소은
-//    @OneToMany(mappedBy = "team", cascade = CascadeType.PERSIST)
-//    private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
+    @JsonIgnore
+    @OneToMany(mappedBy = "team", cascade = CascadeType.ALL)
+    private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
 
     public Team(TeamDto teamDto){
         this.teamName = teamDto.getTeamName();

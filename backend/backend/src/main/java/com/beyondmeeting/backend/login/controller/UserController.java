@@ -39,35 +39,24 @@ public class UserController {
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }
 
-//    @GetMapping("/user/{id}")
-//    public ResponseEntity getUser(@PathVariable Long id) {
-//        User getuser = userRepository.findById(id).get();
-//        if(getuser == null)
-//            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-//        return ResponseEntity.status(HttpStatus.OK).body(getuser);
-//    }
-
-
     // 내 정보 조회
     @GetMapping("/user/{id}")
-    public ResponseEntity getUser(@PathVariable Long id) {
+    public UserDto getUser(@PathVariable Long id) {
 
         User user = userRepository.findById(id).get();
-
-        //UserDto userDto = new UserDto(userRepository.findById(id).get(),userHasTeamRepository.findByTeam(id));
 
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
         userDto.setUserName(user.getName());
         userDto.setUserEmail(user.getEmail());
         userDto.setUserImage(user.getImageUrl());
-
-        // 팀아이디 추가하기 ....
+        userDto.setUserHasTeamList(user.getUserHasTeamList());
+        userDto.setUserHasMeetingList(user.getUserHasMeetingList());
         
-        return ResponseEntity.status(HttpStatus.OK).body(userDto);
+        return userDto;
     }
 
-        @GetMapping("/users")
+    @GetMapping("/users")
     public List<User> getUsers(){
         return userRepository.findAll();
     }
