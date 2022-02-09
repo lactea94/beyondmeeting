@@ -8,7 +8,8 @@ import {
   ListItemButton,
 } from '@mui/material';
 import CreateTeam from './modal/CreateTeam'
-
+import { API_BASE_URL } from '../../constants/index'
+import axios from 'axios'
 
 export function TeamList() {
   const user = {
@@ -19,6 +20,13 @@ export function TeamList() {
       {id:'2123', name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
     ],
   }
+  
+axios.get(API_BASE_URL + '/users')
+  .then(function (response) {
+    console.log(response)  
+  }).catch(function (error) {
+    console.log(error)
+  });
   
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`
