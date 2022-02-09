@@ -58,15 +58,15 @@ public class User {
 //    private UserHasTeam userHasTeam;
     // userHasTeam 의 user
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserHasTeam> userHasTeamList = new ArrayList<>();
 
     // 연관관계를 위해 추가 - 소은
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Message> messageList = new ArrayList<>();
 }

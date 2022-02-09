@@ -107,7 +107,6 @@ public class TeamConroller {
     }
 
     // ------------------------------------ DELETE ---------------------------------------
-    // 추후에 데이터 삭제하지 않고 flag 처리 ..
 
     //팀삭제
     @DeleteMapping("/team/{teamId}")
