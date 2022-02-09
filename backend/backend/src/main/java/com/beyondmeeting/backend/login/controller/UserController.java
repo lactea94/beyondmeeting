@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -59,5 +60,13 @@ public class UserController {
     @GetMapping("/users")
     public List<User> getUsers(){
         return userRepository.findAll();
+    }
+
+    // 추후에 데이터 삭제하지 않고 flag 처리 ..
+    @DeleteMapping("/user/{id}")
+    public String deleteUser(@PathVariable Long id){
+        String userName = userRepository.findById(id).get().getName();
+        userRepository.deleteById(id);
+        return userName;
     }
 }
