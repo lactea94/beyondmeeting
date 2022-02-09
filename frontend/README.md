@@ -114,3 +114,19 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ```bash
 $ checkout -t origin/{브랜치 이름}
 ```
+
+# axios test
+```javascript
+  useEffect(() => {
+    axiosTest();
+  })
+  
+  function axiosTest() {
+    axios.get(API_BASE_URL + '/users')
+      .then(function (response) {
+        console.log(response.data)  
+      }).catch(function (error) {
+        console.log(error)
+      });
+  }
+```
