@@ -8,10 +8,12 @@ import { TeamList } from './components/team/TeamList';
 import { DefaultMeetingList } from './components/team/DefaultMeetingList';
 import { MeetingList } from './components/team/MeetingList';
 import { NotFound } from './common/NotFound';
+import { OAuth2RedirectHandler } from './users/OAuth2RedirectHandler';
+// import { useState } from 'react'
 
 function App() {
   const location = useLocation();
-  
+
   return (
     <div className="App">
       { !location.pathname.includes("meetingroom") && <Navbar />}
@@ -23,6 +25,7 @@ function App() {
           <Route path=':teamId' element={<MeetingList/>}></Route>
         </Route>
         <Route path='meetingroom' element={<Meetingroom />} />
+        <Route path='oauth2/redirect/*' element={<OAuth2RedirectHandler />} />
         <Route path='*' element={<NotFound/>}></Route>
       </Routes>
     </div>
