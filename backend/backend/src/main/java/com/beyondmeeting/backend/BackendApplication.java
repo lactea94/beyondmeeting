@@ -13,6 +13,7 @@ import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
@@ -28,7 +29,10 @@ import java.util.List;
 public class BackendApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(BackendApplication.class, args);
+		SpringApplication app = new SpringApplication(BackendApplication.class);
+//		SpringApplication.run(BackendApplication.class, args);
+		app.addListeners(new ApplicationPidFileWriter());
+		app.run(args);
 	}
 
 }
