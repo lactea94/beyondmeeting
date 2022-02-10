@@ -20,10 +20,7 @@ export function Navbar (props) {
           <LogoutIcon
             className='nav-decoration'
             onClick={() => {
-              props.setState(prevState => ({
-                ...prevState,
-                [props.authenticated]: false
-              }))
+              props.setAuthenticated(false)
               localStorage.removeItem(ACCESS_TOKEN)
           }}/>
         </div>
