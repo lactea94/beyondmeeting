@@ -1,12 +1,10 @@
 import React from 'react';
-// import Carousel from 'react-bootstrap/Carousel';
 import Grid from '@mui/material/Grid'
 import Box from '@mui/material/Box'
 
 
 export const Meetingroom = () => {
-  var member = 6;
-
+  var member = 6
   const totalBox = {
     my : 1/2,
   };
@@ -30,7 +28,7 @@ export const Meetingroom = () => {
           </Grid>
         </Grid>
         <Grid item container xs={7}>
-          {Array.from(Array(6)).map((_, index) => (
+          {Array.from(Array(member)).map((_, index) => (
             <Grid item xs={2} sm={4} md={4} key={index} className="facegrid">
               <Box className="face">화면</Box>
             </Grid>
