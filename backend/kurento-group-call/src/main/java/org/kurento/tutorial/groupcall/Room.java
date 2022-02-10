@@ -151,22 +151,27 @@ public class Room implements Closeable {
     return participants.get(name);
   }
 
-  public void sendMsg(UserSession user, String chatData) throws IOException {
+  public void sendChatMsg(UserSession user, String chatData) throws IOException {
     log.debug("PARTICIPANT {}: send massage room {}", user.getName(), this.name);
-    this.sendMsgParticipant(user.getName(), chatData);//유저를 방에서 내보낸다.
+    this.sendMsgParticipant(user.getName(), "sendChat", chatData);//유저를 방에서 내보낸다.
   }
-  private void sendMsgParticipant(String name, String chatData) throws IOException {
-    log.debug("ROOM {}: notifying all users that {} is leaving the room", this.name, name);
+  public void sendChatErrorMsg(String chatData) throws IOException {
+    log.debug("send massage error room {}", this.name);
+    this.sendMsgParticipant("","errorChat", chatData);//유저를 방에서 내보낸다.
+  }
+
+  private void sendMsgParticipant(String name,String id, String chatData) throws IOException {
+    log.debug("ROOM {}: sendMsgParticipant {} ", this.name, name);
 
     final List<String> unnotifiedParticipants = new ArrayList<>();
-    final JsonObject participantLeftJson = new JsonObject();
-    participantLeftJson.addProperty("id", "sendChat");
-    participantLeftJson.addProperty("name", name);
-    participantLeftJson.addProperty("data", chatData);
+    final JsonObject sendMsgParticipantJson = new JsonObject();
+    sendMsgParticipantJson.addProperty("id", id);
+    sendMsgParticipantJson.addProperty("name", name);
+    sendMsgParticipantJson.addProperty("data", chatData);
     for (final UserSession participant : participants.values()) {
       if(!participant.getName().equals(name)){
         try {
-          participant.sendMessage(participantLeftJson);//
+          participant.sendMessage(sendMsgParticipantJson);//
         } catch (final IOException e) {
           unnotifiedParticipants.add(participant.getName());
           }
