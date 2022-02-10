@@ -14,10 +14,12 @@ import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import com.beyondmeeting.backend.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@PreAuthorize("hasRole('USER')")
 @RequiredArgsConstructor
 @RestController
 public class TeamConroller {
@@ -35,13 +37,11 @@ public class TeamConroller {
         Team team = new Team(teamDto);
 
         // 로그인된사람이 팀장
-        //System.out.printf("---------------------------------------여기다아아아ㅏㅏㅏ-----------------");
-        //System.out.printf(String.valueOf(userPrincipal.getId()));
-        //User user = userRepository.findById(userPrincipal.getId()).get();
+        User user = userRepository.findById(userPrincipal.getId()).get();
         //System.out.printf(user.getName());
 
         // 일단 테스트용으로 user 아무거나
-        User user = userRepository.findById(6L).get();
+        //User user = userRepository.findById(6L).get();
 
         UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
         teamRepository.save(team);
