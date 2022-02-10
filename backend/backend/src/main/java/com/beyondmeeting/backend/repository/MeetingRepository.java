@@ -9,7 +9,4 @@ import java.time.LocalDateTime;
 
 // Spring Data JPA 사용
 public interface MeetingRepository extends JpaRepository<Meeting, Long> {
-    @Modifying
-    @Query("update Meeting m set m.endTime = :endTime where m.id = :teamId")
-    Meeting updateEndTime(LocalDateTime endTime, Long meetingId);
 }
