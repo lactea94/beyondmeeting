@@ -33,7 +33,8 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
     private UserHasTeamRepository userHasTeamRepository;
-    
+
+    //beyondMeeting Front 에서 current user를 저장해줘야해.. 기존로그인페이지는 잘 동작함
     @GetMapping("/user/me")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
         System.out.println("test1: "+ String.valueOf(userPrincipal.getId()));
