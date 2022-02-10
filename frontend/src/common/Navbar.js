@@ -5,6 +5,7 @@ import { useState } from 'react';
 import LoginIcon from '@mui/icons-material/Login';
 import LogoutIcon from '@mui/icons-material/Logout';
 import GoogleIcon from '@mui/icons-material/Google';
+import { ReactComponent as NavLogoImage } from './img/로고시안.svg'
 
 export function Navbar () {
   const [logged, setLogged] = useState(false)
@@ -15,7 +16,7 @@ export function Navbar () {
   return (
     <nav>
       <NavLink to='/'>
-        <img className='navLogoImage' src={require("./img/보라로고시안.png")} alt="logo"></img>
+        <NavLogoImage width="60"></NavLogoImage>
       </NavLink>
       { logged ? (
         <div className='nav-div'>
