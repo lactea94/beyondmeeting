@@ -1,13 +1,9 @@
 package com.beyondmeeting.backend.domain;
 
 import com.beyondmeeting.backend.login.model.User;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
-import java.lang.annotation.Target;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
