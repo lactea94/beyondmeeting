@@ -1,5 +1,7 @@
 // 백엔드 API URL
 export const API_BASE_URL = 'https://i6c101.p.ssafy.io:8082';
+// 백엔드 로컬 테스트
+// export const API_BASE_URL = 'http://localhost:8080';
 
 // webRTC URL
 export const RTC_BASE_URL = 'https://i6c101.p.ssafy.io:8443';
