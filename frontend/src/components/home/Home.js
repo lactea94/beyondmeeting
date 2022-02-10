@@ -1,61 +1,82 @@
 import './Home.css';
 import { Grid } from '@mui/material';
-import { useState, useEffect } from "react"
+import styled from 'styled-components'
 
-function getWindowDimensions() {
-  const { innerWidth: width, innerHeight: height } = window;
-  return {
-    width,
-    height
-  };
-}
+const Hidden = styled.div`
+  display: block;
+  width: 100%;
+  height: 100px;
+  @media only screen and (min-width: 900px) {
+    display: none;
+  }
+`;
 
-export default function useWindowDimensions() {
-  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
+const MiddleLetter = styled.h2`
+  font-size: 30px;
+  @media only screen and (min-width: 600px) {
+    font-size: 40px;
+  }
+  @media only screen and (min-width: 900px) {
+    font-size: 50px
+  }
+`
 
-  useEffect(() => {
-    function handleResize() {
-      setWindowDimensions(getWindowDimensions());
-    }
+const MainLogoImage = styled.img`
+  width: 100%;
+  @media only screen and (min-width: 600px) {
+    width: 80%;
+  }
+  @media only screen and (min-width: 900px) {
+    width: 50%;
+  }
+`
 
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
+const Better = styled.h3`
+  font-size: 20px;
+  width: 50%;
+  margin-left: 41.5%;
+  @media only screen and (min-width: 600px) {
+    font-size: 28px;
+    width: 48%;
+    margin-left: 43.5%;
+  }
+  @media only screen and (min-width: 900px) {
+    font-size: 36px;
+    width: 43%;
+    margin-left: 48.5%;
+  }
+`
 
-  return windowDimensions;
-}
-
+const MeetingImage = styled.img`
+  width: 170%;
+  height: auto;
+  
+  @media only screen and (min-width: 1300px) {
+    width: 100%;
+    height: auto;
+  }
+`
 
 export function Home () {
-  const width = useWindowDimensions().width;
-  // const [customSM, setCustomSM] = useState(false)
-
-  // if (width >= 600) {
-  //   setCustomSM(customSM = true)
-  // } else {
-  //   setCustomSM(customSM = false)
-  // }
-  
-
   return (
   <div>
     <Grid>
-      <h2 className='middleLetter'>지금부터 회의를 시작합니다.{width} </h2>
+      <MiddleLetter className='middleLetter'>지금부터 회의를 시작합니다.</MiddleLetter>
     </Grid>
     <Grid className="mainLogoGrid">
-      <img className="mainLogoImage" src={require("./img/검정로고2.png")} alt="logoimage"></img>
+      <MainLogoImage className="mainLogoImage" src={require("./img/검정로고2.png")} alt="logoimage"></MainLogoImage>
     </Grid>
     <Grid>
       <hr className='logoLine'></hr>
     </Grid>
     <Grid>
-      <h3 className='better'>Better than meetings</h3>
+      <Better className='better'>Better than meetings</Better>
     </Grid>
     
     <Grid className='introBox' container>
       <Grid item sm={12} md={1}/>
       <Grid item sm={12} md={5}>
-        <img className='meetingImage' src={require('./img/회의일러스트.png')} alt="meeting"></img>
+        <MeetingImage className='meetingImage' src={require('./img/회의일러스트.png')} alt="meeting"></MeetingImage>
       </Grid>
       <Grid className='introLetter' item sm={12} md={5}>
         <br></br>
@@ -91,7 +112,7 @@ export function Home () {
       </Grid>
       <Grid item xs={12} sm={1} />
     </Grid>
-
+    
     <Grid className='introSixHatBox' container>
       <Grid item sm={12} md={1} />
       <Grid className='introSixHat' item sm={12} md={5}>
@@ -137,7 +158,7 @@ export function Home () {
           빠르고 쉽게 결론에 다다를 수 있습니다.
         </div>
       </Grid>
-      {/* {customSM ? null : <Grid item sm={12} />} */}
+      <Hidden></Hidden>
       <Grid container item sm={12} md={5}>
         <Grid container item xs={6}>
           <Grid item xs={4} className='hatBox'>

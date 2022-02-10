@@ -16,7 +16,6 @@
   margin: 50px;
 }
 .mainLogoImage {
-  width: 50%;
   height: auto;
   padding-left: 30px;
   padding-top: 10px;
@@ -30,13 +29,10 @@
 }
 
 .better {
-  width: 25%;
   color: rgb(102, 103, 171);
   font : Helvetica;
   font-weight: bold;
-  font-size: 36px;
   text-align: end;
-  margin-left: 66.5%;
   transition: color 0.5s;
 }
 
@@ -49,8 +45,7 @@
 }
 
 .meetingImage {
-  width: 85%;
-  height: auto;
+  
 }
 
 .introLetter {
