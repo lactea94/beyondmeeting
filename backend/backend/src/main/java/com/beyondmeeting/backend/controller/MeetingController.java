@@ -20,7 +20,7 @@ import java.util.Optional;
 
 @Slf4j
 //@CrossOrigin(origins = "*") // postman cors error 해결을 위해 추가 -> Desktop Agent 설치로 해결
-@RequestMapping("/api") // nginx backend 매핑(?)을 위한 추가 - 소은 2/10
+//@RequestMapping("/api") // nginx backend 매핑(?)을 위한 추가 - 소은 2/10
 @RestController
 @RequiredArgsConstructor
 public class MeetingController {
