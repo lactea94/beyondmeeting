@@ -2,7 +2,6 @@ package com.beyondmeeting.backend.controller;
 
 import com.beyondmeeting.backend.domain.Meeting;
 import com.beyondmeeting.backend.domain.UserHasMeeting;
-import com.beyondmeeting.backend.domain.dto.MeetingFinishParam;
 import com.beyondmeeting.backend.domain.dto.MeetingJoinParam;
 import com.beyondmeeting.backend.domain.dto.MeetingCreateParam;
 import com.beyondmeeting.backend.login.repository.UserRepository;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @Slf4j
@@ -29,18 +27,15 @@ public class MeetingController {
 
     @Autowired private final MeetingRepository meetingRepository;
     @Autowired private final UserRepository userRepository;
-
     @Autowired private final TeamRepository teamRepository;
-    @Autowired private final UserHasTeamRepository userHasTeamRepository;
 
     @Autowired private final UserHasMeetingRepository userHasMeetingRepository;
-    @Autowired private final UserHasMeetingCustomRepository userHasMeetingCustomRepository;
 
 
-    // ======================================== 조회 ========================================
+    // ======================================== Meeting, UserHasMeeting 조회 ========================================
 
 
-    /** 회의 리스트 조회
+    /** 회의 전체 리스트 조회
      *
      * @return
      */
@@ -52,7 +47,7 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(meetingList);
     }
 
-    /** 회의 단건 조회 (회의 아이디 이용)
+    /** 특정 회의 아이디를 갖는 회의 단건 조회
      *
      * @param meetingId
      * @return
@@ -65,7 +60,7 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(meetingData);
     }
 
-    /** 사용자 회의 결과 리스트 조회
+    /** 회의 참여자 전체 리스트 조회
      *
      * @return
      */
@@ -77,21 +72,22 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(UserHasMeetingList);
     }
 
-    /** 사용자 회의 결과 단건 조회 (회의 아이디 이용)
+    /** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회
      *
      * @param meetingId
      * @return
      */
     @GetMapping("/userhasmeeting/{meetingId}")
-    public ResponseEntity<Optional<UserHasMeeting>> getUserHasMeetingByMeetingId(@PathVariable Long meetingId){
-        Optional<UserHasMeeting> UserHasMeetingListData = userHasMeetingCustomRepository.findByMeetingId(meetingId).stream().findAny();
-        if (UserHasMeetingListData == null)
+    public ResponseEntity<List<UserHasMeeting>> getUserHasMeetingByMeetingList(@PathVariable Long meetingId){
+        Meeting meeting = meetingRepository.findById(meetingId).get();
+        List<UserHasMeeting> userHasMeeting = userHasMeetingRepository.findAllByMeeting(meeting);
+        if (userHasMeeting == null)
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        else return ResponseEntity.status(HttpStatus.OK).body(UserHasMeetingListData);
+        else return ResponseEntity.status(HttpStatus.OK).body(userHasMeeting);
     }
 
 
-    // ======================================== 미팅 ========================================
+    // ======================================== Meeting 생성(Create), 참여, 종료(Update) ========================================
 
 
     /** 미팅 생성
