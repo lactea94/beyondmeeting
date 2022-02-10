@@ -114,7 +114,10 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 ```bash
 $ checkout -t origin/{브랜치 이름}
 ```
-
+# branch 생성(스위칭 과정 함축)
+```bash
+git checkout -b front/users frontend
+```
 # axios test
 ```javascript
   useEffect(() => {
