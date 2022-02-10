@@ -9,14 +9,25 @@ import { DefaultMeetingList } from './components/team/DefaultMeetingList';
 import { MeetingList } from './components/team/MeetingList';
 import { NotFound } from './common/NotFound';
 import { OAuth2RedirectHandler } from './users/OAuth2RedirectHandler';
-// import { useState } from 'react'
+import { useState } from 'react'
+import { ACCESS_TOKEN } from './constants';
 
 function App() {
   const location = useLocation();
-
+  const [logged, setLogged] = useState(false)
+  if (localStorage.getItem(ACCESS_TOKEN) && !logged) {
+    setLogged(true)
+  }
+  
+    
   return (
     <div className="App">
-      { !location.pathname.includes("meetingroom") && <Navbar />}
+      { !location.pathname.includes("meetingroom") && 
+        <Navbar
+          logged={logged}
+          setLogged={setLogged}
+        />
+      }
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='profile' element={<Profile/>}></Route>
