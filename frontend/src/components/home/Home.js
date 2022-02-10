@@ -11,6 +11,15 @@ const Hidden = styled.div`
   }
 `;
 
+const HiddenWithHatIntro = styled.div`
+  display: none;
+  @media only screen and (min-width: 900px) {
+    display: block;
+    width: 100%;
+    height: 100px;
+  }
+`
+
 const MiddleLetter = styled.h2`
   font-size: 30px;
   @media only screen and (min-width: 600px) {
@@ -57,6 +66,50 @@ const MeetingImage = styled.img`
   }
 `
 
+const Title = styled.div`
+  font-size: 28px;
+  @media only screen and (min-width: 1300px) {
+    font-size: 44px;
+  }
+  @media only screen and (max-width: 900px) {
+    font-size: 40px;
+  }
+`
+
+const Content = styled.div`
+  font-size: 16px;
+  @media only screen and (min-width: 1300px) {
+    font-size: 24px;
+  }
+  @media only screen and (max-width: 900px) {
+    font-size: 20px;
+  }
+`
+
+const ContentHat = styled.div`
+  font-size: 14px;
+  @media only screen and (min-width: 1300px) {
+    font-size: 22px;
+  }
+  @media only screen and (max-width: 900px) {
+    font-size: 20px;
+  }
+`
+const HatIntro = styled.div`
+  font-size: 18px;
+  
+
+  @media only screen and (min-width: 1300px) {
+    font-size: 22px;
+  }
+  @media only screen and (max-width: 900px) {
+    font-size: 16px;
+  }
+  @media only screen and (max-width: 800px) {
+    font-size: 14px;
+  }
+`
+
 export function Home () {
   return (
   <div>
@@ -80,103 +133,96 @@ export function Home () {
       </Grid>
       <Grid className='introLetter' item sm={12} md={5}>
         <br></br>
-        <div className='title'>
+        <Title className='title'>
           회의가 성공으로 가는 지름길
-        </div>
+        </Title>
         <br></br>
         <br></br>
         <br></br>
         <br></br>
-        <div className='content'>
+        <Content className='content'>
           여기는 회의가 서툰 사람들이 좀 더 효율적인 아이디어를
-        </div>
-        <div className='content'>
+        </Content>
+        <Content className='content'>
           발상하기를 원하는 여러분들을 위한 곳 입니다.
-        </div>
+        </Content>
         <br></br>
         <br></br>
-        <div className='content'>
+        <Content className='content'>
           우리가 제공하는 회의 기능을 사용해서 당신의 창의적인
-        </div>
-        <div className='content'>
+        </Content>
+        <Content className='content'>
           생각과 참신한 의견을 맘껏 펼쳐 보세요.
-        </div>
+        </Content>
         <br></br>
         <br></br>
-        <div className='content'>
+        <Content className='content'>
           여러분들이 가지고 있는 많은 생각들을 Beyond Meeting를 통해서
-        </div>
-        <div className='content'>
+        </Content>
+        <Content className='content'>
           쉽고 간편하게 밖으로 이끌어 보세요.
-        </div>
+        </Content>
       </Grid>
       <Grid item xs={12} sm={1} />
     </Grid>
     
     <Grid className='introSixHatBox' container>
       <Grid item sm={12} md={1} />
-      <Grid className='introSixHat' item sm={12} md={5}>
-        <div className='title'>
+      <Grid className='introSixHat' item sm={12} md={11}>
+        <Title className='title'>
           여섯 색깔 모자 기법
-        </div>
+        </Title>
         <br></br>
         <br></br>
         <br></br>
-        <br></br>
-        <div className='contentHat'>
-          창의적 사고와 사고를 기술로 직접 가르치는 분야의 권위자인 
-        </div>
-        <div className='contentHat'>
-          <span style={{ color: 'rgb(102, 103, 171)' }}>에드워드 드 보노(Edward de Bono)박사</span>가 제안한
-        </div>
-        <div className='contentHat'>
-          창의적 사고를 위한 회의 기법입니다.
-        </div>
+        <ContentHat className='contentHat'>
+          창의적 사고와 사고를 기술로 직접 가르치는 분야의 권위자인
+        </ContentHat>
+        <ContentHat className='contentHat'>
+        <span style={{ color: 'rgb(102, 103, 171)' }}>에드워드 드 보노(Edward de Bono)박사</span>가 제안한 창의적 사고를 위한 회의 기법입니다.
+        </ContentHat>
         <br></br>
         <br></br>
-        <div className='contentHat'>
-          이 기법은 세대, 대륙 및 신념 체계를 아우르고 있으며, 
-        </div>
-        <div className='contentHat'>
-          Apple 및 British Airways와 같은 주요 기업의 이사회에서, 
-        </div>
-        <div className='contentHat'>
+        <ContentHat className='contentHat'>
+          이 기법은 세대, 대륙 및 신념 체계를 아우르고 있으며, Apple 및 British Airways와 같은 주요 기업의 이사회에서,
+        </ContentHat>
+        <ContentHat className='contentHat'>
           아프리카 시골의 강의실에서도 똑같이 영향력을 행사합니다.
-        </div>
+        </ContentHat>
         <br></br>
         <br></br>
-        <div className='contentHat'>
+        <ContentHat className='contentHat'>
           우리는 결정을 내릴 때 장단점을 생각하고 이에 따른 감정을 느낍니다.
-        </div>
-        <div className='contentHat'>
-          동시에 다가오는 감정, 생각을 나누어 다른 사람과 공유하며
-        </div>
-        <div className='contentHat'>
-          생각의 복잡성을 버리고 생각이 명확하고 단순해진다면
-        </div>
-        <div className='contentHat'>
-          빠르고 쉽게 결론에 다다를 수 있습니다.
-        </div>
+        </ContentHat>
+        <ContentHat className='contentHat'>
+          동시에 다가오는 감정, 생각을 나누어 다른 사람과 공유하며 생각의 복잡성을 버리고 생각이 명확하고
+        </ContentHat>
+        <ContentHat className='contentHat'>
+         단순해진다면 빠르고 쉽게 결론에 다다를 수 있습니다.
+        </ContentHat>
       </Grid>
-      <Hidden></Hidden>
-      <Grid container item sm={12} md={5}>
+      <HiddenWithHatIntro></HiddenWithHatIntro>
+      <Grid item sm={12} md={3}>
+        <Hidden></Hidden>
+      </Grid>
+      <Grid container item sm={12} md={9}>
         <Grid container item xs={6}>
           <Grid item xs={4} className='hatBox'>
             <img className='redHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ color: 'rgb(240, 60, 60)', fontWeight: 'bold' }}>직관주의자</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 방금 떠오르는 생각을 
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 가감없이 말하세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 논리적일 필요도 없습니다.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
@@ -184,18 +230,18 @@ export function Home () {
             <img className='blueHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ color: 'rgb(65, 65, 220)', fontWeight: 'bold' }}>사회자</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 다른 사람의 이야기를 듣고
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 회의를 잘 조직해 보세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 결론을 이끌어 내세요.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
@@ -203,18 +249,18 @@ export function Home () {
             <img className='greenHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ color: 'rgb(146, 208, 80)', fontWeight: 'bold' }}>아이디어뱅크</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 창의성과 새로운 아이디어를
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 제시하세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 조금 터무니없어도 좋아요.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
@@ -222,18 +268,18 @@ export function Home () {
             <img className='whiteHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ textDecoration: 'underline', fontWeight: 'bold' }}>분석가</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 항상 중립적으로 떨어져서
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 회의를 지켜보세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 객관적인 사실만 말하세요.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
@@ -241,18 +287,18 @@ export function Home () {
             <img className='blackHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ color: 'rgb(102, 103, 171)', fontWeight: 'bold'  }}>비평가</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 아이디어의 약점을 찾아보며
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 약점을 잡아내세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 비판적으로 지적하세요.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
         <Grid container item xs={6}>
@@ -260,18 +306,18 @@ export function Home () {
             <img className='yellowHat' src={require('./img/723.png')} alt='cap'></img>
           </Grid>
           <Grid className='hatBox' item xs={8}>
-            <div className='hatIntro'>
+            <HatIntro className='hatIntro'>
               - 당신은 <span style={{ color: 'yellow', fontWeight: 'bold'  }}>낙관주의자</span>입니다.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 항상 아이디어의 희망과
-            </div>
-            <div className='hatIntro'>
+            </HatIntro>
+            <HatIntro className='hatIntro'>
               &nbsp; 장점을 바라보세요.
-            </div>
-            <div>
+            </HatIntro>
+            <HatIntro>
               - 터무니없지만 않으면 돼요.
-            </div>
+            </HatIntro>
           </Grid>
         </Grid>
       </Grid>
