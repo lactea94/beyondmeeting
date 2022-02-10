@@ -11,21 +11,45 @@ import { NotFound } from '../common/NotFound';
 import { OAuth2RedirectHandler } from '../users/OAuth2RedirectHandler';
 import { useState } from 'react'
 import { ACCESS_TOKEN } from '../constants';
+import { getCurrentUser } from '../util/APIUtils';
 
 function App() {
   const location = useLocation();
-  const [logged, setLogged] = useState(false)
-  if (localStorage.getItem(ACCESS_TOKEN) && !logged) {
-    setLogged(true)
+  const [state, setState] = useState(
+    {
+      authenticated: false,
+      currentUser: null,
+      loading: true 
+    }
+  )
+  if (localStorage.getItem(ACCESS_TOKEN) && !state.authenticated) {
+    setState(prevState => ({
+      ...prevState,
+      [state.authenticated]: true
+    }))
   }
   
+  // function loadCurrentlyLoggedInUser() {
+  //   getCurrentUser()
+  //   .then(response => {
+  //     this.setState({
+  //       currentUser: response,
+  //       authenticated: true,
+  //       loading: false
+  //     });
+  //   }).catch(error => {
+  //     this.setState({
+  //       loading: false
+  //     });  
+  //   });    
+  // }
     
   return (
     <div className="App">
       { !location.pathname.includes("meetingroom") && 
         <Navbar
-          logged={logged}
-          setLogged={setLogged}
+          authenticated={state.authenticated}
+          setState={setState}
         />
       }
       <Routes>
