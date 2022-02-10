@@ -10,9 +10,9 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class UserHasMeetingParam {
+public class MeetingJoinParam {
+    Long meetingId;
     Long userId;
     HatColor hatColor;
     Long speakingTime;
-    Long meetingId;
 }

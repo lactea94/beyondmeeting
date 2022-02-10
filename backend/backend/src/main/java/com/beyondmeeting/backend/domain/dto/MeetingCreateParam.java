@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class MeetingParam {
+public class MeetingCreateParam {
     private String topic;
     private MeetingType meetingType;
     private String teamId;
