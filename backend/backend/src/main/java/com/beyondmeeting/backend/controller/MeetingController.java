@@ -1,6 +1,7 @@
 package com.beyondmeeting.backend.controller;
 
 import com.beyondmeeting.backend.domain.Meeting;
+import com.beyondmeeting.backend.domain.Team;
 import com.beyondmeeting.backend.domain.UserHasMeeting;
 import com.beyondmeeting.backend.domain.dto.MeetingJoinParam;
 import com.beyondmeeting.backend.domain.dto.MeetingCreateParam;
@@ -28,7 +29,6 @@ public class MeetingController {
     @Autowired private final MeetingRepository meetingRepository;
     @Autowired private final UserRepository userRepository;
     @Autowired private final TeamRepository teamRepository;
-
     @Autowired private final UserHasMeetingRepository userHasMeetingRepository;
 
 
@@ -60,12 +60,27 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(meetingData);
     }
 
+    /** 특정 팀 아이디를 갖는 회의 리스트 조회
+     *
+     * @param teamId
+     * @return
+     */
+    @GetMapping("meeting/team/{teamId}")
+    public ResponseEntity<List<Meeting>> getMeetingByTeam(@PathVariable Long teamId){
+        Team team = teamRepository.findById(teamId).get();
+        List<Meeting> meetingList = meetingRepository.findAllByTeam(team);
+        if (meetingList == null || meetingList.size() == 0)
+            return ResponseEntity.status(HttpStatus.OK).body(null);
+        else
+            return ResponseEntity.status(HttpStatus.OK).body(meetingList);
+    }
+
     /** 회의 참여자 전체 리스트 조회
      *
      * @return
      */
     @GetMapping("/userhasmeeting/list")
-    public ResponseEntity<List<UserHasMeeting>> getUserHasMeetingList(){
+    public ResponseEntity<List<UserHasMeeting>> getUserHasMeeting(){
         List<UserHasMeeting> UserHasMeetingList = userHasMeetingRepository.findAll();
         if (UserHasMeetingList == null || UserHasMeetingList.size() == 0)
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -78,7 +93,7 @@ public class MeetingController {
      * @return
      */
     @GetMapping("/userhasmeeting/{meetingId}")
-    public ResponseEntity<List<UserHasMeeting>> getUserHasMeetingByMeetingList(@PathVariable Long meetingId){
+    public ResponseEntity<List<UserHasMeeting>> getUserHasMeetingByMeeting(@PathVariable Long meetingId){
         Meeting meeting = meetingRepository.findById(meetingId).get();
         List<UserHasMeeting> userHasMeeting = userHasMeetingRepository.findAllByMeeting(meeting);
         if (userHasMeeting == null)
