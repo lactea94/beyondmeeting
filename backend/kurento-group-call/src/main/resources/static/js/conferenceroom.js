@@ -77,7 +77,9 @@ function register() {
 	sendButton.addEventListener("click", function() {
 		var data = {
 			id : "chat",
-			data : dataChannelSend.value
+			userId:1,
+			meetingId:1,
+			data : "채팅테스트"
 		};
 		console.log("Send button pressed. Sending data " + data);
 		// webRtcPeer.send(data);
