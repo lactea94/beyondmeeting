@@ -1,73 +1,94 @@
 import React from 'react';
-// import Carousel from 'react-bootstrap/Carousel';
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
+import "./Meetingroom.css"
+import { useState } from 'react';
+import { Grid, IconButton, Button } from '@mui/material/'
+import styled from 'styled-components'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { ReactComponent as RedHat } from './img/hat.svg'
 
+const Theme = styled.div`
+  font-size: 18px;
+  @media only screen and (max-width: 900px) {
+    font-size: 12px;
+  }
+`
+
+// const BottomBar = styled.div`
+//   font-size: 18px;
+//   @media only screen and (max-width: 900px) {
+//     font-size: 12px;
+//   }
+// `
 
 export const Meetingroom = () => {
-  var member = 6;
+  const [openHatInfo, setOpenHatInfo] = useState(true);
+  const [openChatInfo, setOpenChatInfo] = useState(false);
+  const [openMemberInfo, setOpenMemberInfo] = useState(false);
 
-  const totalBox = {
-    my : 1/2,
-  };
+
 
   return (
-    <Grid container direction="column" spacing={2} sx={totalBox}>
-      <Grid item textAlign="center">
-        회의목표
+    <Grid className="room" container>
+      <Grid className="themeBox" item xs={12}>
+        <Theme className="theme">
+          회의 주제
+        </Theme>
       </Grid>
-      <Grid item container className='meetingbox' spacing={2}>
-        <Grid item container xs={2} direction="column" justifyContent="center" alignItems="center">
-          <Grid item>
-            <Box>
-              모자걸이
-            </Box>
-          </Grid>
-          <Grid Item>
-            <Box>
-              상세정보
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid item container xs={7}>
-          {Array.from(Array(6)).map((_, index) => (
-            <Grid item xs={2} sm={4} md={4} key={index} className="facegrid">
-              <Box className="face">화면</Box>
-            </Grid>
-          ))}
-        </Grid>
-        <Grid item container xs={3} direction="column" justifyContent="center" alignItems="center">
-          <Grid item xs={5}>
-            <Box textAlign="center">
-              참여자
-            </Box>
-          </Grid>
-          <Grid item xs={7}>
-            <Box textAlign="center">
-              아이디어보드
-            </Box>
-          </Grid>
-        </Grid>
+      <Grid className="mainFuncBox" item xs={12}>
+        <div className="hatHanger">hat</div>
+        <div className="faceRoom">room</div>
+        <div className="chat">chat</div>
+        {/* <div className="mainFunc">회의 주요 기능</div> */}
       </Grid>
-      <Grid container item>
-        <Grid item xs={2} textAlign="center">
-          imoge
+      <Grid className="bottomBarBox" container item xs={12}>
+        <Grid className="bottomBar" item xs={2}>
+          <Button 
+            variant="outlined" 
+            startIcon={<RedHat width="20"/>} 
+            onClick={() => {
+              setOpenHatInfo(!openHatInfo)
+              console.log("openHatInfo is", openHatInfo)
+              }}
+          >
+          모자
+          </Button>
         </Grid>
-        <Grid item xs={2} textAlign="center">
+        <Grid item xs={1}></Grid>
+        <Grid className="bottomBar" item xs={2}>
           음소거
         </Grid>
-        <Grid item xs={2} textAlign="center"> 
+        <Grid className="bottomBar" item xs={2}>
           화면공유
         </Grid>
-        <Grid item xs={2} textAlign="center">
-          회의 종료
+        <Grid className="bottomBar" item xs={1}>
+          <IconButton>
+            <CancelRoundedIcon className="exitButton"></CancelRoundedIcon>
+          </IconButton>
         </Grid>
-        <Grid item xs={2} textAlign="center">
-          주제
+        <Grid item xs={1}></Grid>
+        <Grid 
+          className="bottomBar" 
+          item 
+          xs={1}
+          onClick={() => {
+            setOpenMemberInfo(!openMemberInfo)
+            console.log("openMemberInfo is", openMemberInfo)
+          }}
+        >
+          참여자
         </Grid>
-        <Grid item xs={2} textAlign="center">
+        <Grid 
+          className="bottomBar" 
+          item 
+          xs={1}
+          onClick={() => {
+            setOpenChatInfo(!openChatInfo)
+            console.log("openChatInfo is", openChatInfo)
+          }}
+        >
           채팅
         </Grid>
+        <Grid item xs={1}></Grid>
       </Grid>
     </Grid>
     );
