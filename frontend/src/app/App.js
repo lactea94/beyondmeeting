@@ -36,6 +36,7 @@ function App() {
 
   useEffect(() => {
     loadCurrentlyLoggedInUser()
+    console.log(currentUser)
   }, [])
     
   return (
