@@ -13,6 +13,16 @@ export function Navbar (props) {
       <NavLink to='/'>
         <NavLogoImage width="60"></NavLogoImage>
       </NavLink>
+      <NavLink 
+        className='nav-decoration' 
+        to='' style={{ textDecoration : 'none' }} 
+        onClick={(event) => {
+          event.preventDefault()
+          window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
+          }}
+      >
+        Meetingroom
+      </NavLink>
       { props.logged ? (
         <div className='nav-div'>
           <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
