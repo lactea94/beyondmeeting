@@ -16,28 +16,28 @@ import { getCurrentUser } from '../util/APIUtils';
 function App() {
   const location = useLocation();
   const [authenticated, setAuthenticated] = useState(false)
-  // const [currentUser, setCurrentUser] = useState(null)
-  // const [loading, setloading] = useState(true)
+  const [currentUser, setCurrentUser] = useState(null)
+  const [loading, setloading] = useState(true)
 
-  if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
-    setAuthenticated(true)
-  }
-  
-  // function loadCurrentlyLoggedInUser() {
-  //   getCurrentUser()
-  //   .then(response => {
-  //     setAuthenticated(true)
-  //     setCurrentUser(response)
-  //     setloading(false)
-  //   }).catch(error => {
-  //     setloading(false) 
-  //   });    
+  // if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
+  //   setAuthenticated(true)
   // }
+  
+  function loadCurrentlyLoggedInUser() {
+    getCurrentUser()
+    .then(response => {
+      setAuthenticated(true)
+      setCurrentUser(response)
+      setloading(false)
+    }).catch(error => {
+      setloading(false) 
+    });    
+  }
 
-  // useEffect(() => {
-  //   loadCurrentlyLoggedInUser()
-  //   console.log(currentUser)
-  // }, [])
+  useEffect(() => {
+    loadCurrentlyLoggedInUser()
+    console.log(currentUser)
+  }, [])
     
   return (
     <div className="App">
