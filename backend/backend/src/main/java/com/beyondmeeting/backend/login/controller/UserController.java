@@ -19,7 +19,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
-
+/*
+@PreAuthorize("hasRole('USER')")
+가입 시 제한된 리소스에 접근할 수 있는 ROLE_USER 권한을 회원에게 부여한다.
+SpringSecurity 설정에는 접근 제한이 필요한 리소스에 대해서 ROLE_USER 권한을 가져야 접근이 가능하도록 세팅한다.
+권한을 가진 회원이 로그인 성공 시엔 리소스에 접근할 수 있는 Jwt 보안 토큰을 발급한다.
+코드 작성 위치에 따라 클래스 내 모든 메소드에 적용하거나 메소드별로 권한부여가 가능하다
+ */
+@PreAuthorize("hasRole('USER')")
 @RestController
 public class UserController {
 
@@ -27,15 +34,15 @@ public class UserController {
     private UserRepository userRepository;
     private UserHasTeamRepository userHasTeamRepository;
 
-//    @GetMapping("/user/me")
-//    @PreAuthorize("hasRole('USER')") //hasRole([role]) : 현재 사용자의 권한이 파라미터의 권한과 동일한 경우 true
-//    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-//        return userRepository.findById(userPrincipal.getId())
-//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
-//    }
-
+    //beyondMeeting Front 에서 current user를 저장해줘야해.. 기존로그인페이지는 잘 동작함
     @GetMapping("/user/me")
     public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        System.out.println("test1: "+ String.valueOf(userPrincipal.getId()));
+        System.out.println("test2: "+String.valueOf(userRepository.findById(userPrincipal.getId())));
+        System.out.println("test3: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get()));
+        System.out.println("test4: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get().getId()));
+        System.out.println("test5: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get().getEmail()));
+
         return userRepository.findById(userPrincipal.getId())
                 .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
     }

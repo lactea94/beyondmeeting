@@ -45,12 +45,15 @@ app:
     # 13.124.242.194
     authorizedRedirectUris:
       - https://i6c101.p.ssafy.io:3000/oauth2/redirect
+      - https://i6c101.p.ssafy.io/oauth2/redirect
       - http://localhost:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
 
 #https 사용을 위한 추가 NamSoo 21.02.07
 server:
+  servlet:
+    context-path: /api
   port: 8082
   ssl:
     enabled: true
@@ -61,4 +64,3 @@ server:
 trust:
   store: classpath:keystore/ssafy.p12
   store.password: ssafyssafy
-
