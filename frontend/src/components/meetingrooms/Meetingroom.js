@@ -1,6 +1,6 @@
 import React from 'react';
 import "./Meetingroom.css"
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Grid, IconButton, Button } from '@mui/material/'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import styled from 'styled-components'
@@ -13,13 +13,6 @@ const Theme = styled.div`
     font-size: 12px;
   }
 `
-
-// const BottomBar = styled.div`
-//   font-size: 18px;
-//   @media only screen and (max-width: 900px) {
-//     font-size: 12px;
-//   }
-// `
 
 const theme = createTheme({
   palette: {
@@ -37,6 +30,78 @@ export const Meetingroom = () => {
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
 
+  let [leftBoxStyle, setLeftBoxStyle] = useState({
+    width: "18%"
+  })
+
+  let [middleBoxStyle, setMiddleBoxStyle] = useState({
+    width: "82%"
+  })
+
+  let [rightBoxStyle, setRightBoxStyle] = useState({
+    width: "0%"
+  })
+
+  let [chatBoxStyle, setChatBoxStyle] = useState({
+    height: "0%"
+  })
+  
+  let [memberBoxStyle, setMemberBoxStyle] = useState({
+    height: "0%"
+  })
+
+  useEffect(() => {
+    if (openHatInfo === true && openChatInfo === true && openMemberInfo === true) {
+      setLeftBoxStyle(leftBoxStyle = { width: "18%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "64%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "60%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "40%" })
+    } else if (openHatInfo === true && openChatInfo === true && openMemberInfo === false) {
+      setLeftBoxStyle(leftBoxStyle = { width: "18%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "64%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "100%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "0%" })
+    } else if (openHatInfo === false && openChatInfo === true && openMemberInfo === true) {
+      setLeftBoxStyle(leftBoxStyle = { width: "0%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "82%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "60%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "40%" })
+    } else if (openHatInfo === true && openChatInfo === false && openMemberInfo === true) {
+      setLeftBoxStyle(leftBoxStyle = { width: "18%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "64%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "0%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "100%" })
+    } else if (openHatInfo === true && openChatInfo === false && openMemberInfo === false) {
+      setLeftBoxStyle(leftBoxStyle = { width: "18%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "82%" })
+      setRightBoxStyle(rightBoxStyle = { width: "0%" })
+      setChatBoxStyle(chatBoxStyle = { height: "0%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "0%" })
+    } else if (openHatInfo === false && openChatInfo === false && openMemberInfo === true) {
+      setLeftBoxStyle(leftBoxStyle = { width: "0%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "82%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "0%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "100%" })
+    } else if (openHatInfo === false && openChatInfo === true && openMemberInfo === false) {
+      setLeftBoxStyle(leftBoxStyle = { width: "0%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "82%" })
+      setRightBoxStyle(rightBoxStyle = { width: "18%" })
+      setChatBoxStyle(chatBoxStyle = { height: "100%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "0%" })
+    } else if (openHatInfo === false && openChatInfo === false && openMemberInfo === false) {
+      setLeftBoxStyle(leftBoxStyle = { width: "0%" })
+      setMiddleBoxStyle(middleBoxStyle = { width: "100%" })
+      setRightBoxStyle(rightBoxStyle = { width: "0%" })
+      setChatBoxStyle(chatBoxStyle = { height: "0%" })
+      setMemberBoxStyle(memberBoxStyle = { height: "0%" })
+    }
+  }, [openHatInfo, openChatInfo, openMemberInfo])
+
   return (
     <Grid className="room" container>
       <Grid className="themeBox" item xs={12}>
@@ -45,9 +110,29 @@ export const Meetingroom = () => {
         </Theme>
       </Grid>
       <Grid className="mainFuncBox" item xs={12}>
-        <div className="hatHanger">hat</div>
-        <div className="faceRoom">room</div>
-        <div className="chat">chat</div>
+        {openHatInfo ? 
+          <div className="leftBox" style={leftBoxStyle}>hat</div>
+          : null
+        }
+        <div className="faceRoom" style={middleBoxStyle}>room</div>
+        {openMemberInfo || openChatInfo ? 
+          <div className="rightBox" style={rightBoxStyle}>
+            {openMemberInfo ? 
+              <div className="memberBox" item style={memberBoxStyle}>
+                memberBox
+              </div>
+              : null
+            }
+            {openChatInfo ?
+              <div className="chatBox" item style={chatBoxStyle}>
+                chatBox
+              </div> 
+              : null
+            }
+          </div>
+          : null
+        }
+        
       </Grid>
       <Grid className="bottomBarBox" item xs={12}>
         <ThemeProvider theme={theme}>
