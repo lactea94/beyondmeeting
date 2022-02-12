@@ -1,13 +1,13 @@
 // 로컬 테스트
-// export const API_BASE_URL = 'http://localhost:8080';
+// export const API_BASE_URL = 'http://localhost:8082';
 // export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/oauth2/redirect'
 
 // 배포용
-export const API_BASE_URL = 'https://i6c101.p.ssafy.io:8082';
+export const API_BASE_URL = 'https://i6c101.p.ssafy.io/api';
 export const OAUTH2_REDIRECT_URI = 'https://i6c101.p.ssafy.io/oauth2/redirect'
 
 // webRTC URL
-export const RTC_BASE_URL = 'https://i6c101.p.ssafy.io:8443';
+export const RTC_BASE_URL = 'https://i6c101.p.ssafy.io/meeting';
 
 // 로그인 토큰
 export const ACCESS_TOKEN = 'accessToken';
