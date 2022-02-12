@@ -8,9 +8,6 @@ import {
   ListItemButton,
 } from '@mui/material';
 import CreateTeam from './modal/CreateTeam'
-import { API_BASE_URL } from '../../constants/index'
-import axios from 'axios'
-import { useEffect } from 'react';
 
 export function TeamList() {
   const user = {
@@ -22,19 +19,6 @@ export function TeamList() {
     ],
   }
 
-  useEffect(() => {
-    axiosTest();
-  })
-  
-  function axiosTest() {
-    axios.get(API_BASE_URL + '/users')
-      .then(function (response) {
-        console.log(response.data)  
-      }).catch(function (error) {
-        console.log(error)
-      });
-  }
-  
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`
     return(
