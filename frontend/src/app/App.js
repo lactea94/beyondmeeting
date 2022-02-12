@@ -9,36 +9,17 @@ import { DefaultMeetingList } from '../components/team/DefaultMeetingList';
 import { MeetingList } from '../components/team/MeetingList';
 import { NotFound } from '../common/NotFound';
 import { OAuth2RedirectHandler } from '../users/OAuth2RedirectHandler';
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { ACCESS_TOKEN } from '../constants';
-import { getCurrentUser } from '../util/APIUtils';
 
 function App() {
   const location = useLocation();
   const [authenticated, setAuthenticated] = useState(false)
-  const [currentUser, setCurrentUser] = useState(null)
-  const [loading, setloading] = useState(true)
 
-  // if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
-  //   setAuthenticated(true)
-  // }
-  
-  function loadCurrentlyLoggedInUser() {
-    getCurrentUser()
-    .then(response => {
-      setAuthenticated(true)
-      setCurrentUser(response)
-      setloading(false)
-    }).catch(error => {
-      setloading(false) 
-    });    
+  if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
+    setAuthenticated(true)
   }
-
-  useEffect(() => {
-    loadCurrentlyLoggedInUser()
-    console.log(currentUser)
-  }, [])
-    
+   
   return (
     <div className="App">
       { !location.pathname.includes("meetingroom") && 
