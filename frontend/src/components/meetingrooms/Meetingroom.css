@@ -49,12 +49,71 @@
   text-align: center;
 }
 
-.bottomBar {
-  color: white;
+.leftBar {
+  display: inline-block;
+  width: 18%;
+}
+
+.hatButton {
+  margin: auto;
+}
+
+.middleBar {
+  display: inline-block;
+  width: 36%;
+  margin-left: 14%;
+  margin-right: 14%;
+}
+
+.muteButtonBox {
+  display: inline-block;
+  width: 33.3%;
+}
+
+.muteButton {
+
+}
+
+.shareScreenButtonBox {
+  display: inline-block;
+  width: 33.3%;
+}
+
+.exitButtonBox {
+  display: inline-block;
+  width: 33.3%
+}
+
+.shareScreenButtonBox {
+  display: inline-block;
+  margin: auto;
+}
+
+.exitButtonBox {
+  display: inline-block;
+  margin: auto;
 }
 
 .exitButton {
   color: rgb(245, 50, 50);
   font-size: 30px;
   font-weight: bold;
+}
+
+.rightBar {
+  display: inline-block;
+  width: 18%;
+}
+
+.memberButtonBox {
+  display: inline-block;
+  margin-left: 15%;
+  width: 35%;
+}
+
+
+.chatRoomButtonBox {
+  display: inline-block;
+  width: 35%;
+  margin-right: 15%;
 }
