@@ -15,11 +15,11 @@ import { ACCESS_TOKEN } from '../constants';
 function App() {
   const location = useLocation();
   const [authenticated, setAuthenticated] = useState(false)
-  
+
   if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
     setAuthenticated(true)
   }
-   
+    
   return (
     <div className="App">
       { !location.pathname.includes("meetingroom") && 
