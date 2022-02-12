@@ -1,0 +1,119 @@
+.room {
+  width: 100vw;
+  height: 100vh;
+}
+
+.themeBox {
+  height: 7%;
+  text-align: center;
+}
+
+.theme {
+  color: rgb(146, 208, 80);
+  font-weight: bold;
+
+}
+
+.mainFuncBox {
+  height: 86%;
+  text-align: center;
+}
+
+.hatHanger {
+  display: inline-block;
+  width: 18%;
+  height: 100%;
+  background-color: rgb(223, 162, 30);
+}
+
+.faceRoom {
+  display: inline-block;
+  width: 64%;
+  height: 100%;
+  background-color: rgba(179, 24, 240, 0.541);
+}
+
+.chat {
+  display: inline-block;
+  width: 18%;
+  height: 100%;
+  background-color: rgb(4, 71, 4);
+}
+
+.mainFunc {
+  color: white;
+}
+
+.bottomBarBox {
+  height: 7%;
+  text-align: center;
+}
+
+.leftBar {
+  display: inline-block;
+  width: 18%;
+}
+
+.hatButton {
+  margin: auto;
+}
+
+.middleBar {
+  display: inline-block;
+  width: 36%;
+  margin-left: 14%;
+  margin-right: 14%;
+}
+
+.muteButtonBox {
+  display: inline-block;
+  width: 33.3%;
+}
+
+.muteButton {
+
+}
+
+.shareScreenButtonBox {
+  display: inline-block;
+  width: 33.3%;
+}
+
+.exitButtonBox {
+  display: inline-block;
+  width: 33.3%
+}
+
+.shareScreenButtonBox {
+  display: inline-block;
+  margin: auto;
+}
+
+.exitButtonBox {
+  display: inline-block;
+  margin: auto;
+}
+
+.exitButton {
+  color: rgb(245, 50, 50);
+  font-size: 30px;
+  font-weight: bold;
+}
+
+.rightBar {
+  display: inline-block;
+  width: 18%;
+}
+
+.memberButtonBox {
+  display: inline-block;
+  margin-left: 15%;
+  width: 35%;
+}
+
+
+.chatRoomButtonBox {
+  display: inline-block;
+  width: 35%;
+  margin-right: 15%;
+}

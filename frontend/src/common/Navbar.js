@@ -16,7 +16,17 @@ export function Navbar (props) {
         <div className='nav-div'>
           <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
           <NavLink className='nav-decoration' to='teamlist' style={{ textDecoration : 'none' }}>Team</NavLink>
-          <NavLink className='nav-decoration' to='' style={{ textDecoration : 'none' }} onClick={() => window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")}>Meetingroom</NavLink>
+          <NavLink 
+            className='nav-decoration' 
+            to='' 
+            style={{ textDecoration : 'none' }} 
+            onClick={(event) => {
+              event.preventDefault()
+              window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
+              }}
+          >
+            Meetingroom
+          </NavLink>
           <LogoutIcon
             className='nav-decoration'
             onClick={() => {
