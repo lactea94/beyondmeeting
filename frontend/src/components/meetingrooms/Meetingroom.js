@@ -1,73 +1,142 @@
 import React from 'react';
-// import Carousel from 'react-bootstrap/Carousel';
-import Grid from '@mui/material/Grid'
-import Box from '@mui/material/Box'
+import "./Meetingroom.css"
+import { useState } from 'react';
+import { Grid, IconButton, Button } from '@mui/material/'
+import { createTheme, ThemeProvider } from '@mui/material/styles'
+import styled from 'styled-components'
+import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { ReactComponent as RedHat } from './img/hat.svg'
 
+const Theme = styled.div`
+  font-size: 18px;
+  @media only screen and (max-width: 900px) {
+    font-size: 12px;
+  }
+`
+
+// const BottomBar = styled.div`
+//   font-size: 18px;
+//   @media only screen and (max-width: 900px) {
+//     font-size: 12px;
+//   }
+// `
+
+const theme = createTheme({
+  palette: {
+    veryPeri: {
+      main: '#6667ab'
+    }
+  }
+})
 
 export const Meetingroom = () => {
-  var member = 6;
-
-  const totalBox = {
-    my : 1/2,
-  };
+  const [openHatInfo, setOpenHatInfo] = useState(true);
+  const [openChatInfo, setOpenChatInfo] = useState(false);
+  const [openMemberInfo, setOpenMemberInfo] = useState(false);
+  const [muted, setMuted] = useState(true);
+  const [shareScreen, setShareScreen] = useState(false);
+  const [exit, setExit] = useState(false);
 
   return (
-    <Grid container direction="column" spacing={2} sx={totalBox}>
-      <Grid item textAlign="center">
-        회의목표
+    <Grid className="room" container>
+      <Grid className="themeBox" item xs={12}>
+        <Theme className="theme">
+          회의 주제
+        </Theme>
       </Grid>
-      <Grid item container className='meetingbox' spacing={2}>
-        <Grid item container xs={2} direction="column" justifyContent="center" alignItems="center">
-          <Grid item>
-            <Box>
-              모자걸이
-            </Box>
-          </Grid>
-          <Grid Item>
-            <Box>
-              상세정보
-            </Box>
-          </Grid>
-        </Grid>
-        <Grid item container xs={7}>
-          {Array.from(Array(6)).map((_, index) => (
-            <Grid item xs={2} sm={4} md={4} key={index} className="facegrid">
-              <Box className="face">화면</Box>
-            </Grid>
-          ))}
-        </Grid>
-        <Grid item container xs={3} direction="column" justifyContent="center" alignItems="center">
-          <Grid item xs={5}>
-            <Box textAlign="center">
-              참여자
-            </Box>
-          </Grid>
-          <Grid item xs={7}>
-            <Box textAlign="center">
-              아이디어보드
-            </Box>
-          </Grid>
-        </Grid>
+      <Grid className="mainFuncBox" item xs={12}>
+        <div className="hatHanger">hat</div>
+        <div className="faceRoom">room</div>
+        <div className="chat">chat</div>
       </Grid>
-      <Grid container item>
-        <Grid item xs={2} textAlign="center">
-          imoge
-        </Grid>
-        <Grid item xs={2} textAlign="center">
-          음소거
-        </Grid>
-        <Grid item xs={2} textAlign="center"> 
-          화면공유
-        </Grid>
-        <Grid item xs={2} textAlign="center">
-          회의 종료
-        </Grid>
-        <Grid item xs={2} textAlign="center">
-          주제
-        </Grid>
-        <Grid item xs={2} textAlign="center">
-          채팅
-        </Grid>
+      <Grid className="bottomBarBox" item xs={12}>
+        <ThemeProvider theme={theme}>
+          <div className="leftBar">
+            <Button 
+              className="hatButton"
+              variant="outlined" 
+              startIcon={<RedHat width="20"/>} 
+              size="large"
+              color="veryPeri"
+              onClick={() => {
+                setOpenHatInfo(!openHatInfo)
+                console.log("openHatInfo is", openHatInfo)
+                }}
+            >
+            모자
+            </Button>
+          </div>
+          <div className="middleBar">
+            <div className="muteButtonBox">
+              <Button 
+                className="muteButton" 
+                variant="contained" 
+                size="large"
+                color="veryPeri"
+                onClick={() => {
+                  setMuted(!muted)
+                  console.log("muted is", muted)
+                }}
+              >
+                음소거
+              </Button>
+            </div>
+            <div className="shareScreenButtonBox">
+            <Button 
+                className="shareScreenButton" 
+                variant="outlined" 
+                size="large"
+                color="veryPeri"
+                onClick={() => {
+                  setShareScreen(!shareScreen)
+                  console.log("shareScreen is", shareScreen)
+                }}
+              >
+                화면공유
+              </Button>
+            </div>
+            <div className="exitButtonBox">
+              <IconButton
+                onClick={() => {
+                  setExit(!exit)
+                  console.log("exit is", exit)
+                }}
+              >
+                <CancelRoundedIcon className="exitButton"></CancelRoundedIcon>
+              </IconButton>
+            </div>
+          </div>
+          <div className="rightBar">
+            <div className="memberButtonBox">
+              <Button
+                className="memberButton"
+                variant="outlined"
+                size="large"
+                color="veryPeri"
+                onClick={() => {
+                  setOpenMemberInfo(!openMemberInfo)
+                  console.log("openMemberInfo is", openMemberInfo)
+                }}
+              >
+                참여자
+              </Button>
+            </div>
+            <div className="chatRoomButtonBox">
+              <Button
+                className="chatRoomButton"
+                variant="outlined"
+                size="large"
+                color="veryPeri"
+                onClick={() => {
+                  setOpenChatInfo(!openChatInfo)
+                  console.log("openChatInfo is", openChatInfo)
+                }}
+              >
+                채팅
+              </Button>
+            </div>
+          </div>
+        </ThemeProvider>
       </Grid>
     </Grid>
     );

@@ -19,7 +19,10 @@ package org.kurento.tutorial.groupcall;
 
 import java.io.IOException;
 
+import com.google.gson.JsonElement;
 import org.kurento.client.IceCandidate;
+import org.kurento.tutorial.groupcall.entity.Message;
+import org.kurento.tutorial.groupcall.service.MessageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +51,9 @@ public class CallHandler extends TextWebSocketHandler {
 
   @Autowired
   private UserRegistry registry;//현재 연결된 user의 session을 user의 name을 key로하는 map을 가지고 있다.
+
+  @Autowired
+  private MessageService messageService = new MessageService();
 
   //client 에서 받아온 메세지를 다루는 메소드 ->TextWebSocketHandler를 상속받았기 때문에 handleTextMessage를 구현
   //TextWebSocketHandler이외에 BinaryWebSocketHandler도 지원한다.
@@ -88,7 +94,9 @@ public class CallHandler extends TextWebSocketHandler {
         break;
       case "chat":
         System.out.println("jsonMessage.get(\"data\") = " + jsonMessage.get("data"));
-        sendMessage(user, jsonMessage.get("data").getAsString());
+        String userId = jsonMessage.get("userId").getAsString();
+        String meetingId = jsonMessage.get("meetingId").getAsString();
+        sendMessage(user, userId, meetingId, jsonMessage.get("data").getAsString());
         break;
       default:
         break;
@@ -120,8 +128,14 @@ public class CallHandler extends TextWebSocketHandler {
     }
   }
 
-  private void sendMessage(UserSession user, String chatData) throws IOException {
+  private void sendMessage(UserSession user, String userId, String meetingId, String chatData) throws IOException {
     final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
-    room.sendMsg(user,chatData);
+    Message save = messageService.save(userId, meetingId, chatData);
+    if(save!=null){
+      room.sendChatMsg(user,chatData);
+    }else{
+      room.sendChatErrorMsg("errorchat");
+    }
+
   }
 }
