@@ -20,6 +20,7 @@ package org.kurento.tutorial.groupcall;
 import org.kurento.client.KurentoClient;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.context.ApplicationPidFileWriter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
@@ -63,7 +64,9 @@ public class GroupCallApp implements WebSocketConfigurer {
   }
   //필요한 class를 spring bean에 등록한다.(끝)
   public static void main(String[] args) throws Exception {
-    SpringApplication.run(GroupCallApp.class, args);
+    SpringApplication app = new SpringApplication(GroupCallApp.class);
+    app.addListeners(new ApplicationPidFileWriter());
+    app.run(args);
   }
 
   @Override
