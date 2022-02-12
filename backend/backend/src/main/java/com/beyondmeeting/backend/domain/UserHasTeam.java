@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import net.minidev.json.annotate.JsonIgnore;
+import org.hibernate.validator.constraints.UniqueElements;
 
 import javax.persistence.*;
 
@@ -26,7 +27,7 @@ public class UserHasTeam {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",unique = true)
     private User user;
 
     // 팀장인지
