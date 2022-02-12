@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useEffect } from 'react';
 import {
   Grid,
   Button,
@@ -11,20 +11,46 @@ import {
   TableRow,
   Paper,
   Card,
+  Select,
+  MenuItem,
 } from '@mui/material'
 import ModalStyle from './ModalStyle';
+import { getUsers } from '../../../util/APIUtils';
 
 function CreateTeam() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
-  const [userList, setUserList] = useState([])
-  const nextId = useRef(0)
+  const [addUser, setAddUser] = useState([])
 
   function onRemove (id) {
-    setUserList(userList.filter(user => user.id !== id))
+    setAddUser(addUser.filter(user => user.id !== id))
   }
+  
+  const [users, setUsers] = useState([])
+  const [user, setUser] = useState({})
 
+  useEffect(() => {
+    getUsers()
+    .then(response => {
+      setUsers(response)
+    })
+  }, [])
+
+  const userList = users.map((user) => {
+    const id = user.id
+    return (
+      <MenuItem
+        key={id}
+        value={user}
+      >{user.email}</MenuItem>
+    )
+  })
+
+  const handelChange = (event) => {
+    setUser(event.target.value);
+  };
+  
   return (
     <Grid item>
       <Button onClick={handleOpen} variant="contained" sx={{m:1}}>팀 생성</Button>
@@ -42,18 +68,21 @@ function CreateTeam() {
               component="form"
               onSubmit={function (event) {
                 event.preventDefault()
-                setUserList([...userList, { id: nextId.current, email: event.target.email.value}])
-                nextId.current += 1
-                event.target.email.value = ''
+                setAddUser([...addUser, user])
               }}
             >
               <Grid item>
-                <TextField
-                  label="이메일"
-                  name="email"
-                  size="small"
-                  variant="outlined"
-                />
+                <Select
+                  labelId="demo-simple-select-label"
+                  id="demo-simple-select"
+                  value={user}
+                  label="사용자"
+                  name="user"
+                  onChange={handelChange}
+                >
+                  <MenuItem value="">None</MenuItem>
+                  {userList}  
+                </Select>
               </Grid>
               <Grid item>
                 <Button
@@ -68,7 +97,7 @@ function CreateTeam() {
               <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 300 }} size="small">
                   <TableBody>
-                    {userList.map((user) => (
+                    {addUser.map((user) => (
                       <TableRow
                         key={user.id}
                         sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
