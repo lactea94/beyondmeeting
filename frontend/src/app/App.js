@@ -49,7 +49,7 @@ function App() {
       }
       <Routes>
         <Route path='/' element={<Home/>}></Route>
-        <Route path='profile' element={<Profile/>} currentUser={currentUser}></Route>
+        <Route path='profile' element={<Profile/>}></Route>
         <Route path='teamlist' element={<TeamList/>}>
           <Route index element={<DefaultMeetingList/>}></Route>
           <Route path=':teamId' element={<MeetingList/>}></Route>
