@@ -34,7 +34,7 @@ window.onbeforeunload = function() {
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
 	console.info('Received message: ' + message.data);
-
+	console.log('wss://' + location.host + '/groupcall');
 	switch (parsedMessage.id) {
 	case 'existingParticipants':
 		onExistingParticipants(parsedMessage);
