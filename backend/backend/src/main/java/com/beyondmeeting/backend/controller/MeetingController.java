@@ -2,6 +2,7 @@ package com.beyondmeeting.backend.controller;
 
 import com.beyondmeeting.backend.domain.*;
 import com.beyondmeeting.backend.domain.dto.JoinUserInfo;
+import com.beyondmeeting.backend.domain.dto.MeetingFinishParam;
 import com.beyondmeeting.backend.domain.dto.MeetingJoinParam;
 import com.beyondmeeting.backend.domain.dto.MeetingCreateParam;
 import com.beyondmeeting.backend.login.repository.UserRepository;
@@ -206,18 +207,19 @@ public class MeetingController {
      * description :
      * 미팅 생성 당시 원래 null 값으로 저장된 미팅 종료 시각(endTime)을 Meeting Table 저장
      *
-     * @param meetingId
+     * @param meetingFinishParam
      * @return
      */
     @PostMapping("meeting/finish")
-    public ResponseEntity<Meeting> finishMeeting(@RequestBody Long meetingId) {
+    public ResponseEntity<Meeting> finishMeeting(@RequestBody MeetingFinishParam meetingFinishParam) {
 
         // finishMeeting 함수가 호출되는 시각을 endTime 에 저장
         LocalDateTime endTime = LocalDateTime.now();
 
         // 원래 @RequestBody 에서 MeetingFinishParam 을 받는데 맴버별 speakTime 구현을 우선순위를 낮추기로 해서 
-        // @RequestBody 에서 meetingId 를 파라미터로 넘겨 받았기 때문에 아래 행을 주석처리 함
-        // Long meetingId = meetingFinishParam.getMeetingId();
+        // @RequestBody 에서 Long meetingId 를 파라미터로 넘겨 받았기 때문에 아래 행을 주석처리 함
+        // 주석처리 했었는데 보니까 @RequestBody 에서는 무조건 Json 형태로 요청을 받을 수 있도록 객체로 받는게 좋은가 봄...
+        Long meetingId = meetingFinishParam.getMeetingId();
         
         // 파라미터로 받은 meetingId 값으로 meetingRepository 에서 meeting 객체 찾고 미팅 생성 후 null 값이였던 endTime 값을 셋팅
         Meeting meeting = meetingRepository.findById(meetingId).get();

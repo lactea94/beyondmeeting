@@ -21,12 +21,12 @@ public class MessageController {
     private final MessageRepository messageRepository;
     private final MeetingRepository meetingRepository;
 
-    /** 전체 메시지 리스트 조회
+    /** 메시지 전체 리스트 조회
      *
      * @return
      */
-    @GetMapping("/message/list")
-    public ResponseEntity<List<Message>> getMessageList(){
+    @GetMapping("/messages")
+    public ResponseEntity<List<Message>> getMessages(){
         List<Message> messageList = messageRepository.findAll();
         if (messageList == null || messageList.size() == 0)
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -39,7 +39,7 @@ public class MessageController {
      * @return
      */
     @GetMapping("/message/{meetingId}")
-    public ResponseEntity<List<Message>> getMessageByMeetingId(@PathVariable Long meetingId){
+    public ResponseEntity<List<Message>> getMessagesByMeetingId(@PathVariable Long meetingId){
         Meeting meeting = meetingRepository.findById(meetingId).get();
         List<Message> messageList = messageRepository.findByMeeting(meeting);
         if (messageList == null || messageList.size() == 0)
