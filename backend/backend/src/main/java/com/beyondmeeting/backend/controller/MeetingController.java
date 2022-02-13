@@ -36,8 +36,8 @@ public class MeetingController {
      *
      * @return
      */
-    @GetMapping("/meeting/list")
-    public ResponseEntity<List<Meeting>> getMeetingList() {
+    @GetMapping("/meetings")
+    public ResponseEntity<List<Meeting>> getMeetings() {
         List<Meeting> meetingList = meetingRepository.findAll();
         if (meetingList == null || meetingList.size() == 0)
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -45,7 +45,7 @@ public class MeetingController {
     }
 
     /**
-     * 특정 회의 아이디를 갖는 회의 단건 조회
+     * 특정 회의 아이디(meetingId)를 갖는 회의 단건 조회
      *
      * @param meetingId
      * @return
@@ -59,13 +59,13 @@ public class MeetingController {
     }
 
     /**
-     * 특정 팀 아이디를 갖는 회의 리스트 조회
+     * 특정 팀 아이디(teamId)를 갖는 회의 리스트 조회
      *
      * @param teamId
      * @return
      */
     @GetMapping("meeting/team/{teamId}")
-    public ResponseEntity<List<Meeting>> getMeetingByTeam(@PathVariable Long teamId) {
+    public ResponseEntity<List<Meeting>> getMeetingsByTeamId(@PathVariable Long teamId) {
         Team team = teamRepository.findById(teamId).get();
         List<Meeting> meetingList = meetingRepository.findAllByTeam(team);
         if (meetingList == null || meetingList.size() == 0)
@@ -79,8 +79,8 @@ public class MeetingController {
      *
      * @return
      */
-    @GetMapping("/userhasmeeting/list")
-    public ResponseEntity<List<UserHasMeeting>> getUserHasMeeting() {
+    @GetMapping("/attenders")
+    public ResponseEntity<List<UserHasMeeting>> getAttenders() {
         List<UserHasMeeting> UserHasMeetingList = userHasMeetingRepository.findAll();
         if (UserHasMeetingList == null || UserHasMeetingList.size() == 0)
             return ResponseEntity.status(HttpStatus.OK).body(null);
@@ -88,13 +88,13 @@ public class MeetingController {
     }
 
     /**
-     * 특정 회의 아이디를 갖는 회의 참여자 리스트 조회
+     * 특정 회의 아이디(meetingId)를 갖는 회의 참여자 리스트 조회
      *
      * @param meetingId
      * @return
      */
-    @GetMapping("/userhasmeeting/{meetingId}")
-    public ResponseEntity<List<UserHasMeeting>> getUserHasMeetingByMeeting(@PathVariable Long meetingId) {
+    @GetMapping("/attender/{meetingId}")
+    public ResponseEntity<List<UserHasMeeting>> getAttendersByMeetingId(@PathVariable Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId).get();
         List<UserHasMeeting> userHasMeeting = userHasMeetingRepository.findAllByMeeting(meeting);
         if (userHasMeeting == null)
