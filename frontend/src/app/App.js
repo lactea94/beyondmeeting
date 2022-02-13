@@ -21,7 +21,7 @@ function App() {
   }
     
   return (
-    <div className="App">
+    <div className="App" style={ !location.pathname.includes("meetingroom") ? { paddingTop: 100 } : null }>
       { !location.pathname.includes("meetingroom") && 
         <Navbar
           authenticated={authenticated}
