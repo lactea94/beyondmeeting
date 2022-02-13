@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import {
   Grid,
   Button,
@@ -16,12 +16,11 @@ function CreateTeam() {
   const [teamName, setTeamName] = useState('');
   const handleChange = ({ target: {value} }) => setTeamName(value);
   const handleSubmit = (event) => {
-    event.preventDefault()
-    createTeam({ teamName: teamName })
-    alert(`팀 생성 : ${teamName}`)
-    setTeamName('')
-    setOpen(false)
-  };
+    event.preventDefault();
+    createTeam({ teamName: teamName });
+    alert(`팀 생성 : ${teamName}`);
+    setTeamName('');
+    setOpen(false)  };
 
 
   // useEffect(() => {
@@ -50,7 +49,7 @@ function CreateTeam() {
             <Grid item>팀 생성</Grid>
             <Grid item container
               component="form"
-              onSubmit={handleSubmit}
+              // onSubmit={handleSubmit}
             >
               <Grid item>
                 <TextField
@@ -66,6 +65,7 @@ function CreateTeam() {
                 <Button
                   type="submit"
                   variant="contained"
+                  onClick={handleSubmit}
                 >
                   생성
                 </Button>
