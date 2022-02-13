@@ -33,6 +33,7 @@ function CreateTeam() {
   useEffect(() => {
     getUsers()
     .then(response => {
+      console.log(response)
       setUsers(response)
     })
   }, [])

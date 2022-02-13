@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Paper from '@mui/material/Paper';
 import { PieChart } from 'react-minimal-pie-chart';
+import { Card, Grid } from '@mui/material';
 // import { Animation } from '@devexpress/dx-react-chart';
 
 // const chartData = [
@@ -13,15 +14,31 @@ import { PieChart } from 'react-minimal-pie-chart';
 // ];
 const Piechart = () => (
 
-  <Paper>
+  <div className='chart-color'>
     <PieChart
       data={[
-        { title: 'One', value: 10, color: '#E38627' },
-        { title: 'Two', value: 15, color: '#C13C37' },
-        { title: 'Three', value: 20, color: '#6A2135' },
+        { title: 'Red', value: 10, color: '#793c3c' },
+        { title: 'Blue', value: 15, color: '#424282' },
+        { title: 'White', value: 20, color: '#808080' },
+        { title: 'Yellow', value: 25, color: '#828242'},
+        { title: 'Green', value: 25, color: '#426242'},
+        { title: 'Black', value: 25, color: '#424242'},
       ]}
     />;
-  </Paper>
+  </div>
+  
+  // <div className='chart-color'>
+  //   <PieChart
+  //     data={[
+  //       { title: 'Red', value: 10, color: '#CC0000' },
+  //       { title: 'Blue', value: 15, color: '#0000CC' },
+  //       { title: 'White', value: 20, color: '#FFFFFF' },
+  //       { title: 'Yellow', value: 25, color: '#FFFF66'},
+  //       { title: 'Green', value: 25, color: '#66CC00 '},
+  //       { title: 'Black', value: 25, color: '#424242'},
+  //     ]}
+  //   />;
+  // </div>
 );
 
 export default Piechart;

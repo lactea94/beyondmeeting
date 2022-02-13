@@ -21,7 +21,7 @@ export default function MultiCarouselPage() {
   function Item(props)
   {
     return (
-      <Paper>
+      <Grid>
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
         {props.item.graph}
@@ -29,7 +29,7 @@ export default function MultiCarouselPage() {
         <Button className="CheckButton">
           Check it out!
         </Button>
-      </Paper>
+      </Grid>
       )
   }
 

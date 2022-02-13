@@ -32,17 +32,17 @@ export default function TimeLog() {
   return (
     <Grid item container xs={10} rowSpacing={5}>
       <Grid item xs={12}>
-        <Card className="timeLog">
+        <Grid className="timeLog">
           <h1>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
-        </Card>
+        </Grid>
       </Grid>
       <Grid item xs={3}>
-        <Card className="Card">
+        <Grid className="Card">
           <h3> 모자 별 시간 </h3>
           <ul>
             {numRender()}
           </ul>
-        </Card>
+        </Grid>
       </Grid>
       <Grid item xs={9}>
         {MultiCarouselPage()}
