@@ -199,3 +199,103 @@ export function updateTeamName(teamId,UpdateTeamNameReq) {
         method: 'DELETE'
     });
   }
+
+  // ============================== 회의 조회 ==============================
+
+/** 회의 전체 리스트 조회 */
+export function getMeetingList() {
+    axios({
+        method: "get",
+        url: API_BASE_URL + "/meeting/list",
+        // headers: {
+        //     'Authorization': `bearer ` + localStorage.getItem(ACCESS_TOKEN)
+        // }
+    })
+    // axios.get(API_BASE_URL + "/meeting/list", {
+    //     headers: { Authorization: `Bearer ${localStorage.getItem(ACCESS_TOKEN)}` }
+    // })
+        .then((response) => {
+            // response Action
+            console.log(response.data)
+        })
+        .catch(function (error) {
+            // response Action
+            console.log(error)
+            console.log("no available token")
+        });
+}
+
+/** 특정 회의 아이디를 갖는 회의 단건 조회 */
+export function getMeetingByMeetingId(meetingId) {
+    axios.get(API_BASE_URL + "/meeting/" + meetingId)
+        .then((response) => { console.log(response.data) })
+        .catch(function (error) { console.log(error) });
+}
+
+/** 특정 팀 아이디를 갖는 회의 리스트 조회 */
+export function getMeetingByTeamId(teamId) {
+    axios.get(API_BASE_URL + "/meeting/team/" + teamId)
+    .then((response) => { console.log(response.data) })
+    .catch(function (error) { console.log(error) });
+}
+
+/** 회의 참여자 전체 리스트 조회 */
+export function getUserHasMeeting() {
+    axios.get(API_BASE_URL + "/userhasmeeting/list")
+    .then((response) => { console.log(response.data) })
+    .catch(function (error) { console.log(error) });
+}
+
+/** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회 */
+export function getUserHasMeetingByMeetingId(meetingId) {
+    axios.get(API_BASE_URL + "/userhasmeeting/" + meetingId)
+    .then((response) => { console.log(response.data) })
+    .catch(function (error) { console.log(error) });
+}
+
+// ============================== 회의 생성, 참여, 종료 ==============================
+
+/** 미팅 생성 */
+export function createMeeting(requestCreateMeeting) {
+    axios({
+        url: API_BASE_URL + "/meeting/create",
+        method: "POST",
+        data: {
+            topic: requestCreateMeeting.topic,
+            meetingType: requestCreateMeeting.meetingType,
+            teamId: requestCreateMeeting.teamId
+        }
+    })
+    // axios.post(API_BASE_URL + "/meeting/create",
+    //     {
+    //         topic: "topic name : axios test",
+    //         meetingType: "SIXHAT",
+    //         teamId: 110
+    //     }
+    // )
+    .then((response) => {console.log(response.data)})
+    .catch(function (error) { console.log(error) });
+}
+
+/** 미팅 참여 */
+export function joinMeeting(requestJoinMeeting) {
+    axios({
+        url: API_BASE_URL + "/meeting/join",
+        method: "POST",
+        data: {
+            meetingId: requestJoinMeeting.meetingId,
+            userId: requestJoinMeeting.userId,
+            hatColor: requestJoinMeeting.hatColor,
+            speakingTime: requestJoinMeeting.speakingTime
+            }
+    })
+    .then((response) => { console.log(response.data) })
+    .catch(function (error) { console.log(error) });
+}
+
+/** 미팅 종료 */
+// export function finishMeeting() {
+//     axios.post(API_BASE_URL + "/meeting/finish")
+//     .then((response) => { console.log(response.data) })
+//     .catch(function (error) { console.log(error) });
+// }

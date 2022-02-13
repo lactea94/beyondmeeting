@@ -1,5 +1,5 @@
-// import React, { useState, useEffect } from 'react'
 // import axios from 'axios'
+import { useEffect, useState } from 'react';
 import { NavLink, Outlet } from 'react-router-dom'
 import {
   Grid,
@@ -7,7 +7,8 @@ import {
   ListItem,
   ListItemButton,
 } from '@mui/material';
-import CreateTeam from './modal/CreateTeam'
+import CreateTeam from './modal/createteam/CreateTeam'
+import { getCurrentUser, getTeams, getUsers } from '../../util/APIUtils';
 
 export function TeamList() {
   const user = {
@@ -18,7 +19,22 @@ export function TeamList() {
       {id:'2123', name:'팀 3', leader: false, meeting: ['hi', 'hello', 'zbc', 'adf']}
     ],
   }
+  // const [user, setUser] = useState('')
+  // const [teams, setTeams] = useState('')
 
+  // useEffect(() => {
+  //   getCurrentUser()
+  //   .then(response => {
+  //     setUser(response)
+  //   }).then(getTeams())
+  //   .then(response => {
+  //     console.log(response)
+  //   })     
+  //   .catch(error => {
+  //     console.log(error)
+  //   })
+  // }, [])
+  // console.log(user)
   const teamList = user.teams.map((team) => {
     const url = `${team.id}`
     return(
