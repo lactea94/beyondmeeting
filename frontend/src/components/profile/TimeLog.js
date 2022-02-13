@@ -30,7 +30,7 @@ export default function TimeLog() {
     return result;
   };
   return (
-    <Grid item container xs={9} rowSpacing={5}>
+    <Grid item container xs={10} rowSpacing={5}>
       <Grid item xs={12}>
         <Card className="timeLog">
           <h1>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
