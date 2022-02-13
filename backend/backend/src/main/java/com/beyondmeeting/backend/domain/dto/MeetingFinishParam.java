@@ -16,5 +16,6 @@ import java.util.List;
 @AllArgsConstructor
 public class MeetingFinishParam {
     private Long meetingId;
-    private List<Long> speakingTimeList = new ArrayList<>(); // UserId, SpeakingTime 저장
+    // UserId, SpeakingTime 저장을 위해 만들었는데 맴버별 speakTime 기능 구현은 후순위
+    // private List<Long> speakingTimeList = new ArrayList<>();
 }
