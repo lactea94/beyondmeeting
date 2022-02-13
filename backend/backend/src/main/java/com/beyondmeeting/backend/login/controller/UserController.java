@@ -50,23 +50,7 @@ public class UserController {
 //        userDto.setDeleteUser(user.deleteUser);
         return userDto;
     }
-
-    // 내 정보 조회
-//    @GetMapping("/user/{id}")
-//    public UserDto getUser(@PathVariable Long id) {
-//
-//        User user = userRepository.findById(id).get();
-//
-//        UserDto userDto = new UserDto();
-//        userDto.setId(user.getId());
-//        userDto.setUserName(user.getName());
-//        userDto.setUserEmail(user.getEmail());
-//        userDto.setUserImage(user.getImageUrl());
-//        userDto.setUserHasTeamList(user.getUserHasTeamList());
-//        userDto.setUserHasMeetingList(user.getUserHasMeetingList());
-//
-//        return userDto;
-//    }
+    
 
     @GetMapping("/users")
     public List<User> getUsers(){
