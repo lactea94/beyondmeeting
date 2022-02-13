@@ -1,20 +1,44 @@
 import * as React from 'react';
-import Paper from '@mui/material/Paper';
+import { useState, useEffect } from 'react';
+import { getCurrentUser, getOneUser, getUserHasMeeting } from '../../util/APIUtils';
+
+
 import { PieChart } from 'react-minimal-pie-chart';
+import Paper from '@mui/material/Paper';
 import { Card, Grid } from '@mui/material';
-// import { Animation } from '@devexpress/dx-react-chart';
 
-// const chartData = [
-//   { country: 'BLACKHAT', area: 12 },
-//   { country: 'YELLOWHAT', area: 7 },
-//   { country: 'REDHAT', area: 7 },
-//   { country: 'GREENHAT', area: 7 },
-//   { country: 'BLUEHAT', area: 6 },
-//   { country: 'WHITEHAT', area: 5 },
-// ];
-const Piechart = () => (
+export default function Piechart() {
+  const [user, setUser] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [hat, setHat] = useState(null);
+  
+  
+  useEffect(() => {
+    getCurrentUser()
+    .then(response => {
+      // console.log(response)
+      setUserId(response.id)
+    }).catch(error => {
+      console.log(error)
+    });
+  }, []);
+  useEffect(() => {
+    if (userId)
+      getOneUser(userId)
+      .then(response => {
+        setUser(response)
+        console.log(response)
 
-  <div className='chart-color'>
+      }).catch(error => {
+        console.log(error)
+      });
+  }, [userId]);
+  // useEffect(() => {
+  //   if (user)
+  //   getUserHasMeeting(user)
+  // })
+  return (
+    <div className='chart-color'>
     <PieChart
       data={[
         { title: 'Red', value: 10, color: '#793c3c' },
@@ -26,7 +50,7 @@ const Piechart = () => (
       ]}
     />;
   </div>
-  
+  )  
   // <div className='chart-color'>
   //   <PieChart
   //     data={[
@@ -39,6 +63,4 @@ const Piechart = () => (
   //     ]}
   //   />;
   // </div>
-);
-
-export default Piechart;
+};
