@@ -2,6 +2,8 @@ package com.beyondmeeting.backend.login.model;
 import com.beyondmeeting.backend.domain.Message;
 import com.beyondmeeting.backend.domain.UserHasMeeting;
 import com.beyondmeeting.backend.domain.UserHasTeam;
+import com.beyondmeeting.backend.domain.dto.UserDto;
+import com.beyondmeeting.backend.domain.dto.UserHasTeamDto;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,7 +22,6 @@ import java.util.List;
         @UniqueConstraint(columnNames = "email")
 })
 
-// getter, setter 롬복으로 리팩토링
 @Setter
 @Getter
 @NoArgsConstructor
@@ -53,6 +54,13 @@ public class User {
     public User(Long id) {
         this.id = id;
     }
+
+//    @Column(nullable = false)
+//    public Boolean deleteUser = false;
+//
+//    public void delete() {
+//        this.deleteUser = true;
+//    }
 
     //    @OneToMany(mappedBy = "user")
 //    private UserHasTeam userHasTeam;

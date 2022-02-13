@@ -13,11 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
+import java.util.Collections;
 import java.util.List;
 /*
 @PreAuthorize("hasRole('USER')")
@@ -34,24 +34,11 @@ public class UserController {
     private UserRepository userRepository;
     private UserHasTeamRepository userHasTeamRepository;
 
-    //beyondMeeting Front 에서 current user를 저장해줘야해.. 기존로그인페이지는 잘 동작함
-    @GetMapping("/user/me")
-    public User getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
-        System.out.println("test1: "+ String.valueOf(userPrincipal.getId()));
-        System.out.println("test2: "+String.valueOf(userRepository.findById(userPrincipal.getId())));
-        System.out.println("test3: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get()));
-        System.out.println("test4: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get().getId()));
-        System.out.println("test5: "+String.valueOf(userRepository.findById(userPrincipal.getId()).get().getEmail()));
-
-        return userRepository.findById(userPrincipal.getId())
-                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
-    }
-
     // 내 정보 조회
-    @GetMapping("/user/{id}")
-    public UserDto getUser(@PathVariable Long id) {
-
-        User user = userRepository.findById(id).get();
+    @GetMapping("/user/me")
+    public UserDto getCurrentUser(@CurrentUser UserPrincipal userPrincipal) {
+        User user = userRepository.findById(userPrincipal.getId())
+                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
 
         UserDto userDto = new UserDto();
         userDto.setId(user.getId());
@@ -60,9 +47,26 @@ public class UserController {
         userDto.setUserImage(user.getImageUrl());
         userDto.setUserHasTeamList(user.getUserHasTeamList());
         userDto.setUserHasMeetingList(user.getUserHasMeetingList());
-        
+//        userDto.setDeleteUser(user.deleteUser);
         return userDto;
     }
+
+    // 내 정보 조회
+//    @GetMapping("/user/{id}")
+//    public UserDto getUser(@PathVariable Long id) {
+//
+//        User user = userRepository.findById(id).get();
+//
+//        UserDto userDto = new UserDto();
+//        userDto.setId(user.getId());
+//        userDto.setUserName(user.getName());
+//        userDto.setUserEmail(user.getEmail());
+//        userDto.setUserImage(user.getImageUrl());
+//        userDto.setUserHasTeamList(user.getUserHasTeamList());
+//        userDto.setUserHasMeetingList(user.getUserHasMeetingList());
+//
+//        return userDto;
+//    }
 
     @GetMapping("/users")
     public List<User> getUsers(){
@@ -70,10 +74,20 @@ public class UserController {
     }
 
     // 추후에 데이터 삭제하지 않고 flag 처리 ..
-    @DeleteMapping("/user/{id}")
-    public String deleteUser(@PathVariable Long id){
-        String userName = userRepository.findById(id).get().getName();
-        userRepository.deleteById(id);
-        return userName;
-    }
+//    @DeleteMapping("/user/{id}")
+//    public String deleteUser(@PathVariable Long id){
+//        String userName = userRepository.findById(id).get().getName();
+//        userRepository.deleteById(id);
+//        return userName;
+//    }
+//
+//    @Transactional
+//    @PostMapping("/user/delete")
+//    public User deleteUser(@CurrentUser UserPrincipal userPrincipal, @RequestBody UserDto userDto){
+//        User user = userRepository.findById(userPrincipal.getId())
+//                .orElseThrow(() -> new ResourceNotFoundException("User", "id", userPrincipal.getId()));
+//        System.out.println("회원삭제기능입니다아아아ㅏㅏㅏㅏ");
+//        user.delete(); //
+//        return user;
+//    }
 }

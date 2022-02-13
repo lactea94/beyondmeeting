@@ -25,9 +25,10 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 //SecurityConfig 클래스는 보안 구현의 핵심
 //OAuth2 소셜 로그인과 이메일 및 비밀번호 기반 로그인에 대한 구성이 포함되어 있음음
-@Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(
+@Configuration //해당 클래스를 Configuration으로 등록합니다.
+@EnableWebSecurity //Spring Security를 활성화 시킵니다.
+@EnableGlobalMethodSecurity(  //Controller에서 특정 페이지에 특정 권한이 있는 유저만 접근을 허용할 경우 @PreAuthorize 어노테이션을 사용하는데,
+/// 해당 어노테이션에 대한 설정을 활성화시키는 어노테이션입니다. (필수는 아닙니다.)
         securedEnabled = true,
         jsr250Enabled = true,
         prePostEnabled = true
@@ -81,6 +82,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
+    /*
+HttpSecurity
+HttpSecurity를 통해 HTTP 요청에 대한 보안을 설정할 수 있습니다.
+
+http.authorizeRequests()
+    .antMatchers("/member/**").authenticated()
+    .antMatchers("/admin/**").authenticated()
+    .antMatchers("/**").permitAll();
+http 요청에 대해서 모든 사용자가 /** 경로로 요청할 수 있지만, /member/** , /admin/** 경로는 인증된 사용자만 요청이 가능합니다.
+
+
+ */
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
