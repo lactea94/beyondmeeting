@@ -11,7 +11,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-// Spring Security 인증 된 UserPrincipal
+// Spring Security 인증 된 UserPrincipal => 로그인을 통해 인증된 user
 public class UserPrincipal implements OAuth2User, UserDetails {
     private Long id;
     private String email;
