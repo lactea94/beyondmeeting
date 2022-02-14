@@ -26,18 +26,21 @@ public class UserDto {
     private String userName;
     private String userEmail;
     private String userImage;
+//    private Boolean deleteUser;
 
     private List<UserHasTeam> userHasTeamList;
     private List<UserHasMeeting> userHasMeetingList;
     private List<Message> messageList;
 
-//    public UserDto(User user, List<UserHasTeam> teamIdList, List<UserHasMeeting> meetingIdList) {
+//    public UserDto(User user) {
 //        this.id = user.getId();
 //        this.userName = user.getName();
 //        this.userEmail = user.getEmail();
 //        this.userImage = user.getImageUrl();
-//        this.teamIdList = teamIdList;
-//        this.meetingIdList = meetingIdList;
+//        this.deleteUser = user.getDeleteUser();
+//        this.userHasTeamList = user.getUserHasTeamList();
+//        this.userHasMeetingList = user.getUserHasMeetingList();
+//        this.messageList = user.getMessageList();
 //    }
 
 //    public UserDto(User user, List<UserHasTeam> byTeamList) {
