@@ -50,7 +50,7 @@ public class UserController {
 //        userDto.setDeleteUser(user.deleteUser);
         return userDto;
     }
-    
+
 
     @GetMapping("/users")
     public List<User> getUsers(){
