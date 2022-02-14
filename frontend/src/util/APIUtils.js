@@ -270,18 +270,6 @@ export function getAttendersByMeetingId(meetingId) {
         });
 }
 
-/** 내 유저 아이디로 미팅 참여 정보 조회 */
-export function getAttendersByUserId(userId) {
-    axios
-        .get(API_BASE_URL + "/attender/user/" + userId)
-        .then((response) => {
-            console.log("내 유저 아이디로 미팅 참여 정보 조회")
-            console.log(response.data)
-        })
-        .catch(function (error) {
-            console.log(error)
-        });
-}
 
 // ============================== 회의 생성, 참여, 종료 ==============================
 
