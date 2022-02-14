@@ -1,13 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import {
+  Button,
   Grid,
   List,
   ListItem,
   ListItemButton,
 } from '@mui/material';
-import CreateTeam from './modal/CreateTeam'
 import { getCurrentUser } from '../../util/APIUtils';
+import CreateTeam from './CreateTeam';
 
 export function TeamList() {
   const [user, setUser] = useState('');
@@ -19,7 +20,7 @@ export function TeamList() {
       setUser(response)
     }).catch(error => {
       console.log(error)
-    });
+    }); 
   }, []);
   
   useEffect(() => {
@@ -43,7 +44,10 @@ export function TeamList() {
   }, [user]);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container
+      spacing={2}
+    >
+      {CreateTeam()}
       <Grid
         item xs={4}
         container
@@ -54,7 +58,6 @@ export function TeamList() {
             {teams}
           </List>
         </Grid>
-        {CreateTeam()}
       </Grid>
     </Grid>
   );

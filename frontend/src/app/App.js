@@ -6,11 +6,11 @@ import { Profile } from '../components/profile/Profile';
 import { Meetingroom } from '../components/meetingrooms/Meetingroom';
 import { TeamList } from '../components/team/TeamList';
 import { MeetingList } from '../components/team/MeetingList';
+import { ManageTeam } from '../components/team/ManageTeam';
 import { NotFound } from '../common/NotFound';
 import { OAuth2RedirectHandler } from '../users/OAuth2RedirectHandler';
 import { useState } from 'react'
 import { ACCESS_TOKEN } from '../constants';
-import ManageTeam from '../components/team/ManageTeam';
 
 function App() {
   const location = useLocation();

@@ -3,8 +3,9 @@ import {
     Grid,
     Card,
     CardContent,
+    Button,
 } from '@mui/material';
-import CreateMeeting from './modal/CreateMeeting'
+import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
@@ -14,10 +15,11 @@ export function MeetingList() {
   const { state } = useLocation();
   const roleType = state.data.roleType;
   const teamId = state.data.team.id;
+  const teamName = state.data.team.teamName;
   const user = state.data.user
   const [users, setUsers] = useState([]);
   const [meetingList, setMeetingList] = useState(<Grid>회의를 생성하세요</Grid>);
-  
+ 
   useEffect(() => {
     getUsers()
     .then(response => {
@@ -74,9 +76,19 @@ export function MeetingList() {
         <Grid item container>
           <NavLink
             to='update'
-            state={{teamId:teamId, teamLeaderId:user.id, users:users}}
+            state={{
+              teamId:teamId,
+              teamLeaderId:user.id,
+              users:users,
+              teamName:teamName
+            }}
           >
-            회의 관리
+            <Button
+              variant="contained"
+              sx={{textDecoration: 'none'}}
+            >
+              팀 관리
+            </Button>
           </NavLink>
           {CreateMeeting()}
         </Grid>

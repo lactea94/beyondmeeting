@@ -4,6 +4,7 @@ import axios from 'axios';
 function request (options) {
     const headers = new Headers({
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
     })
     
     if(localStorage.getItem(ACCESS_TOKEN)) {
