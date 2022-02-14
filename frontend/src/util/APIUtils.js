@@ -49,34 +49,34 @@ export function getUsers() {
     });
 }
 
-// export function getOneUser(id) {
-//     if(!localStorage.getItem(ACCESS_TOKEN)) {
-//         return Promise.reject("No access token set.");
-//     }
+export function getOneUser(id) {
+    if(!localStorage.getItem(ACCESS_TOKEN)) {
+        return Promise.reject("No access token set.");
+    }
 
-//     return request({
-//         url: API_BASE_URL + "/user/"+id,
-//         method: 'GET'
-//     });
-// }
+    return request({
+        url: API_BASE_URL + "/user/"+id,
+        method: 'GET'
+    });
+}
 
 //-------------------------------USER CREATE-----------------------------
 //혹시 그냥 로그인이나 회원가입 할 때 
-// export function login(loginRequest) {
-//     return request({
-//         url: API_BASE_URL + "/auth/login",
-//         method: 'POST',
-//         body: JSON.stringify(loginRequest)
-//     });
-// }
+export function login(loginRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/login",
+        method: 'POST',
+        body: JSON.stringify(loginRequest)
+    });
+}
 
-// export function signup(signupRequest) {
-//     return request({
-//         url: API_BASE_URL + "/auth/signup",
-//         method: 'POST',
-//         body: JSON.stringify(signupRequest)
-//     });
-// }
+export function signup(signupRequest) {
+    return request({
+        url: API_BASE_URL + "/auth/signup",
+        method: 'POST',
+        body: JSON.stringify(signupRequest)
+    });
+}
 
 //-------------------------------USER DELETE-----------------------------
 
