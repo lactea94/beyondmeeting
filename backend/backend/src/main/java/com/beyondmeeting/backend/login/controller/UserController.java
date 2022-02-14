@@ -26,7 +26,7 @@ SpringSecurity 설정에는 접근 제한이 필요한 리소스에 대해서 RO
 권한을 가진 회원이 로그인 성공 시엔 리소스에 접근할 수 있는 Jwt 보안 토큰을 발급한다.
 코드 작성 위치에 따라 클래스 내 모든 메소드에 적용하거나 메소드별로 권한부여가 가능하다
  */
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 @RestController
 public class UserController {
 
@@ -50,7 +50,7 @@ public class UserController {
 //        userDto.setDeleteUser(user.deleteUser);
         return userDto;
     }
-    
+
 
     @GetMapping("/users")
     public List<User> getUsers(){
