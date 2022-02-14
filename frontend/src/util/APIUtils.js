@@ -260,7 +260,7 @@ export function getAttenders() {
 /** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회 */
 export function getAttendersByMeetingId(meetingId) {
     axios
-        .get(API_BASE_URL + "/attender/" + meetingId)
+        .get(API_BASE_URL + "/attender/meeting/" + meetingId)
         .then((response) => {
             console.log("특정 회의 아이디를 갖는 회의 참여자 리스트 조회")
             console.log(response.data)
@@ -270,6 +270,18 @@ export function getAttendersByMeetingId(meetingId) {
         });
 }
 
+/** 내 유저 아이디로 미팅 참여 정보 조회 */
+export function getAttendersByUserId(userId) {
+    axios
+        .get(API_BASE_URL + "/attender/user/" + userId)
+        .then((response) => {
+            console.log("내 유저 아이디로 미팅 참여 정보 조회")
+            console.log(response.data)
+        })
+        .catch(function (error) {
+            console.log(error)
+        });
+}
 
 // ============================== 회의 생성, 참여, 종료 ==============================
 
