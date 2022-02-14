@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { getCurrentUser, getOneUser, getAttenders } from '../../util/APIUtils';
+// import { getCurrentUser, getAttenders } from '../../util/APIUtils';
 
 
 import { PieChart } from 'react-minimal-pie-chart';
@@ -8,31 +8,31 @@ import Paper from '@mui/material/Paper';
 import { Card, Grid } from '@mui/material';
 
 export default function Piechart() {
-  const [user, setUser] = useState('');
-  const [userId, setUserId] = useState(null);
-  const [hat, setHat] = useState(null);
+  // const [user, setUser] = useState('');
+  // const [userId, setUserId] = useState(null);
+  // const [hat, setHat] = useState(null);
   
   
-  useEffect(() => {
-    getCurrentUser()
-    .then(response => {
-      // console.log(response)
-      setUserId(response.id)
-    }).catch(error => {
-      console.log(error)
-    });
-  }, []);
-  useEffect(() => {
-    if (userId)
-      getOneUser(userId)
-      .then(response => {
-        setUser(response)
-        console.log(response)
+  // useEffect(() => {
+  //   getCurrentUser()
+  //   .then(response => {
+  //     // console.log(response)
+  //     setUserId(response.id)
+  //   }).catch(error => {
+  //     console.log(error)
+  //   });
+  // }, []);
+  // useEffect(() => {
+  //   if (userId)
+  //     getOneUser(userId)
+  //     .then(response => {
+  //       setUser(response)
+  //       console.log(response)
 
-      }).catch(error => {
-        console.log(error)
-      });
-  }, [userId]);
+  //     }).catch(error => {
+  //       console.log(error)
+  //     });
+  // }, [userId]);
   // useEffect(() => {
   //   if (user)
   //   getUserHasMeeting(user)
