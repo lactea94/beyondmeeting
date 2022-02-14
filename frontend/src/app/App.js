@@ -31,10 +31,8 @@ function App() {
       <Routes>
         <Route path='/' element={<Home/>}></Route>
         <Route path='profile' element={<Profile/>}></Route>
-        <Route path='teamlist' element={<TeamList/>}>
-          <Route index element={<DefaultMeetingList/>}></Route>
-          <Route path=':teamId' element={<MeetingList/>}></Route>
-        </Route>
+        <Route path='teamlist' element={<TeamList/>}></Route>
+        <Route path='teamlist/:teamId' element={<MeetingList/>}></Route>
         <Route path='meetingroom' element={<Meetingroom />} />
         <Route path='oauth2/redirect/*' element={<OAuth2RedirectHandler />} />
         <Route path='*' element={<NotFound/>}></Route>
