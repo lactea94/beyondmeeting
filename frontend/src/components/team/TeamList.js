@@ -6,30 +6,20 @@ import {
   ListItem,
   ListItemButton,
 } from '@mui/material';
-import CreateTeam from './modal/createteam/CreateTeam'
-import { getCurrentUser, getOneUser } from '../../util/APIUtils';
+import CreateTeam from './modal/CreateTeam'
+import { getCurrentUser } from '../../util/APIUtils';
 
 export function TeamList() {
   const [user, setUser] = useState('');
-  const [userId, setUserId] = useState(null);
   const [teams, setTeams] = useState(null);
   useEffect(() => {
     getCurrentUser()
     .then(response => {
-      setUserId(response.id)
+      setUser(response)
     }).catch(error => {
       console.log(error)
     });
   }, []);
-  useEffect(() => {
-    if (userId)
-      getOneUser(userId)
-      .then(response => {
-        setUser(response)
-      }).catch(error => {
-        console.log(error)
-      });
-  }, [userId]);
   useEffect(() => {
     if (user)
       setTeams(user.userHasTeamList.map((data) => {
