@@ -261,7 +261,7 @@ export function getAttenders() {
 /** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회 */
 export function getAttendersByMeetingId(meetingId) {
     axios
-        .get(API_BASE_URL + "/attender/" + meetingId)
+        .get(API_BASE_URL + "/attender/meeting/" + meetingId)
         .then((response) => {
             console.log("특정 회의 아이디를 갖는 회의 참여자 리스트 조회")
             console.log(response.data)
