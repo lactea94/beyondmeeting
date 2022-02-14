@@ -4,6 +4,7 @@ import Info from './Info'
 import './Profile.css';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../util/APIUtils';
+import LoadingIndicator from '../../common/LoadingIndicator';
 
 
 export function Profile() {
@@ -12,6 +13,7 @@ export function Profile() {
   const [userEmail, setUserEmail] = useState('');
   const [userImg, setUserImg] = useState(''); 
   const [userHasMeetingList, setUserHasMeetingList] = useState('');
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     getCurrentUser()
@@ -20,16 +22,18 @@ export function Profile() {
       setUserName(response.userName)
       setUserEmail(response.userEmail)
       setUserImg(response.userImage)
+      setLoading(false)
       console.log(response)
     }).catch(error => {
       console.log(error)
+      setLoading(false)
     });
   }, []);
-  useEffect(() => {
-    if (user)
-      setUserHasMeetingList(user.userHasMeetingList)
-      console.log(userHasMeetingList)
-  })
+  // useEffect(() => {
+  //   if (user)
+  //     setUserHasMeetingList(user.userHasMeetingList)
+  //     console.log(userHasMeetingList)
+  // })
 
   // useEffect(() => {
   //   if (user)
@@ -42,10 +46,13 @@ export function Profile() {
 
   // },[user]);
   
+  if(loading) {
+    <LoadingIndicator />
+  }
   return (
   <Grid container columnSpacing={5}>
     <Info userName={userName} userEmail={userEmail} userImg={userImg}></Info>
-    {TimeLog()}
+    <TimeLog></TimeLog>
   </Grid>
   )
 };
