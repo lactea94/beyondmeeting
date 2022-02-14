@@ -6,8 +6,8 @@ import {
   TextField,
   Card,
 } from '@mui/material'
-import ModalStyle from '../ModalStyle';
-import { createTeam } from '../../../../util/APIUtils';
+import ModalStyle from './ModalStyle';
+import { createTeam } from '../../../util/APIUtils';
 
 function CreateTeam() {
   const [open, setOpen] = useState(false);
@@ -20,21 +20,9 @@ function CreateTeam() {
     createTeam({ teamName: teamName });
     alert(`팀 생성 : ${teamName}`);
     setTeamName('');
-    setOpen(false)  };
+    setOpen(false)
+  };
 
-
-  // useEffect(() => {
-  //   getUsers()
-  //   .then(response => {
-  //     setUsers(response)
-  //   }).catch(error => {
-  //     console.log(error)
-  //   })
-  // }, [])
-
-  // users.sort((a, b) => {
-  //   return a.email < b.email ? -1 : a.email > b.email ? 1 : 0;
-  // })
   return (
     <Grid item>
       <Button onClick={handleOpen} variant="contained" sx={{m:1}}>팀 생성</Button>
@@ -49,7 +37,7 @@ function CreateTeam() {
             <Grid item>팀 생성</Grid>
             <Grid item container
               component="form"
-              // onSubmit={handleSubmit}
+              onSubmit={handleSubmit}
             >
               <Grid item>
                 <TextField
@@ -65,7 +53,6 @@ function CreateTeam() {
                 <Button
                   type="submit"
                   variant="contained"
-                  onClick={handleSubmit}
                 >
                   생성
                 </Button>
