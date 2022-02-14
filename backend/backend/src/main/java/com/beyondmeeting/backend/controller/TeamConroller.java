@@ -14,6 +14,7 @@ import com.beyondmeeting.backend.repository.UserHasTeamRepository;
 import com.beyondmeeting.backend.service.TeamService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,28 +34,40 @@ public class TeamConroller {
     // 팀추가 - success
     // 로그인만 테스트남음
     @PostMapping("/team")
-    public UserHasTeam createTeam(@RequestBody TeamDto teamDto,@CurrentUser UserPrincipal userPrincipal){
-        Team team = new Team(teamDto);
+    public String createTeam(@RequestBody TeamDto teamDto,@CurrentUser UserPrincipal userPrincipal){
+        String msg = "팀생성 완료";
+        try{
+            Team team = new Team(teamDto);
+            // 로그인된사람이 팀장
+            User user = userRepository.findById(userPrincipal.getId()).get();
+            //System.out.printf(user.getName());
 
-        // 로그인된사람이 팀장
-        User user = userRepository.findById(userPrincipal.getId()).get();
-        //System.out.printf(user.getName());
+            // 일단 테스트용으로 user 아무거나
+            //User user = userRepository.findById(6L).get();
 
-        // 일단 테스트용으로 user 아무거나
-        //User user = userRepository.findById(6L).get();
+            UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
+            teamRepository.save(team);
 
-        UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
-        teamRepository.save(team);
+            // userHasTeamList 추가
+            team.getUserHasTeamList().add(userHasTeam);
 
-        // userHasTeamList 추가
-        team.getUserHasTeamList().add(userHasTeam);
+            userHasTeamRepository.save(userHasTeam);
 
-        return userHasTeamRepository.save(userHasTeam);
+        }catch(NullPointerException e){
+            System.out.println("다른 이름을 사용해주세요.");
+            return msg = "다른 이름을 사용해주세요.";
+        }finally {
+
+        }
+
+        return msg;
+
+//        return userHasTeamRepository.save(userHasTeam);
     }
 
     // 팀원추가 - success
     @PostMapping("/team/member")
-    public UserHasTeam createTeamMember( @RequestBody UserHasTeamDto userHasTeamDto){
+    public String createTeamMember( @RequestBody UserHasTeamDto userHasTeamDto){
 
         Team team = teamRepository.findById(userHasTeamDto.getTeam()).get();
         User user = userRepository.findById(userHasTeamDto.getUser()).get();
@@ -65,9 +78,11 @@ public class TeamConroller {
 
         // userHasTeam 에 teamId로 찾고 거기서 userId가 중복되는지 확인
         // findByTeamAndUser 가 null 이면 insert 값이 존재하면 null
-        if(userHasTeamRepository.findAllByTeamAndUser(team,user) == null)
-            return userHasTeamRepository.save(userHasTeam);
-        else return null; // 중복된 유저가 있으면
+
+        if(userHasTeamRepository.findAllByTeamAndUser(team,user) == null){
+            userHasTeamRepository.save(userHasTeam);
+            return "팀원 추가 성공";
+        }else return "중복된 유저입니다.";
 
     }
 
