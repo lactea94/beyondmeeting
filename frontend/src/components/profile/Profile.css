@@ -93,3 +93,7 @@ img {
   border-radius: 50%;
   max-width: 250px;
 }
+
+.chart-color {
+  background-color: #92d14f;
+}

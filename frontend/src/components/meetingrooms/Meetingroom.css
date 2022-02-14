@@ -3,45 +3,39 @@
   height: 100vh;
 }
 
-.themeBox {
+.theme-box {
   height: 7%;
   text-align: center;
 }
 
-.theme {
-  color: rgb(146, 208, 80);
-  font-weight: bold;
-
-}
-
-.mainFuncBox {
+.main-func-box {
   height: 86%;
   text-align: center;
 }
 
-.leftBox {
+.left-box {
   display: inline-block;
   height: 100%;
   background-color: rgb(223, 162, 30);
 }
 
-.faceRoom {
+.video-room {
   display: inline-block;
   height: 100%;
   background-color: rgba(179, 24, 240);
 }
 
-.rightBox {
+.right-box {
   display: inline-flex;
   flex-direction: column;
   height: 100%;
 }
 
-.memberBox {
+.member-box {
   background-color: skyblue;
 }
 
-.chatBox {
+.chat-box {
   background-color: aliceblue;
 }
 
@@ -49,76 +43,77 @@
   color: white;
 }
 
-.bottomBarBox {
+.bottom-bar-box {
   height: 7%;
   text-align: center;
 }
 
-.leftBar {
+.left-bar {
   display: inline-block;
   width: 18%;
 }
 
-.hatButton {
+.hat-button {
   margin: auto;
 }
 
-.middleBar {
+.middle-bar {
   display: inline-block;
   width: 36%;
   margin-left: 14%;
   margin-right: 14%;
 }
 
-.muteButtonBox {
+.mute-button-box {
   display: inline-block;
   width: 33.3%;
 }
 
-.muteButton {
+.mute-button {
 
 }
 
-.shareScreenButtonBox {
+.share-screen-button-box {
   display: inline-block;
   width: 33.3%;
 }
 
-.exitButtonBox {
+.share-screen-button {
+
+}
+
+.exit-button-box {
   display: inline-block;
   width: 33.3%
 }
 
-.shareScreenButtonBox {
-  display: inline-block;
-  margin: auto;
-}
-
-.exitButtonBox {
-  display: inline-block;
-  margin: auto;
-}
-
-.exitButton {
+.exit-button {
   color: rgb(245, 50, 50);
   font-size: 30px;
   font-weight: bold;
 }
 
-.rightBar {
+.right-bar {
   display: inline-block;
   width: 18%;
 }
 
-.memberButtonBox {
+.member-button-box {
   display: inline-block;
   margin-left: 15%;
   width: 35%;
 }
 
+.member-button {
 
-.chatRoomButtonBox {
+}
+
+.chat-room-button-box {
   display: inline-block;
   width: 35%;
   margin-right: 15%;
+}
+
+.chat-room-button {
+
 }

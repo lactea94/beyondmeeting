@@ -13,7 +13,8 @@ const data = [
   { argument: 3, value: 30 },
 ];
 
-const LineChart =  () => (
+export default function LineChart() {
+  return (
   <Paper>
     <Chart
       data={data}
@@ -25,5 +26,5 @@ const LineChart =  () => (
       <Animation />
     </Chart>
   </Paper>
-);
-export default LineChart;
+  )
+};
