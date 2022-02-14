@@ -75,6 +75,8 @@ function register() {
 	var dataChannelSend = document.getElementById('dataChannelSend');
 	var sendButton = document.getElementById('send');
 	sendButton.addEventListener("click", function() {
+		var participant = participants[name];
+		participant.setVideoMute();
 		var data = {
 			id : "chat",
 			userId:1,

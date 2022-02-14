@@ -98,6 +98,11 @@ public class CallHandler extends TextWebSocketHandler {
         String meetingId = jsonMessage.get("meetingId").getAsString();
         sendMessage(user, userId, meetingId, jsonMessage.get("data").getAsString());
         break;
+      case "mute":
+        break;
+      case "shareMonitor":
+        break;
+
       default:
         break;
     }
@@ -136,6 +141,19 @@ public class CallHandler extends TextWebSocketHandler {
     }else{
       room.sendChatErrorMsg("errorchat");
     }
-
+  }
+  private void mute(UserSession user) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
+    room.mute(user);//유저를 방에서 내보낸다.
+//    if (room.getParticipants().isEmpty()) {//방에 남아있는 참가자가 없다면
+//      roomManager.removeRoom(room);//방을 삭제한다.
+//    }
+  }
+  private void shareMonitor(UserSession user) throws IOException {
+    final Room room = roomManager.getRoom(user.getRoomName());//유저가 접속해있는 방을 가져온다.
+    room.shareMonitor(user);//유저를 방에서 내보낸다.
+//    if (room.getParticipants().isEmpty()) {//방에 남아있는 참가자가 없다면
+//      roomManager.removeRoom(room);//방을 삭제한다.
+//    }
   }
 }
