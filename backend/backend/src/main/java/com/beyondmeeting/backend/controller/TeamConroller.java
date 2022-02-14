@@ -60,7 +60,14 @@ public class TeamConroller {
         User user = userRepository.findById(userHasTeamDto.getUser()).get();
         UserHasTeam userHasTeam = new UserHasTeam(user, team, userHasTeamDto.getRoleType());
 
-        return userHasTeamRepository.save(userHasTeam);
+        // 팀에 중복된 유저가 들어가지 않게끔
+        // 중복된 유저가 없으면
+
+        // userHasTeam 에 teamId로 찾고 거기서 userId가 중복되는지 확인
+        // findByTeamAndUser 가 null 이면 insert 값이 존재하면 null
+        if(userHasTeamRepository.findAllByTeamAndUser(team,user) == null)
+            return userHasTeamRepository.save(userHasTeam);
+        else return null; // 중복된 유저가 있으면
 
     }
 
