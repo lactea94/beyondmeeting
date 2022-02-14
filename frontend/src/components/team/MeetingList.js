@@ -15,7 +15,6 @@ export function MeetingList() {
   const roleType = state.data.roleType;
   const teamId = state.data.team.id;
   const [meetingList, setMeetingList] = useState(<Grid>회의를 생성하세요</Grid>);
-
   useEffect(() => {
     axios.get(API_BASE_URL + "/meeting/team/" + teamId)
     .then((response => {
@@ -57,7 +56,7 @@ export function MeetingList() {
       </Grid>
       { roleType === 'LEADER' ? (
         <Grid item container>
-          {ManageTeam()}
+          {ManageTeam(teamId)}
           {CreateMeeting()}
         </Grid>
       ) : (<div></div>)}
