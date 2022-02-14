@@ -78,6 +78,14 @@ public class Room implements Closeable {
     this.removeParticipant(user.getName());//유저를 방에서 내보낸다.
     user.close();
   }
+  public void mute(UserSession user) throws IOException {
+    log.debug("PARTICIPANT {}: Mute {}", user.getName(), this.name);
+    this.muteParticipant(user.getName());//유저를 방에서 내보낸다.
+  }
+  public void shareMonitor(UserSession user) throws IOException {
+    log.debug("PARTICIPANT {}: Leaving room {}", user.getName(), this.name);
+    this.removeParticipant(user.getName());//유저를 방에서 내보낸다.
+  }
 
   private Collection<String> joinRoom(UserSession newParticipant) throws IOException {
     final JsonObject newParticipantMsg = new JsonObject();
@@ -124,7 +132,28 @@ public class Room implements Closeable {
     }
 
   }
+  private void muteParticipant(String name) throws IOException {
+    log.debug("ROOM {}: notifying all users that {} is mute", this.name, name);
 
+    final List<String> unnotifiedParticipants = new ArrayList<>();
+    final JsonObject participantLeftJson = new JsonObject();
+    participantLeftJson.addProperty("id", "participantMute");
+    participantLeftJson.addProperty("name", name);
+    for (final UserSession participant : participants.values()) {
+      try {
+        participant.cancelVideoFrom(name);//나가려는 유저와 비디오연결을 끊는다?
+        participant.sendMessage(participantLeftJson);//
+      } catch (final IOException e) {
+        unnotifiedParticipants.add(participant.getName());
+      }
+    }
+
+    if (!unnotifiedParticipants.isEmpty()) {
+      log.debug("ROOM {}: The users {} could not be notified that {} left the room", this.name,
+              unnotifiedParticipants, name);
+    }
+
+  }
   public void sendParticipantNames(UserSession user) throws IOException {
 
     final JsonArray participantsArray = new JsonArray();

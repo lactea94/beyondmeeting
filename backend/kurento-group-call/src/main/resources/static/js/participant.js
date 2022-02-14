@@ -54,7 +54,15 @@ function Participant(name) {
 	this.getVideoElement = function() {
 		return video;
 	}
+	this.setVideoMute = function (){
+		console.log("set mute")
+		if(video.muted){
+			video.muted=false;
+		}else{
+			video.muted=true;
+		}
 
+	}
 	function switchContainerClass() {
 		if (container.className === PARTICIPANT_CLASS) {
 			var elements = Array.prototype.slice.call(document.getElementsByClassName(PARTICIPANT_MAIN_CLASS));
