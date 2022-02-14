@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@PreAuthorize("hasRole('USER')")
+//@PreAuthorize("hasRole('USER')")
 @RequiredArgsConstructor
 @RestController
 public class TeamConroller {
