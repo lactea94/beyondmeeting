@@ -27,12 +27,14 @@ export function Navbar (props) {
           >
             Meetingroom
           </NavLink>
-          <LogoutIcon
-            className='nav-decoration'
-            onClick={() => {
-              props.setAuthenticated(false)
-              localStorage.removeItem(ACCESS_TOKEN)
-          }}/>
+          <NavLink to='/'>
+            <LogoutIcon
+              className='nav-decoration'
+              onClick={() => {
+                props.setAuthenticated(false)
+                localStorage.removeItem(ACCESS_TOKEN)
+            }}/>
+          </NavLink>
         </div>
         ): (
         <div className='nav-div'>
