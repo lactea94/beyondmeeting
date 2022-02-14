@@ -1,7 +1,7 @@
 import { Button, Card, Autocomplete, TextField, Grid, Input } from '@mui/material'
 import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { FRONT_END_URL } from '../../constants';
+import { FRONT_BASE_URL } from '../../constants';
 import { getOneTeam, inviteTeamMember, deleteTeam, deleteTeamMember, updateTeamName } from '../../util/APIUtils';
 
 export function ManageTeam() {
@@ -34,7 +34,7 @@ export function ManageTeam() {
   
   const handleDeleteTeam = () => {
     deleteTeam(teamId)
-    window.location.href = FRONT_END_URL + '/team'
+    window.location.href = FRONT_BASE_URL + '/team'
   }
 
   useEffect(() => {
@@ -42,10 +42,11 @@ export function ManageTeam() {
     .then(response => {
       setCurrentTeam(response.map(member => member.user))
       setSubmitMember(false)
+      setDeleteMember(false)
     }).catch(error => {
       console.log(error)
     })
-  }, [submitMember, teamId])
+  }, [submitMember, deleteMember, teamId])
 
   useEffect(() => {
     if (currentTeam)
@@ -61,7 +62,7 @@ export function ManageTeam() {
                 id={member.id}
                 onClick={(event) => {
                   deleteTeamMember(teamId, event.target.id)
-                  window.location.href = FRONT_END_URL + '/team/' + teamId + '/update'
+                  setDeleteMember(true)
                 }}
               >삭제</Button>
             : null}

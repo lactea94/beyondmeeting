@@ -7,7 +7,7 @@ import {
   Card,
 } from '@mui/material'
 import { createTeam } from '../../util/APIUtils';
-import { FRONT_END_URL } from '../../constants';
+import { FRONT_BASE_URL } from '../../constants';
 
 function CreateTeam() {
   const [open, setOpen] = useState(false);
@@ -22,7 +22,7 @@ function CreateTeam() {
     createTeam({teamName: teamName});
     setTeamName('');
     setOpen(false)
-    window.location.href = FRONT_END_URL + '/team'
+    window.location.href = FRONT_BASE_URL + '/team'
   };
   
   const handelKeyPress = (event) => {
@@ -54,7 +54,7 @@ function CreateTeam() {
             <Grid item container
               component="form"
               onSubmit={handleSubmit}
-              onKeyDown={handelKeyPress}
+              onKeyUp={handelKeyPress}
               >
               <Grid item>
                 <TextField
