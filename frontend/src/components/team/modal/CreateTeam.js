@@ -14,7 +14,9 @@ function CreateTeam() {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const [teamName, setTeamName] = useState('');
+
   const handleChange = ({ target: {value} }) => setTeamName(value);
+
   const handleSubmit = (event) => {
     event.preventDefault();
     createTeam({ teamName: teamName });

@@ -12,6 +12,7 @@ import { getCurrentUser } from '../../util/APIUtils';
 export function TeamList() {
   const [user, setUser] = useState('');
   const [teams, setTeams] = useState(null);
+
   useEffect(() => {
     getCurrentUser()
     .then(response => {
@@ -20,6 +21,7 @@ export function TeamList() {
       console.log(error)
     });
   }, []);
+  
   useEffect(() => {
     if (user)
       setTeams(user.userHasTeamList.map((data) => {
