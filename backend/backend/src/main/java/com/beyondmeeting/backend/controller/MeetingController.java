@@ -5,6 +5,7 @@ import com.beyondmeeting.backend.domain.dto.JoinUserInfo;
 import com.beyondmeeting.backend.domain.dto.MeetingFinishParam;
 import com.beyondmeeting.backend.domain.dto.MeetingJoinParam;
 import com.beyondmeeting.backend.domain.dto.MeetingCreateParam;
+import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.*;
 import lombok.RequiredArgsConstructor;
@@ -88,13 +89,35 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(UserHasMeetingList);
     }
 
+    /** 내 유저 아이디로 미팅 참여 정보 조회
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/attender/user/{userId}")
+    public ResponseEntity<List<UserHasMeeting>> getAttendersByUserId(@PathVariable Long userId){
+        // @PathVariable Long userId, @PathVariable Long teamId, @PathVariable Long meetingId
+
+        User user = userRepository.findById(userId).get();
+
+        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUser(user).getMeeting().getUserHasMeetingList();
+        //Team team = userHasTeamRepository.findAllByUser(user).getTeam();
+        //Meeting meeting = userHasMeetingRepository.findAllByUserAndTeam(user,team).getMeeting();
+
+        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUser(user).getUser().getUserHasMeetingList();
+        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndMeeting(user, meeting).getUser().getUserHasMeetingList();
+        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndTeam(user, team).getUser().getUserHasMeetingList();
+        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndTeamAndMeeting(user, team, meeting).getUser().getUserHasMeetingList();
+        return ResponseEntity.status(HttpStatus.OK).body(user.getUserHasMeetingList());
+    }
+
     /**
      * 특정 회의 아이디(meetingId)를 갖는 회의 참여자 리스트 조회
      *
      * @param meetingId
      * @return
      */
-    @GetMapping("/attender/{meetingId}")
+    @GetMapping("/attender/meeting/{meetingId}")
     public ResponseEntity<List<UserHasMeeting>> getAttendersByMeetingId(@PathVariable Long meetingId) {
         Meeting meeting = meetingRepository.findById(meetingId).get();
         List<UserHasMeeting> userHasMeeting = userHasMeetingRepository.findAllByMeeting(meeting);
