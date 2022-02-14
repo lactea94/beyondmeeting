@@ -49,16 +49,16 @@ export function getUsers() {
     });
 }
 
-export function getOneUser(id) {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
+// export function getOneUser(id) {
+//     if(!localStorage.getItem(ACCESS_TOKEN)) {
+//         return Promise.reject("No access token set.");
+//     }
 
-    return request({
-        url: API_BASE_URL + "/user/"+id,
-        method: 'GET'
-    });
-}
+//     return request({
+//         url: API_BASE_URL + "/user/"+id,
+//         method: 'GET'
+//     });
+// }
 
 //-------------------------------USER CREATE-----------------------------
 //혹시 그냥 로그인이나 회원가입 할 때 
