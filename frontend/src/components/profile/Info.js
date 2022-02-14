@@ -28,7 +28,7 @@ export default function Info() {
   }, [])
 
   return (
-    <Grid item container xs={3}>
+    <Grid item container xs={2}>
       <Grid item xs={12}>
         <div className="profile-container">
           <div className="container">

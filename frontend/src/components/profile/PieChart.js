@@ -1,36 +1,66 @@
 import * as React from 'react';
+import { useState, useEffect } from 'react';
+import { getCurrentUser, getOneUser, getUserHasMeeting } from '../../util/APIUtils';
+
+
+import { PieChart } from 'react-minimal-pie-chart';
 import Paper from '@mui/material/Paper';
-import {
-  Chart,
-  PieSeries,
-  Title,
-} from '@devexpress/dx-react-chart-material-ui';
-import { Animation } from '@devexpress/dx-react-chart';
+import { Card, Grid } from '@mui/material';
 
-const chartData = [
-  { country: 'BLACKHAT', area: 12 },
-  { country: 'YELLOWHAT', area: 7 },
-  { country: 'REDHAT', area: 7 },
-  { country: 'GREENHAT', area: 7 },
-  { country: 'BLUEHAT', area: 6 },
-  { country: 'WHITEHAT', area: 5 },
-];
-const PieChart = () => (
+export default function Piechart() {
+  const [user, setUser] = useState('');
+  const [userId, setUserId] = useState(null);
+  const [hat, setHat] = useState(null);
+  
+  
+  useEffect(() => {
+    getCurrentUser()
+    .then(response => {
+      // console.log(response)
+      setUserId(response.id)
+    }).catch(error => {
+      console.log(error)
+    });
+  }, []);
+  useEffect(() => {
+    if (userId)
+      getOneUser(userId)
+      .then(response => {
+        setUser(response)
+        console.log(response)
 
-  <Paper>
-    <Chart
-      data={chartData}
-    >
-      <PieSeries
-        valueField="area"
-        argumentField="country"
-      />
-      <Title
-        text="Hats"
-      />
-      <Animation />
-    </Chart>
-  </Paper>
-);
-
-export default PieChart;
+      }).catch(error => {
+        console.log(error)
+      });
+  }, [userId]);
+  // useEffect(() => {
+  //   if (user)
+  //   getUserHasMeeting(user)
+  // })
+  return (
+    <div className='chart-color'>
+    <PieChart
+      data={[
+        { title: 'Red', value: 10, color: '#793c3c' },
+        { title: 'Blue', value: 15, color: '#424282' },
+        { title: 'White', value: 20, color: '#808080' },
+        { title: 'Yellow', value: 25, color: '#828242'},
+        { title: 'Green', value: 25, color: '#426242'},
+        { title: 'Black', value: 25, color: '#424242'},
+      ]}
+    />;
+  </div>
+  )  
+  // <div className='chart-color'>
+  //   <PieChart
+  //     data={[
+  //       { title: 'Red', value: 10, color: '#CC0000' },
+  //       { title: 'Blue', value: 15, color: '#0000CC' },
+  //       { title: 'White', value: 20, color: '#FFFFFF' },
+  //       { title: 'Yellow', value: 25, color: '#FFFF66'},
+  //       { title: 'Green', value: 25, color: '#66CC00 '},
+  //       { title: 'Black', value: 25, color: '#424242'},
+  //     ]}
+  //   />;
+  // </div>
+};

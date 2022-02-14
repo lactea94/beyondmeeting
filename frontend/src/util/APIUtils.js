@@ -1,5 +1,5 @@
 import { API_BASE_URL, ACCESS_TOKEN } from '../constants';
-import axios from 'axios'
+import axios from 'axios';
 
 function request (options) {
     const headers = new Headers({
@@ -24,31 +24,6 @@ function request (options) {
     );
 };
 
-    // url = 'http://localhost:3000/test' 
-    // method:'POST', 
-    // header: { 
-    //     'Accept':'application/json', 
-    //     'Content-Type': 'application/json';charset=UTP-8'
-     
-    // },
-    //  data: { 
-    //      name: 'jungHo', 
-    //      age: 23 
-    //     } 
-    //     axios(options) 
-    //     .then(response => console.log(response)) 
-    
-
- 
-// function axiosTest() {
-//     axios.get(API_BASE_URL + '/users')
-//       .then((response)=> {
-//         console.log(response.data)  
-//       }).catch(function (error) {
-//         console.log(error)
-//       });
-//   }
-
 //-------------------------------USER READ-----------------------------
 
 export function getCurrentUser() {
@@ -62,7 +37,7 @@ export function getCurrentUser() {
     });
     
 }
-  
+
 export function getUsers() {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
@@ -72,9 +47,9 @@ export function getUsers() {
         url: API_BASE_URL + "/users",
         method: 'GET'
     });
-  }
+}
 
-  export function getOneUser(id) {
+export function getOneUser(id) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
@@ -83,7 +58,7 @@ export function getUsers() {
         url: API_BASE_URL + "/user/"+id,
         method: 'GET'
     });
-  }
+}
 
 //-------------------------------USER CREATE-----------------------------
 //혹시 그냥 로그인이나 회원가입 할 때 
@@ -139,9 +114,9 @@ export function getTeams() {
         url: API_BASE_URL + "/teams",
         method: 'GET'
     });
-  }
+}
 
-  export function getOneTeam(teamId) {
+export function getOneTeam(teamId) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
@@ -150,50 +125,46 @@ export function getTeams() {
         url: API_BASE_URL + "/team/member/" + teamId,
         method: 'GET'
     });
-  }
+}
 
 //-------------------------------TEAM UPDATE-----------------------------
 export function updateTeamName(teamId,UpdateTeamNameReq) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
-
     return request({
         url: API_BASE_URL + "/team/" + teamId,
         method: 'PUT',
         body: JSON.stringify(UpdateTeamNameReq)
     });
-  }
+}
 
-  export function updateLeader(teamId,updateLeaderReq) {
+export function updateLeader(teamId,updateLeaderReq) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
-
     return request({
         url: API_BASE_URL + "/team/leader/" + teamId,
         method: 'PUT',
         body: JSON.stringify(updateLeaderReq)
     });
-  }
+}
 
 //-------------------------------TEAM DELETE-----------------------------
-  export function deleteTeam(teamId) {
+export function deleteTeam(teamId) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
-
     return request({
         url: API_BASE_URL + "/team/" + teamId,
         method: 'DELETE'
     });
-  }
+}
 
-  export function deleteTeamMember(teamId,userId) {
+export function deleteTeamMember(teamId,userId) {
     if(!localStorage.getItem(ACCESS_TOKEN)) {
         return Promise.reject("No access token set.");
     }
-
     return request({
         url: API_BASE_URL + "/team/member/" + teamId + "/" + userId,
         method: 'DELETE'
