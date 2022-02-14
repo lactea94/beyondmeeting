@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useEffect } from 'react';
-import { getCurrentUser, getOneUser, getUserHasMeeting } from '../../util/APIUtils';
+import { getCurrentUser, getOneUser, getAttenders } from '../../util/APIUtils';
 
 
 import { PieChart } from 'react-minimal-pie-chart';
