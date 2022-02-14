@@ -5,7 +5,6 @@ import { Home } from '../components/home/Home'
 import { Profile } from '../components/profile/Profile';
 import { Meetingroom } from '../components/meetingrooms/Meetingroom';
 import { TeamList } from '../components/team/TeamList';
-import { DefaultMeetingList } from '../components/team/DefaultMeetingList';
 import { MeetingList } from '../components/team/MeetingList';
 import { NotFound } from '../common/NotFound';
 import { OAuth2RedirectHandler } from '../users/OAuth2RedirectHandler';
