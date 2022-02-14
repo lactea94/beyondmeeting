@@ -3,6 +3,8 @@ import { IconButton, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { leaveRoom } from '../mainfunction/Kurento/conferenceroom';
+import sendMessage from '../mainfunction/Kurento/test';
 
 const theme = createTheme({
   palette: {
@@ -54,6 +56,7 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             onClick={() => {
               setShareScreen(!shareScreen)
               console.log("shareScreen is", shareScreen)
+              sendMessage()
             }}
           >
             화면공유
@@ -64,6 +67,7 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             onClick={() => {
               setExit(!exit)
               console.log("exit is", exit)
+              leaveRoom()
             }}
           >
             <CancelRoundedIcon className="exit-button"></CancelRoundedIcon>

@@ -1,9 +1,28 @@
 import React from 'react';
-// import './Kurento/conferenceroom.js';
-// import './Kurento/participant.js';
+import './Videoroom.css';
+import 
+  { getChannelName, 
+    register, 
+    onNewParticipant, 
+    receiveVideoResponse, 
+    callResponse, 
+    onExistingParticipants, 
+    leaveRoom, 
+    receiveVideo, 
+    onParticipantLeft, 
+    onReceiveMsg, 
+    sendMessage 
+  } from './Kurento/conferenceroom.js';
+
+
+
 
 export default function Videoroom() {
+
+  console.log(window.location)
   return (
-    <div>Videoroom</div>
+    <div id='participants' className="video-box">
+
+    </div>
   );
 };

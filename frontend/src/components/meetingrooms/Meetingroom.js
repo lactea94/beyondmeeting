@@ -26,6 +26,7 @@ export const Meetingroom = () => {
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
 
+
   let [leftBoxStyle, setLeftBoxStyle] = useState({
     width: "18%"
   })
