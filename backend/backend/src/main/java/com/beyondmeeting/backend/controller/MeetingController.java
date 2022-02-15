@@ -130,17 +130,22 @@ public class MeetingController {
 
         for (int n=0 ; n < targetList.size() ; n++) {
 
-            HatInfo hatInfo = new HatInfo();
+            LocalDateTime checkEndTime = targetList.get(n).getMeeting().getEndTime();
 
-            // Hat Color set
-            hatInfo.setHatColor(targetList.get(n).getHat_color());
+            if (checkEndTime != null) {
 
-            // calc Time set
-            LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
-            LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
-            hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
+                HatInfo hatInfo = new HatInfo();
 
-            resultList.add(hatInfo);
+                // Hat Color set
+                hatInfo.setHatColor(targetList.get(n).getHat_color());
+
+                // calc Time set
+                LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
+                LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
+                hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
+
+                resultList.add(hatInfo);
+            } else continue;
         }
 
         return ResponseEntity.status(HttpStatus.OK).body(resultList);
