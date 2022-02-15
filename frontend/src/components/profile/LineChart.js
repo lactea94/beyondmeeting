@@ -38,7 +38,7 @@ export default function LineChart() {
       // setUserImg(response.userImage)
       // setLoading(false)
       setLoading(false)
-      console.log(response.data)
+      // console.log(response.data)
     }).catch(error => {
       console.log(error)
       setLoading(false)
@@ -53,7 +53,7 @@ export default function LineChart() {
     >
       <ArgumentAxis />
       <ValueAxis />
-      {loading ? <LoadingIndicator /> : (<LineSeries valueField="value" argumentField="argument" />) }
+      {/* {loading ? <LoadingIndicator /> : (<LineSeries valueField="value" argumentField="argument" />) } */}
       
       <Animation />
     </Chart>

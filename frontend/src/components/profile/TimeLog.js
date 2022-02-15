@@ -1,22 +1,68 @@
 import { Grid } from '@mui/material';
 import { useEffect, useState } from 'react';
+import { getAttederWithHat } from '../../util/APIUtils';
 import MultiCarouselPage from './MultiCarouselPage';
 
 
 
 export default function TimeLog(props) {
-  // const [userHasMeetingList, setUserHasMeetingList] = useState('');
-  const hatSpeakTime = [40000, 22000, 10000, 8004, 3000, 2800]// 순서는 정렬을 해서12/34/56 높은 순으로 3줄로 표현
-  const speakTime = hatSpeakTime.reduce(function add(sum, currValue) {
+  const [userHasMeetingList, setUserHasMeetingList] = useState('');
+  const [hatTime, setHatTime] = useState([])// 순서는 정렬을 해서12/34/56 높은 순으로 3줄로 표현
+  const speakTime = hatTime.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0); // 유저가 발언한 시간의 총 합 -> 초단위로 받음 reduce에 관한 -> 발언시간을 회의 참가 시간으로 변경
-
+  const [hats, setHats] = useState('')
+  const [blackHat, setBlackHat] = useState(0)
+  const [yellowHat, setYellowHat] = useState(0)
+  const [redHat, setRedHat] = useState(0)
+  const [greenHat, setGreenHat] = useState(0)
+  const [blueHat, setBlueHat] = useState(0)
+  const [whiteHat, setWhiteHat] = useState(0)
   // https://react.vlpt.us/basic/16-useEffect.html -> 언마운트 마운트
-  // useEffect (() => {
-  //   if (props.user)
-  //   setUserHasMeetingList(props.user.userHasMeetingList)
-  // });
+  useEffect (() => {
+    if (props.user)
+    setUserHasMeetingList(props.user.userHasMeetingList)
+    // props.user.id)
+  },[props.user]);
+  useEffect(() => {
+    getAttederWithHat(props.user.id)
+    .then(response => {
+      response.data.map((hat => {
+        if (hat.hatColor === 'RED')
+        setRedHat(redHat+hat.durationTime)
+        if (hat.hatColor === 'BLUE')
+        setBlueHat(blueHat+hat.durationTime)
+        if (hat.hatColor === 'BLACK')
+        setBlackHat(blackHat+hat.durationTime)
+        if (hat.hatColor === 'WHITE')
+        setWhiteHat(whiteHat+hat.durationTime)
+        if (hat.hatColor === 'YELLOW')
+        setYellowHat(yellowHat+hat.durationTime)
+        if (hat.hatColor === 'GREEN')
+        setGreenHat(greenHat+hat.durationTime)
+      }))
+    }).catch(error => {
+      console.log(error)
+    });
+  },[userHasMeetingList]);
 
+  useEffect(() => {
+    if(redHat)
+      setHatTime(
+        [
+          redHat,
+          blueHat,
+          blackHat,
+          yellowHat,
+          greenHat,
+          whiteHat,
+        ]
+      )
+  },[redHat])
+  useEffect(() => {
+    if (hatTime)
+    console.log(hatTime)
+  }, [hatTime])
 
   function calHour(SToH) {
     return parseInt(SToH / 3600);
@@ -29,11 +75,11 @@ export default function TimeLog(props) {
   }
   function numRender() {
     const result = [];
-    for (let i = 0; i < hatSpeakTime.length; i++) {
+    for (let i = 0; i < hatTime.length; i++) {
       result.push(
       <li key={`모자${i}`}>
         <img src={require(`./img/모자${i}.png`)} alt=""></img>
-        <p>Time Log : {calHour(hatSpeakTime[i]) } h {calMin(hatSpeakTime[i])} m {calSec(hatSpeakTime[i])}s</p>
+        <p>Time Log : {calHour(hatTime[i]) } h {calMin(hatTime[i])} m {calSec(hatTime[i])}s</p>
       </li>);
     }
     return result;

@@ -39,7 +39,7 @@ export function Profile() {
       setUser(response)
       setUserHasMeetingList(user.userHasMeetingList)
       // setLoading(false)
-      console.log(response)
+      // console.log(response)
     }).catch(error => {
       console.log(error)
       // setLoading(false)
