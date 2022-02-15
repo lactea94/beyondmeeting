@@ -24,6 +24,13 @@ class MeetingControllerTest {
     UserRepository userRepository;
 
     @Test
+    public void 이것저것테스트(){
+        Long userId = userRepository.count() + 1;
+        System.out.println("userId = " + userId);
+    }
+
+
+    //@Test
     @Transactional
     public void 모자시간리스트테스트(){
 

@@ -115,39 +115,43 @@ public class MeetingController {
     }
 
     /**
-     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 return
+     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 리스트 조회
      *
      * @param userId
      * @return
      */
     @GetMapping("attender/hat/{userId}")
-    public ResponseEntity<List<HatInfo>> getAttendersWithHat(@PathVariable Long userId){
+    public ResponseEntity<List<HatInfo>> getAttenderWithHat(@PathVariable Long userId) {
 
+        // 찾고자 하는 유저객체를 userId 로 찾아서 user 에 저장
+        // attenders 정보가 저장된 user.getUserHasMeetingList 를 targetList 에 저장
+        // targetList 로부터 필요한 데이터만 가져와서 저장 후 리턴해줄 리스트를 resultList 선언
         User user = userRepository.findById(userId).get();
         List<UserHasMeeting> targetList = user.getUserHasMeetingList();
-        
         List<HatInfo> resultList = new ArrayList<>();
 
-        for (int n=0 ; n < targetList.size() ; n++) {
+        for (int n = 0; n < targetList.size(); n++) {
 
+            // endTime 이 null (= 종료되지 않은 회의) 이 아닌 로우만 찾아서,
+            // 해당 회의 durationTime 과 참여한 user 의 hatColor 을 hatInfo 객체에 저장 후,
+            // resultList 에 hatInfo 를 추가
             LocalDateTime checkEndTime = targetList.get(n).getMeeting().getEndTime();
-
             if (checkEndTime != null) {
 
+                // hatInfo 객체 생성
                 HatInfo hatInfo = new HatInfo();
 
-                // Hat Color set
+                // hatInfo.hatColor, hatInfo.DurationTime 값 셋팅
                 hatInfo.setHatColor(targetList.get(n).getHat_color());
-
-                // calc Time set
                 LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
                 LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
                 hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
 
+                // resultList 에 hatInfo 저장
                 resultList.add(hatInfo);
+
             } else continue;
         }
-
         return ResponseEntity.status(HttpStatus.OK).body(resultList);
     }
 
@@ -214,7 +218,7 @@ public class MeetingController {
         Long userId = meetingJoinParam.getUserId(); // input
         Long meetingId = meetingJoinParam.getMeetingId(); // input
         Long teamId = meetingRepository.findById(meetingId).get().getTeam().getId(); // meetingId 로 찾음
-        
+
         // JoinUserInfo 에 출력하기 위한 정보일 뿐 joinMeeting 로직 수행에는 크게 영향이 없다
         Long targetId = userHasTeamRepository.findAllByTeamAndUser(teamRepository.findById(teamId).get(), userRepository.findById(userId).get()).getId();
         String roleType = String.valueOf(userHasTeamRepository.findById(targetId).get().getRoleType());
@@ -265,7 +269,7 @@ public class MeetingController {
         // @RequestBody 에서 Long meetingId 를 파라미터로 넘겨 받았기 때문에 아래 행을 주석처리 함
         // 주석처리 했었는데 보니까 @RequestBody 에서는 무조건 Json 형태로 요청을 받을 수 있도록 객체로 받는게 좋은가 봄...
         Long meetingId = meetingFinishParam.getMeetingId();
-        
+
         // 파라미터로 받은 meetingId 값으로 meetingRepository 에서 meeting 객체 찾고 미팅 생성 후 null 값이였던 endTime 값을 셋팅
         Meeting meeting = meetingRepository.findById(meetingId).get();
         meeting.setEndTime(endTime);
