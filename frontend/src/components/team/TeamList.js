@@ -12,15 +12,17 @@ import CreateTeam from './CreateTeam';
 export function TeamList() {
   const [user, setUser] = useState('');
   const [teams, setTeams] = useState(null);
+  const [reLoad, setReload] = useState(true);
 
   useEffect(() => {
     getCurrentUser()
     .then(response => {
-      setUser(response)
+      setUser(response);
+      setReload(false);
     }).catch(error => {
-      console.log(error)
+      console.log(error);
     }); 
-  }, []);
+  }, [reLoad]);
   
   useEffect(() => {
     if (user)
@@ -46,7 +48,9 @@ export function TeamList() {
     <Grid container
       spacing={2}
     >
-      {CreateTeam()}
+      <CreateTeam
+        setReload={setReload}
+      />
       <Grid
         item xs={4}
         container
