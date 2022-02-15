@@ -7,9 +7,9 @@ import {
   Card,
 } from '@mui/material'
 import { createTeam } from '../../util/APIUtils';
-import { FRONT_BASE_URL } from '../../constants';
+import { ModalStyle } from './ModalStyle';
 
-function CreateTeam() {
+function CreateTeam(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -21,15 +21,15 @@ function CreateTeam() {
     event.preventDefault();
     createTeam({teamName: teamName});
     setTeamName('');
-    setOpen(false)
-    window.location.href = FRONT_BASE_URL + '/team'
+    setOpen(false);
+    props.setReload(true);
   };
   
   const handelKeyPress = (event) => {
     if (event.key === "Enter") {
       handleSubmit();
     }
-  }
+  };
 
   return (
     <Grid item>
@@ -39,15 +39,7 @@ function CreateTeam() {
         onClose={handleClose}
       >
         <Card
-          sx={{
-            position: 'absolute',
-            top: '50%',
-            left: '50%',
-            transform: 'translate(-50%, -50%)',
-            bgcolor: 'background.paper',
-            boxShadow: 24,
-            p: 4,
-          }}
+          sx={ModalStyle()}
         >
           <Grid container direction="column" rowSpacing={2}>
             <Grid item>팀 생성</Grid>
