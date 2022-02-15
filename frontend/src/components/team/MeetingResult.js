@@ -10,26 +10,52 @@ export function MeetingResult() {
   const [ message, setMessage ] = useState("")
   const startTime = meeting.startTime
   const endTime = meeting.endTime
-  function getYear(str) { return Number(str.slice(0, 4))}
-  function getMonth(str) { return Number(str.slice(5, 7))}
-  function getDay(str) { return Number(str.slice(8, 10))}
-  function getHour(str) { return Number(str.slice(11, 13))}
-  function getMinute(str) { return Number(str.slice(14, 16))}
-  function getSecond(str) { return Number(str.slice(17, 19))}
+  function getYear(time) { return Number(time.slice(0, 4))}
+  function getMonth(time) { return Number(time.slice(5, 7))}
+  function getDay(time) { return Number(time.slice(8, 10))}
+  function getHour(time) { return Number(time.slice(11, 13))}
+  function getMinute(time) { return Number(time.slice(14, 16))}
+  function getSecond(time) { return Number(time.slice(17, 19))}
+  function getColor(color) {
+    switch (color) {
+      case 'RED':
+        return '#CC0000'
+      case 'GREEN':
+        return '#66CC00'
+      case 'BLUE':
+        return '#0000CC'
+      case 'WHITE':
+        return '#EBEBEB'
+      case 'BLACK':
+        return '#424242'
+      case 'YELLOW':
+        return '#FFFF66'
+      default:
+        return '#7b7cc2'
+    }
+  }
 
   useEffect(() => {
     getAttendersByMeetingId(meeting.id)
     .then(response => {
       setAttenders(response.data.map(attender => {
+        const color = getColor(attender.hat_color)
         return (
-          <Typography
+          <CardHeader
             key={attender.id}
-          >
-            <Avatar alt={attender.user.name} src={attender.user.imageUrl} />
-            {attender.user.name} {attender.hat_color}
-          </Typography>
-        )
-    }))}).catch(error => {
+            avatar = {
+              <Avatar
+                alt={attender.user.name}
+                src={attender.user.imageUrl}
+              />}
+              title={attender.user.name}
+              subheader={attender.user.email}
+            sx = {{
+              color: color
+            }}
+          />
+        )}
+    ))}).catch(error => {
       console.log(error)
     })
   }, [meeting])
@@ -46,9 +72,10 @@ export function MeetingResult() {
   return (
     <Card
       sx={{
-        m: 'auto',
-        pb: 10,
-        width: '50%',
+        mt: 10,
+        mx: 'auto',
+        p: 5,
+        width: '70%',
       }}
     >
       <CardHeader title={meeting.topic}/>
