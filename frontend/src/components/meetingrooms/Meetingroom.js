@@ -1,6 +1,7 @@
 import React from 'react';
 import './Meetingroom.css';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Grid } from '@mui/material/';
 import styled from 'styled-components';
 import Hatinfo from './mainfunction/Hatinfo.js';
@@ -20,6 +21,10 @@ const Theme = styled.div`
 `;
 
 export const Meetingroom = () => {
+  const { state } = useLocation()
+  const topic = state.meeting.topic
+  const meetingId = state.meeting.id
+  const userName = state.user.name
   const [openHatInfo, setOpenHatInfo] = useState(true);
   const [openChatInfo, setOpenChatInfo] = useState(false);
   const [openMemberInfo, setOpenMemberInfo] = useState(false);
@@ -48,7 +53,7 @@ export const Meetingroom = () => {
   })
 
   useEffect(() => {
-    register();
+    register(userName, meetingId);
   }, [])
 
   useEffect(() => {
@@ -107,7 +112,7 @@ export const Meetingroom = () => {
     <Grid className="room" container>
       <Grid className="theme-box" item xs={12}>
         <Theme>
-          회의 주제
+          {topic}
         </Theme>
       </Grid>
       <Grid className="main-func-box" item xs={12}>
