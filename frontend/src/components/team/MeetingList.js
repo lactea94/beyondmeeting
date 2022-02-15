@@ -56,13 +56,8 @@ export function MeetingList() {
                   </NavLink>
                 ) : (
                   <NavLink
-                    to=''
+                    to= 'meetingroom'
                     state={{meeting: meeting}}
-                    onClick={(event) => {
-                      event.preventDefault()
-                      window.open(FRONT_BASE_URL + "/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
-                      register()
-                      }}
                   >
                     {meeting.topic}
                   </NavLink>

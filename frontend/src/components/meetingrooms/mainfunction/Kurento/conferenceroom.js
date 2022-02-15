@@ -276,5 +276,5 @@ export function onReceiveMsg(request) {
 export default function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
-	ws.send(jsonMessage);
+	ws.onopen = () => ws.send(jsonMessage);
 }
