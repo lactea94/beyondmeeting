@@ -1,16 +1,21 @@
 import { Grid } from '@mui/material';
+import { useEffect, useState } from 'react';
 import MultiCarouselPage from './MultiCarouselPage';
 
 
 
-export default function TimeLog() {
+export default function TimeLog(props) {
+  // const [userHasMeetingList, setUserHasMeetingList] = useState('');
   const hatSpeakTime = [40000, 22000, 10000, 8004, 3000, 2800]// 순서는 정렬을 해서12/34/56 높은 순으로 3줄로 표현
   const speakTime = hatSpeakTime.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0); // 유저가 발언한 시간의 총 합 -> 초단위로 받음 reduce에 관한 -> 발언시간을 회의 참가 시간으로 변경
 
   // https://react.vlpt.us/basic/16-useEffect.html -> 언마운트 마운트
-  
+  // useEffect (() => {
+  //   if (props.user)
+  //   setUserHasMeetingList(props.user.userHasMeetingList)
+  // });
 
 
   function calHour(SToH) {
@@ -38,6 +43,7 @@ export default function TimeLog() {
       <Grid item xs={12}>
         <Grid className="timeLog">
           <h1>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
+          {/* <h1>{userHasMeetingList[0].id}</h1> */}
         </Grid>
       </Grid>
       <Grid item xs={3}>

@@ -9,9 +9,6 @@ import { Grid } from '@mui/material';
 
 export function Profile() {
   const [user, setUser] = useState('');
-  const [userName, setUserName] = useState('');
-  const [userEmail, setUserEmail] = useState('');
-  const [userImg, setUserImg] = useState(''); 
   const [userHasMeetingList, setUserHasMeetingList] = useState('');
   const [loading, setLoading] = useState(true)
 
@@ -40,6 +37,7 @@ export function Profile() {
     getCurrentUser()
     .then(response => {
       setUser(response)
+      setUserHasMeetingList(user.userHasMeetingList)
       // setLoading(false)
       console.log(response)
     }).catch(error => {
@@ -49,8 +47,6 @@ export function Profile() {
   }, []);
 
   useEffect(() => {
-    if (user)
-    console.log(user.userHasMeetingList)
 
   },[user]);
 
@@ -58,7 +54,7 @@ export function Profile() {
   return (
   <Grid container columnSpacing={5}>
     <Info user={user}></Info>
-    <TimeLog userHasMeetingList={userHasMeetingList}></TimeLog>
+    <TimeLog user={user} userHasMeetingList={userHasMeetingList}></TimeLog>
   </Grid>
   )
 };
