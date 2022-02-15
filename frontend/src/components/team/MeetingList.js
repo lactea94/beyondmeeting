@@ -5,7 +5,7 @@ import {
     CardContent,
     Button,
 } from '@mui/material';
-import CreateMeeting from './CreateMeeting/CreateMeeting'
+import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
@@ -24,11 +24,7 @@ export function MeetingList() {
   useEffect(() => {
     getUsers()
     .then(response => {
-      setUsers(response.map(user => {
-        return (
-          {id: user.id, email: user.email}
-          )
-        }));
+      setUsers(response.map(user => ({id: user.id, email: user.email})));
       setReload(false);
     }).catch(error => {
       console.log(error);

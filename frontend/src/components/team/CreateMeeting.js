@@ -12,8 +12,8 @@ import {
   TextField
 } from '@mui/material'
 import { useState } from 'react';
-import { createMeeting } from '../../../util/APIUtils';
-import { ModalStyle } from '../ModalStyle';
+import { createMeeting } from '../../util/APIUtils';
+import { ModalStyle } from './ModalStyle';
 
 function CreateMeeting(props) {
   const [open, setOpen] = useState(false);
