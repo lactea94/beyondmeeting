@@ -138,3 +138,39 @@ git checkout -b front/users frontend
 
 useEffect 내부 함수 전체 진행 후 
 .then 의 값을 요청
+
+# postman용
+
+https://www.notion.so/API-41da035bbe4545528255faee1ddc7a00
+
+- workbench sql
+```
+use BeyondMeeting;
+
+select * from message;
+select * from users;
+
+select * from team;
+select * from user_has_team;
+select * from meeting;
+select * from user_has_meeting;
+```
+
+- 회의 참여자 추가 및 모자 색 선택
+url : https://i6c101.p.ssafy.io/api/meeting/join
+
+형태
+```
+{
+"meetingId": 2,
+"userId": 3,
+"hatColor": "RED"
+}
+```
+- 회의 종료
+url :https://i6c101.p.ssafy.io/api/meeting/finish
+```
+{
+"meetingId": 1
+}
+```
