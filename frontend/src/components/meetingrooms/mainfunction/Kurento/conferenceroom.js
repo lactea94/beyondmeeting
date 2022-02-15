@@ -230,7 +230,6 @@ export function leaveRoom() {
 	// document.getElementById('room').style.display = 'none';
 
 	ws.close();
-	window.close();
 }
 
 export function receiveVideo(sender) {
