@@ -1,6 +1,5 @@
 import React from 'react';
 import { Grid, Button, Modal, Card } from '@mui/material'
-import ModalStyle from './ModalStyle';
 
 function CreateMeeting() {
   const [open, setOpen] = React.useState(false);
@@ -14,7 +13,7 @@ function CreateMeeting() {
         open={open}
         onClose={handleClose}
         >
-        <Card sx={ModalStyle()}>
+        <Card>
           회의 생성
         </Card>
       </Modal>

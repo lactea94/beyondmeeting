@@ -6,20 +6,22 @@ import {
   ListItem,
   ListItemButton,
 } from '@mui/material';
-import CreateTeam from './modal/CreateTeam'
 import { getCurrentUser } from '../../util/APIUtils';
+import CreateTeam from './CreateTeam';
 
 export function TeamList() {
   const [user, setUser] = useState('');
   const [teams, setTeams] = useState(null);
+
   useEffect(() => {
     getCurrentUser()
     .then(response => {
       setUser(response)
     }).catch(error => {
       console.log(error)
-    });
+    }); 
   }, []);
+  
   useEffect(() => {
     if (user)
       setTeams(user.userHasTeamList.map((data) => {
@@ -41,7 +43,10 @@ export function TeamList() {
   }, [user]);
 
   return (
-    <Grid container spacing={2}>
+    <Grid container
+      spacing={2}
+    >
+      {CreateTeam()}
       <Grid
         item xs={4}
         container
@@ -52,7 +57,6 @@ export function TeamList() {
             {teams}
           </List>
         </Grid>
-        {CreateTeam()}
       </Grid>
     </Grid>
   );

@@ -15,7 +15,7 @@ export function Navbar (props) {
       { props.authenticated ? (
         <div className='nav-div'>
           <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
-          <NavLink className='nav-decoration' to='teamlist' style={{ textDecoration : 'none' }}>Team</NavLink>
+          <NavLink className='nav-decoration' to='team' style={{ textDecoration : 'none' }}>Team</NavLink>
           <NavLink 
             className='nav-decoration' 
             to='' 

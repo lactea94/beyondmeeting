@@ -1,20 +1,38 @@
-import { useLocation  } from 'react-router-dom'
+import { useLocation, NavLink } from 'react-router-dom'
 import { 
     Grid,
     Card,
     CardContent,
+    Button,
 } from '@mui/material';
-import ManageTeam from './modal/ManageTeam'
-import CreateMeeting from './modal/CreateMeeting'
+import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL } from '../../constants';
+import { getUsers } from '../../util/APIUtils';
 
 export function MeetingList() {
   const { state } = useLocation();
   const roleType = state.data.roleType;
   const teamId = state.data.team.id;
+  const teamName = state.data.team.teamName;
+  const user = state.data.user
+  const [users, setUsers] = useState([]);
   const [meetingList, setMeetingList] = useState(<Grid>회의를 생성하세요</Grid>);
+ 
+  useEffect(() => {
+    getUsers()
+    .then(response => {
+      setUsers(response.map(user => {
+        return (
+          {id: user.id, email: user.email}
+        )
+      })) 
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [])
+
   useEffect(() => {
     axios.get(API_BASE_URL + "/meeting/team/" + teamId)
     .then((response => {
@@ -56,7 +74,22 @@ export function MeetingList() {
       </Grid>
       { roleType === 'LEADER' ? (
         <Grid item container>
-          {ManageTeam(teamId)}
+          <NavLink
+            to='update'
+            state={{
+              teamId:teamId,
+              teamLeaderId:user.id,
+              users:users,
+              teamName:teamName
+            }}
+          >
+            <Button
+              variant="contained"
+              sx={{textDecoration: 'none'}}
+            >
+              팀 관리
+            </Button>
+          </NavLink>
           {CreateMeeting()}
         </Grid>
       ) : (<div></div>)}

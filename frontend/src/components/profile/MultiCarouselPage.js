@@ -1,9 +1,7 @@
 import React from 'react';
-import { Grid, Paper, Button } from '@mui/material';
-// import Carousel from 'react-material-ui-carousel'
+import { Grid, Button } from '@mui/material';
 import LineChart from './LineChart';
 import Piechart from './PieChart';
-// import { PieChart } from 'react-minimal-pie-chart';
 
 export default function MultiCarouselPage() {
   const items = [
@@ -36,18 +34,9 @@ export default function MultiCarouselPage() {
   return (
     <Grid item container xs={12} rowSpacing={5}>
       <Grid item xs={6}>
-        {/* <Carousel> */}
-          {
-            items.map( (item, i) => <Item key={i} item={item} /> )
-          }
-        {/* </Carousel> */}
-      </Grid>
-      <Grid item xs={6}>
-        {/* <Carousel> */}
-          {
-            items.map( (item, i) => <Item key={i} item={item} /> )
-          }
-        {/* </Carousel> */}
+        {
+          items.map( (item, i) => <Item key={i} item={item} /> )
+        }
       </Grid>
     </Grid>
   )

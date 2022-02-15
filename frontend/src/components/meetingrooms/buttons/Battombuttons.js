@@ -3,6 +3,7 @@ import { IconButton, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
+import { leaveRoom } from '../mainfunction/Kurento/conferenceroom';
 
 const theme = createTheme({
   palette: {
@@ -64,6 +65,7 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             onClick={() => {
               setExit(!exit)
               console.log("exit is", exit)
+              leaveRoom()
             }}
           >
             <CancelRoundedIcon className="exit-button"></CancelRoundedIcon>

@@ -33,10 +33,12 @@
 
 .member-box {
   background-color: skyblue;
+  display: inline-block;
 }
 
 .chat-box {
   background-color: aliceblue;
+  display: inline-block;
 }
 
 .mainFunc {

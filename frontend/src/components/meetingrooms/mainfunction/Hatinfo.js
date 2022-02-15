@@ -1,8 +1,9 @@
 import React from 'react';
+import './Hatinfo.css'
 
 export default function Hatinfo() {
   return (
-    <div>Hatinfo</div>
+    <div className="hat">Hatinfo</div>
   );
 
 };

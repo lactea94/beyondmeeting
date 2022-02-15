@@ -28,7 +28,7 @@ const PARTICIPANT_CLASS = 'participant';
  *                        The tag of the new element will be 'video<name>'
  * @return
  */
-function Participant(name) {
+export default function Participant(name) {
 	this.name = name;
 	var container = document.createElement('div');
 	container.className = isPresentMainParticipant() ? PARTICIPANT_CLASS : PARTICIPANT_MAIN_CLASS;
@@ -47,8 +47,8 @@ function Participant(name) {
 	video.id = 'video-' + name;
 	video.autoplay = true;
 	video.controls = false;
-
-
+	
+	
 	this.getElement = function() {
 		return container;
 	}

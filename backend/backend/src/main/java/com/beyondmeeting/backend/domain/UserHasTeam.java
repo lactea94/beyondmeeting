@@ -27,7 +27,7 @@ public class UserHasTeam {
 
     @JsonIgnore
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "user_id",unique = true)
     private User user;
 
     // 팀장인지

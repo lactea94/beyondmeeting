@@ -4,6 +4,7 @@ import axios from 'axios';
 function request (options) {
     const headers = new Headers({
         'Content-Type': 'application/json',
+        'Accept': 'application/json',
     })
     
     if(localStorage.getItem(ACCESS_TOKEN)) {
@@ -49,16 +50,16 @@ export function getUsers() {
     });
 }
 
-export function getOneUser(id) {
-    if(!localStorage.getItem(ACCESS_TOKEN)) {
-        return Promise.reject("No access token set.");
-    }
+// export function getOneUser(id) {
+//     if(!localStorage.getItem(ACCESS_TOKEN)) {
+//         return Promise.reject("No access token set.");
+//     }
 
-    return request({
-        url: API_BASE_URL + "/user/"+id,
-        method: 'GET'
-    });
-}
+//     return request({
+//         url: API_BASE_URL + "/user/"+id,
+//         method: 'GET'
+//     });
+// }
 
 //-------------------------------USER CREATE-----------------------------
 //혹시 그냥 로그인이나 회원가입 할 때 
@@ -260,7 +261,7 @@ export function getAttenders() {
 /** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회 */
 export function getAttendersByMeetingId(meetingId) {
     axios
-        .get(API_BASE_URL + "/attender/" + meetingId)
+        .get(API_BASE_URL + "/attender/meeting/" + meetingId)
         .then((response) => {
             console.log("특정 회의 아이디를 갖는 회의 참여자 리스트 조회")
             console.log(response.data)

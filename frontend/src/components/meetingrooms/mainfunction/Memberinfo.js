@@ -1,7 +1,8 @@
 import React from 'react';
+import './Memberinfo.css'
 
 export default function Memberinfo() {
   return (
-    <div>Memberinfo</div>
+    <div className="member">Memberinfo</div>
   );
 };

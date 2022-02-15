@@ -22,7 +22,7 @@ public class Team {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 테스트 코드 작성을 위해 AUTO 에서 IDENTITY 로 수정 - 소은
     private Long id;    // sql에서는 bigint
 
-    @Column(nullable = false,unique = true)
+    @Column(nullable = false)
     private String teamName;
 
     // meeting table 과 일대다 관계를 위한 meetings 추가 - 소은
