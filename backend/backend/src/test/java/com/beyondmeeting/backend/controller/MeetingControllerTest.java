@@ -28,7 +28,7 @@ class MeetingControllerTest {
     public void 모자시간리스트테스트(){
 
         // given
-        Long userId = 4L;
+        Long userId = 1L;
 
         User user = userRepository.findById(userId).get();
         List<UserHasMeeting> targetList = user.getUserHasMeetingList();
@@ -45,26 +45,29 @@ class MeetingControllerTest {
 
         for (int n=0 ; n < targetList.size() ; n++) {
 
-//            LocalDateTime checkException = targetList.get(n).getMeeting().getEndTime();
+            LocalDateTime checkEndTime = targetList.get(n).getMeeting().getEndTime();
 //
 //            if (checkException == null){
 //                System.out.println("미팅이 종료되지 않음");
 //            }
 
-            HatInfo hatInfo = new HatInfo();
+            if (checkEndTime != null) {
 
-            // Hat Color set
-            //resultList.get(0).setHatColor(targetList.get(0).getHat_color());
-            hatInfo.setHatColor(targetList.get(n).getHat_color());
+                HatInfo hatInfo = new HatInfo();
 
-            // calc Time set
-            LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
-            LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
-            //resultList.get(0).setDurationTime(Duration.between(startTime, endTime).getSeconds());
-            hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
+                // Hat Color set
+                //resultList.get(0).setHatColor(targetList.get(0).getHat_color());
+                hatInfo.setHatColor(targetList.get(n).getHat_color());
 
-            resultList.add(hatInfo);
+                // calc Time set
+                LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
+                LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
+                //resultList.get(0).setDurationTime(Duration.between(startTime, endTime).getSeconds());
+                hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
 
+                resultList.add(hatInfo);
+
+            } else continue;
         }
 
         for (HatInfo info : resultList) {
