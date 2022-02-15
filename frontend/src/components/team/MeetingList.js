@@ -8,7 +8,7 @@ import {
 import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_BASE_URL } from '../../constants';
+import { API_BASE_URL, FRONT_BASE_URL } from '../../constants';
 import { getUsers } from '../../util/APIUtils';
 
 export function MeetingList() {
@@ -35,6 +35,7 @@ export function MeetingList() {
     axios.get(API_BASE_URL + "/meeting/team/" + teamId)
     .then((response => {
       setMeetingList(response.data.map(meeting => {
+        const url = `${meeting.id}`
         return (
           <Grid
             key={meeting.id}
@@ -45,7 +46,26 @@ export function MeetingList() {
           >
             <Card>
               <CardContent>
-                {meeting.topic}
+                { meeting.endTime ? (
+                  <NavLink
+                    to={url}
+                    state={{meeting: meeting}}
+                  >
+                    {meeting.topic}
+                  </NavLink>
+                ) : (
+                  <NavLink
+                    to=''
+                    state={{meeting: meeting}}
+                    onClick={(event) => {
+                      event.preventDefault()
+                      window.open(FRONT_BASE_URL + "/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
+                      }}
+                  >
+                    {meeting.topic}
+                  </NavLink>
+                  
+                )}
               </CardContent>
             </Card>
           </Grid>

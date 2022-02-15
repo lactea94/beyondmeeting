@@ -1,5 +1,5 @@
 import './Navbar.css';
-import { ACCESS_TOKEN, GOOGLE_AUTH_URL } from '../constants';
+import { ACCESS_TOKEN, FRONT_BASE_URL, GOOGLE_AUTH_URL } from '../constants';
 import { NavLink } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -22,7 +22,7 @@ export function Navbar (props) {
             style={{ textDecoration : 'none' }} 
             onClick={(event) => {
               event.preventDefault()
-              window.open("http://localhost:3000/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
+              window.open(FRONT_BASE_URL + "/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
               }}
           >
             Meetingroom

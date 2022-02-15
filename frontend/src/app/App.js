@@ -11,6 +11,7 @@ import { NotFound } from '../common/NotFound';
 import { OAuth2RedirectHandler } from '../users/OAuth2RedirectHandler';
 import { useState } from 'react'
 import { ACCESS_TOKEN } from '../constants';
+import { MeetingResult } from '../components/team/MeetingResult';
 
 function App() {
   const location = useLocation();
@@ -34,6 +35,7 @@ function App() {
         <Route path='team' element={<TeamList/>}></Route>
         <Route path='team/:teamId' element={<MeetingList/>}></Route>
         <Route path='team/:teamId/update' element={<ManageTeam/>}></Route>
+        <Route path='team/:teamId/:meetingId' element={<MeetingResult/>} />
         <Route path='meetingroom' element={<Meetingroom />} />
         <Route path='oauth2/redirect/*' element={<OAuth2RedirectHandler />} />
         <Route path='*' element={<NotFound/>}></Route>
