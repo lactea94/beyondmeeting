@@ -4,7 +4,6 @@ import axios from 'axios';
 function request (options) {
     const headers = new Headers({
         'Content-Type': 'application/json',
-        'Accept': 'application/json',
     })
     
     if(localStorage.getItem(ACCESS_TOKEN)) {
@@ -63,21 +62,21 @@ export function getUsers() {
 
 //-------------------------------USER CREATE-----------------------------
 //혹시 그냥 로그인이나 회원가입 할 때 
-export function login(loginRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/login",
-        method: 'POST',
-        body: JSON.stringify(loginRequest)
-    });
-}
+// export function login(loginRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/login",
+//         method: 'POST',
+//         body: JSON.stringify(loginRequest)
+//     });
+// }
 
-export function signup(signupRequest) {
-    return request({
-        url: API_BASE_URL + "/auth/signup",
-        method: 'POST',
-        body: JSON.stringify(signupRequest)
-    });
-}
+// export function signup(signupRequest) {
+//     return request({
+//         url: API_BASE_URL + "/auth/signup",
+//         method: 'POST',
+//         body: JSON.stringify(signupRequest)
+//     });
+// }
 
 //-------------------------------USER DELETE-----------------------------
 
@@ -170,36 +169,37 @@ export function deleteTeamMember(teamId,userId) {
         url: API_BASE_URL + "/team/member/" + teamId + "/" + userId,
         method: 'DELETE'
     });
-  }
+}
 
 
 // ============================== 메시지 조회 ==============================
 
+
 /** 메시지 전체 리스트 조회 */
 export function getMessages() {
-    axios
-        .get(API_BASE_URL + "/messages")
-        .then((response) => {
-            console.log("메시지 전체 리스트 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/messages",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
+        
 }
 
 /** 특정 회의 아이디를 갖는 메시지 리스트 조회 */
 export function getMeesagesByMeetingId(meetingId) {
-    axios
-    .get(API_BASE_URL + "/message/" + meetingId)
-    .then((response) => {
-        console.log("특정 회의 아이디를 갖는 메시지 리스트 조회")
-        console.log(response.data)
-    })
-    .catch(function (error) {
-        console.log(error)
-    });
-    
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/message/" + meetingId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
+        })
 }
 
 
@@ -208,67 +208,80 @@ export function getMeesagesByMeetingId(meetingId) {
 
 /** 회의 전체 리스트 조회 */
 export function getMeetings() {
-    axios
-        .get(API_BASE_URL + "/meetings")
-        .then((response) => {
-            console.log("회의 전체 리스트 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/meetings",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
 }
 
 /** 특정 회의 아이디를 갖는 회의 단건 조회 */
 export function getMeetingByMeetingId(meetingId) {
-    axios
-        .get(API_BASE_URL + "/meeting/" + meetingId)
-        .then((response) => {
-            console.log("특정 회의 아이디를 갖는 회의 단건 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/meeting/" + meetingId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
 }
 
 /** 특정 팀 아이디를 갖는 회의 리스트 조회 */
 export function getMeetingsByTeamId(teamId) {
-    axios
-        .get(API_BASE_URL + "/meeting/team/" + teamId)
-        .then((response) => {
-            console.log("특정 팀 아이디를 갖는 회의 리스트 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/meeting/team/" + teamId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
 }
 
 /** 회의 참여자 전체 리스트 조회 */
 export function getAttenders() {
-    axios
-        .get(API_BASE_URL + "/attenders")
-        .then((response) => {
-            console.log("회의 참여자 전체 리스트 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/attenders",
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
 }
 
 /** 특정 회의 아이디를 갖는 회의 참여자 리스트 조회 */
 export function getAttendersByMeetingId(meetingId) {
-    axios
-        .get(API_BASE_URL + "/attender/meeting/" + meetingId)
-        .then((response) => {
-            console.log("특정 회의 아이디를 갖는 회의 참여자 리스트 조회")
-            console.log(response.data)
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/attender/meeting/" + meetingId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
         })
-        .catch(function (error) {
-            console.log(error)
-        });
+}
+
+/** 내 유저 아이디로 미팅 참여 정보 조회 */
+export function getAttendersByUserId(userId) {
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/attender/user/" + userId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
+        })
 }
 
 
@@ -277,47 +290,49 @@ export function getAttendersByMeetingId(meetingId) {
 
 /** 미팅 생성 */
 export function createMeeting(requestCreateMeeting) {
-    axios({
-        url: API_BASE_URL + "/meeting/create",
+    return axios({
         method: "POST",
+        url: API_BASE_URL + "/meeting/create",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+        }, 
         data: {
             topic: requestCreateMeeting.topic,
             meetingType: requestCreateMeeting.meetingType,
             teamId: requestCreateMeeting.teamId
         }
     })
-    .then((response) => {console.log(response.data)})
-    .catch(function (error) { console.log(error) });
 }
 
 /** 미팅 참여 */
 export function joinMeeting(requestJoinMeeting) {
-    axios({
+    return axios({
         method: "POST",
         url: API_BASE_URL + "/meeting/join",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+        }, 
         data: {
             meetingId: requestJoinMeeting.meetingId,
             userId: requestJoinMeeting.userId,
             hatColor: requestJoinMeeting.hatColor
         }
     })
-    .then((response) => { console.log(response.data) })
-    .catch(function (error) { console.log(error) });
 }
 
 /** 미팅 종료 */
 export function finishMeeting(requestFinishMeeting) {
-    axios({
-        url: API_BASE_URL + "/meeting/finish",
+    return axios({
         method: "POST",
+        url: API_BASE_URL + "/meeting/finish",
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+        }, 
         data: {
             meetingId: requestFinishMeeting.meetingId
         }
     })
-    .then((response) => { console.log(response.data) })
-    .catch(function (error) { console.log(error) });
-    
-    // axios.post(API_BASE_URL + "/meeting/finish")
-    // .then((response) => { console.log(response.data) })
-    // .catch(function (error) { console.log(error) });
 }
