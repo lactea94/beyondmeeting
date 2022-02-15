@@ -33,7 +33,7 @@ export default function MultiCarouselPage() {
 
   return (
     <Grid item container xs={12} rowSpacing={5}>
-      <Grid item xs={12}>
+      <Grid item xs={6}>
         {
           items.map( (item, i) => <Item key={i} item={item} /> )
         }
