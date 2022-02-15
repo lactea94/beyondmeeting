@@ -7,9 +7,7 @@ import {
 } from '@mui/material';
 import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_BASE_URL } from '../../constants';
-import { getUsers } from '../../util/APIUtils';
+import { getMeetingsByTeamId, getUsers } from '../../util/APIUtils';
 
 export function MeetingList() {
   const { state } = useLocation();
@@ -32,7 +30,7 @@ export function MeetingList() {
   }, [reLoad]);
 
   useEffect(() => {
-    axios.get(API_BASE_URL + "/meeting/team/" + teamId)
+    getMeetingsByTeamId(teamId)
     .then((response => {
       setMeetingList(response.data.map(meeting => {
         const url = `${meeting.id}`
