@@ -34,16 +34,37 @@ public class TeamConroller {
     // 팀추가 - success
     // 로그인만 테스트남음
     @PostMapping("/team")
-    public String createTeam(@RequestBody TeamDto teamDto,@CurrentUser UserPrincipal userPrincipal){
-        String msg = "팀생성 완료";
-        try{
+    public UserHasTeam createTeam(@RequestBody TeamDto teamDto,@CurrentUser UserPrincipal userPrincipal){
+//        String msg = "team create success!";
+//        try{
+//            Team team = new Team(teamDto);
+//            // 로그인된사람이 팀장
+//            User user = userRepository.findById(userPrincipal.getId()).get();
+//            //System.out.printf(user.getName());
+//
+//            // 일단 테스트용으로 user 아무거나
+//            //User user = userRepository.findById(6L).get();
+//
+//            UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
+//            teamRepository.save(team);
+//
+//            // userHasTeamList 추가
+//            team.getUserHasTeamList().add(userHasTeam);
+//
+//            userHasTeamRepository.save(userHasTeam);
+//
+//        }catch(NullPointerException e){
+//            System.out.println("다른 이름을 사용해주세요.");
+//            return msg = "다른 이름을 사용해주세요.";
+//        }finally {
+//
+//        }
+//
+//        return msg;
+
             Team team = new Team(teamDto);
             // 로그인된사람이 팀장
             User user = userRepository.findById(userPrincipal.getId()).get();
-            //System.out.printf(user.getName());
-
-            // 일단 테스트용으로 user 아무거나
-            //User user = userRepository.findById(6L).get();
 
             UserHasTeam userHasTeam = new UserHasTeam(user,team,RoleType.LEADER);
             teamRepository.save(team);
@@ -51,18 +72,7 @@ public class TeamConroller {
             // userHasTeamList 추가
             team.getUserHasTeamList().add(userHasTeam);
 
-            userHasTeamRepository.save(userHasTeam);
-
-        }catch(NullPointerException e){
-            System.out.println("다른 이름을 사용해주세요.");
-            return msg = "다른 이름을 사용해주세요.";
-        }finally {
-
-        }
-
-        return msg;
-
-//        return userHasTeamRepository.save(userHasTeam);
+        return userHasTeamRepository.save(userHasTeam);
     }
 
     // 팀원추가 - success
@@ -81,8 +91,8 @@ public class TeamConroller {
 
         if(userHasTeamRepository.findAllByTeamAndUser(team,user) == null){
             userHasTeamRepository.save(userHasTeam);
-            return "팀원 추가 성공";
-        }else return "중복된 유저입니다.";
+            return "team member add success!!";
+        }else return "Failed to add member!! It's duplicate member";
 
     }
 

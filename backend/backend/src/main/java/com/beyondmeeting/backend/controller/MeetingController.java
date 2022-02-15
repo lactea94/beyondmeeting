@@ -1,10 +1,7 @@
 package com.beyondmeeting.backend.controller;
 
 import com.beyondmeeting.backend.domain.*;
-import com.beyondmeeting.backend.domain.dto.JoinUserInfo;
-import com.beyondmeeting.backend.domain.dto.MeetingFinishParam;
-import com.beyondmeeting.backend.domain.dto.MeetingJoinParam;
-import com.beyondmeeting.backend.domain.dto.MeetingCreateParam;
+import com.beyondmeeting.backend.domain.dto.*;
 import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.*;
@@ -14,7 +11,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,7 +29,7 @@ public class MeetingController {
     private final UserHasTeamRepository userHasTeamRepository;
 
 
-    // ======================================== Meeting, UserHasMeeting 조회 ========================================
+    // ======================================== Meeting, Attender 조회 ========================================
 
 
     /**
@@ -72,8 +71,7 @@ public class MeetingController {
         List<Meeting> meetingList = meetingRepository.findAllByTeam(team);
         if (meetingList == null || meetingList.size() == 0)
             return ResponseEntity.status(HttpStatus.OK).body(null);
-        else
-            return ResponseEntity.status(HttpStatus.OK).body(meetingList);
+        else return ResponseEntity.status(HttpStatus.OK).body(meetingList);
     }
 
     /**
@@ -89,28 +87,6 @@ public class MeetingController {
         else return ResponseEntity.status(HttpStatus.OK).body(UserHasMeetingList);
     }
 
-    /** 내 유저 아이디로 미팅 참여 정보 조회
-     *
-     * @param userId
-     * @return
-     */
-    @GetMapping("/attender/user/{userId}")
-    public ResponseEntity<List<UserHasMeeting>> getAttendersByUserId(@PathVariable Long userId){
-        // @PathVariable Long userId, @PathVariable Long teamId, @PathVariable Long meetingId
-
-        User user = userRepository.findById(userId).get();
-
-        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUser(user).getMeeting().getUserHasMeetingList();
-        //Team team = userHasTeamRepository.findAllByUser(user).getTeam();
-        //Meeting meeting = userHasMeetingRepository.findAllByUserAndTeam(user,team).getMeeting();
-
-        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUser(user).getUser().getUserHasMeetingList();
-        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndMeeting(user, meeting).getUser().getUserHasMeetingList();
-        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndTeam(user, team).getUser().getUserHasMeetingList();
-        //List<UserHasMeeting> userHasMeetingList = userHasMeetingRepository.findAllByUserAndTeamAndMeeting(user, team, meeting).getUser().getUserHasMeetingList();
-        return ResponseEntity.status(HttpStatus.OK).body(user.getUserHasMeetingList());
-    }
-
     /**
      * 특정 회의 아이디(meetingId)를 갖는 회의 참여자 리스트 조회
      *
@@ -124,6 +100,50 @@ public class MeetingController {
         if (userHasMeeting == null)
             return ResponseEntity.status(HttpStatus.OK).body(null);
         else return ResponseEntity.status(HttpStatus.OK).body(userHasMeeting);
+    }
+
+    /**
+     * 내 유저 아이디로 미팅 참여 정보 조회
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("/attender/user/{userId}")
+    public ResponseEntity<List<UserHasMeeting>> getAttendersByUserId(@PathVariable Long userId){
+        User user = userRepository.findById(userId).get();
+        return ResponseEntity.status(HttpStatus.OK).body(user.getUserHasMeetingList());
+    }
+
+    /**
+     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 return
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("attender/hat/{userId}")
+    public ResponseEntity<List<HatInfo>> getAttendersWithHat(@PathVariable Long userId){
+
+        User user = userRepository.findById(userId).get();
+        List<UserHasMeeting> targetList = user.getUserHasMeetingList();
+        
+        List<HatInfo> resultList = new ArrayList<>();
+
+        for (int n=0 ; n < targetList.size() ; n++) {
+
+            HatInfo hatInfo = new HatInfo();
+
+            // Hat Color set
+            hatInfo.setHatColor(targetList.get(n).getHat_color());
+
+            // calc Time set
+            LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
+            LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
+            hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
+
+            resultList.add(hatInfo);
+        }
+
+        return ResponseEntity.status(HttpStatus.OK).body(resultList);
     }
 
 
@@ -143,9 +163,6 @@ public class MeetingController {
      */
     @PostMapping("/meeting/create")
     public ResponseEntity<Meeting> createMeeting(@RequestBody MeetingCreateParam meetingCreateParam) {
-
-        // BE - class MeetingCreateParam { String topic; MeetingType meetingType; String teamId; }
-        // FE - const requestCreateMeeting = { topic: "topic name : axios post test", meetingType: "NORMAL", teamId: 110 } 
 
         // 파라미터로 넘겨받은 meetingParam 각각의 값을 저장해 줄 meeting 객체 생성
         Meeting meeting = new Meeting();
