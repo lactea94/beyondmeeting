@@ -1,5 +1,5 @@
 import './Navbar.css';
-import { ACCESS_TOKEN, FRONT_BASE_URL, GOOGLE_AUTH_URL } from '../constants';
+import { ACCESS_TOKEN, GOOGLE_AUTH_URL } from '../constants';
 import { NavLink } from 'react-router-dom'
 import LogoutIcon from '@mui/icons-material/Logout';
 import GoogleIcon from '@mui/icons-material/Google';
@@ -16,17 +16,6 @@ export function Navbar (props) {
         <div className='nav-div'>
           <NavLink className='nav-decoration' to='profile' style={{ textDecoration : 'none' }}>Profile</NavLink>
           <NavLink className='nav-decoration' to='team' style={{ textDecoration : 'none' }}>Team</NavLink>
-          <NavLink 
-            className='nav-decoration' 
-            to='' 
-            style={{ textDecoration : 'none' }} 
-            onClick={(event) => {
-              event.preventDefault()
-              window.open(FRONT_BASE_URL + "/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
-              }}
-          >
-            Meetingroom
-          </NavLink>
           <NavLink to='/'>
             <LogoutIcon
               className='nav-decoration'

@@ -10,6 +10,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { API_BASE_URL, FRONT_BASE_URL } from '../../constants';
 import { getUsers } from '../../util/APIUtils';
+import { register } from '../meetingrooms/mainfunction/Kurento/conferenceroom';
 
 export function MeetingList() {
   const { state } = useLocation();
@@ -60,6 +61,7 @@ export function MeetingList() {
                     onClick={(event) => {
                       event.preventDefault()
                       window.open(FRONT_BASE_URL + "/meetingroom", "_blank", "toolbar=yes, scrollbars=yes, resizable=yes, menubar=yes")
+                      register()
                       }}
                   >
                     {meeting.topic}
