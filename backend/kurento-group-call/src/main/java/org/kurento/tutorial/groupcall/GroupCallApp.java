@@ -73,6 +73,6 @@ public class GroupCallApp implements WebSocketConfigurer {
   public void registerWebSocketHandlers(WebSocketHandlerRegistry registry) {
     //연결할 웹소켓의 url과 핸들러를 등록한다.
     System.out.println("/groupcall 등록~!!@!@!@!@!@");
-    registry.addHandler(groupCallHandler(), "/groupcall").setAllowedOrigins("http://localhost:3000","https://i6c101.p.ssafy.io/");
+    registry.addHandler(groupCallHandler(), "/groupcall").setAllowedOrigins("*");
   }
 }
