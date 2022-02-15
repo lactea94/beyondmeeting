@@ -133,3 +133,8 @@ git checkout -b front/users frontend
       });
   }
 ```
+
+# .then 요청 순서
+
+useEffect 내부 함수 전체 진행 후 
+.then 의 값을 요청

@@ -1,14 +1,7 @@
-import { useState } from "react";
 import { Grid } from '@mui/material';
-import { useEffect } from "react";
-import { useLocation } from "react-router-dom";
 
 export default function Info(props) {
-  // const [user, setUser] = useState('');
-  // const [userName, setUserName] = useState('');
-  // const [userEmail, setUserEmail] = useState('');
-  // const [userImg, setUserImg] = useState(''); // false는 유저 이미지를 가져왔더니 이미지가 기본 상태
-  const { state } = useLocation();
+
   return (
     <Grid item container xs={2}>
       <Grid item xs={12}>
@@ -16,9 +9,9 @@ export default function Info(props) {
           <div className="container">
             <div className="profile-info">
               <div className="profile-avatar">
-                { props.userImg ? (
+                { props.user.userImage ? (
                   <div className="">
-                    <img src={props.userImg} alt="" />
+                    <img src={props.user.userImage} alt="" />
                   </div>
                 ) : (
                   <div className="text-avatar">
@@ -26,9 +19,10 @@ export default function Info(props) {
                   </div>
                 )
                 }
+                {/* <h1>{props.user.userName}</h1> */}
                 <Grid item xs={12}>
-                  <h5 className="info-text1">name : {props.userName}</h5>
-                  <h5 className="info-text2">email : {props.userEmail}</h5>
+                  <h5 className="info-text1">name : {props.user.userName}</h5>
+                  <h5 className="info-text2">email : {props.user.userEmail}</h5>
                 </Grid>
               </div>
             </div>

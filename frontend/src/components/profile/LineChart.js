@@ -16,7 +16,7 @@ const data = [
 export default function LineChart() {
   return (
   <Paper>
-    <Chart
+    {/* <Chart
       data={data}
     >
       <ArgumentAxis />
@@ -24,7 +24,7 @@ export default function LineChart() {
 
       <LineSeries valueField="value" argumentField="argument" />
       <Animation />
-    </Chart>
+    </Chart> */}
   </Paper>
   )
 };

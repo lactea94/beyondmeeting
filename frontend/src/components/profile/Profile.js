@@ -1,10 +1,10 @@
-import { formControlUnstyledClasses, Grid } from '@mui/material';
 import TimeLog from './TimeLog'
 import Info from './Info'
 import './Profile.css';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../util/APIUtils';
 import LoadingIndicator from '../../common/LoadingIndicator';
+import { Grid } from '@mui/material';
 
 
 export function Profile() {
@@ -15,44 +15,50 @@ export function Profile() {
   const [userHasMeetingList, setUserHasMeetingList] = useState('');
   const [loading, setLoading] = useState(true)
 
+  // useEffect(() => {
+  //   if (userId)
+  //     getOneUser(userId)
+  //     .then(response => {
+  //       setUser(response)
+  //       const num = (response.userHasMeetingList).length
+  //       let sum = 0;
+  //       for (let i = 0; i < num; i++) {
+  //         let end = new Date(response.userHasMeetingList[i].meeting.endTime)
+  //         let start = new Date(response.userHasMeetingList[i].meeting.startTime)
+  //         let diff = (end.getTime() - start.getTime())
+  //         sum = sum + diff;
+  //       }
+  //       console.log(sum)
+  //     }).catch(error => {
+  //       console.log(error)
+  //     });
+  // }, [userId]);
+
+    // if(loading) 
+    //   <LoadingIndicator></LoadingIndicator>
   useEffect(() => {
     getCurrentUser()
     .then(response => {
       setUser(response)
-      setUserName(response.userName)
-      setUserEmail(response.userEmail)
-      setUserImg(response.userImage)
-      setLoading(false)
+      // setLoading(false)
       console.log(response)
     }).catch(error => {
       console.log(error)
-      setLoading(false)
+      // setLoading(false)
     });
   }, []);
-  // useEffect(() => {
-  //   if (user)
-  //     setUserHasMeetingList(user.userHasMeetingList)
-  //     console.log(userHasMeetingList)
-  // })
 
-  // useEffect(() => {
-  //   if (user)
-  //   setUserHasMeetingList(user.userHasMeetingList)
-  //   .then(response)
-  //     console.log(userHasMeetingList)
-  //   }).catch((error => {
-  //     console.log(error)
-  //   });
+  useEffect(() => {
+    if (user)
+    console.log(user.userHasMeetingList)
 
-  // },[user]);
-  
-  if(loading) {
-    <LoadingIndicator />
-  }
+  },[user]);
+
+
   return (
   <Grid container columnSpacing={5}>
-    <Info userName={userName} userEmail={userEmail} userImg={userImg}></Info>
-    <TimeLog></TimeLog>
+    <Info user={user}></Info>
+    <TimeLog userHasMeetingList={userHasMeetingList}></TimeLog>
   </Grid>
   )
 };
