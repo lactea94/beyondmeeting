@@ -8,9 +8,8 @@ import {
 import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { API_BASE_URL, FRONT_BASE_URL } from '../../constants';
+import { API_BASE_URL } from '../../constants';
 import { getUsers } from '../../util/APIUtils';
-import { register } from '../meetingrooms/mainfunction/Kurento/conferenceroom';
 
 export function MeetingList() {
   const { state } = useLocation();
@@ -49,14 +48,14 @@ export function MeetingList() {
               <CardContent>
                 { meeting.endTime ? (
                   <NavLink
-                    to={url}
+                    to={url.concat('/result')} 
                     state={{meeting: meeting}}
                   >
                     {meeting.topic}
                   </NavLink>
                 ) : (
                   <NavLink
-                    to= 'meetingroom'
+                    to= {url.concat('/room')}
                     state={{meeting: meeting}}
                   >
                     {meeting.topic}
