@@ -70,7 +70,7 @@ window.onbeforeunload = function() {
 // 	}
 // }
 
-export function register() {
+export function register(userName, room) {
 	ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
 
 	ws.onmessage = function(message) {
@@ -105,16 +105,23 @@ export function register() {
 			console.error('Unrecognized message', parsedMessage);
 		}
 	}
-	ws.onopen = (e) => {
-		alert("[open] 커넥션이 만들어졌습니다.");
-		alert("데이터를 서버에 전송해봅시다.");
-		console.log(e)
-		ws.send("My name is Bora");
-	};
+	// ws.onopen = (e) => {
+	// 	alert("[open] 커넥션이 만들어졌습니다.");
+	// 	alert("데이터를 서버에 전송해봅시다.");
+	// 	console.log(e)
+	// 	ws.send("My name is Bora");
+	// };
 	// name = document.getElementById('name').value;
 	// var room = document.getElementById('roomName').value;
-	name = "김병완";
-	var room = "1";
+	name = userName;
+	var room = room;
+	
+	var message = {
+		id : 'joinRoom',
+		name : name,
+		room : room,
+	}
+	sendMessage(message);
 
 	// document.getElementById('room-header').innerText = 'ROOM ' + room;
 	// document.getElementById('join').style.display = 'none';
@@ -136,12 +143,6 @@ export function register() {
 	// });
 
 	//--------------------------------------------------------------
-	var message = {
-		id : 'joinRoom',
-		name : name,
-		room : room,
-	}
-	sendMessage(message);
 
 }
 
