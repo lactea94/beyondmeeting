@@ -284,6 +284,18 @@ export function getAttendersByUserId(userId) {
         })
 }
 
+/** { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 return */
+export function getAttederWithHat(userId) {
+    return axios
+    ({
+        method: "GET",
+        url: API_BASE_URL + "/attender/hat/" + userId,
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+        }           
+    })
+}
 
 // ============================== 회의 생성, 참여, 종료 ==============================
 
