@@ -1,10 +1,9 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import {
+  Card,
+  CardContent,
   Grid,
-  List,
-  ListItem,
-  ListItemButton,
 } from '@mui/material';
 import { getCurrentUser } from '../../util/APIUtils';
 import CreateTeam from './CreateTeam';
@@ -29,38 +28,41 @@ export function TeamList() {
       setTeams(user.userHasTeamList.map((data) => {
         const url = `${data.team.id}`
         return (
-          <NavLink
+          <Grid
             key={data.team.id}
-            to={url}
-            id={data.team.id}
-            state={{data: data}}
+            item xs={4}
+            sx={{p:2}}
           >
-            <ListItem>
-              <ListItemButton>
-                {data.team.teamName}
-              </ListItemButton>
-            </ListItem>
-          </NavLink>
+            <Card>
+              <CardContent>
+                <NavLink
+                  to={url}
+                  id={data.team.id}
+                  state={{data: data}}
+                >
+                  {data.team.teamName}
+                </NavLink>
+              </CardContent>
+            </Card>
+          </Grid>
         )}));
   }, [user]);
 
   return (
-    <Grid container
+    <Grid
+      container
       spacing={2}
     >
-      <CreateTeam
-        setReload={setReload}
-      />
-      <Grid
-        item xs={4}
+      <Grid item xs={12}>
+        <CreateTeam
+          setReload={setReload}
+        />
+      </Grid>
+      <Grid item
         container
-        direction={'column'}
+        xs={12}
       >
-        <Grid item>
-          <List>
-            {teams}
-          </List>
-        </Grid>
+        {teams}
       </Grid>
     </Grid>
   );
