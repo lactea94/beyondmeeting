@@ -36,7 +36,7 @@ function App() {
         <Route path='team/:teamId' element={<MeetingList/>}></Route>
         <Route path='team/:teamId/update' element={<ManageTeam/>}></Route>
         <Route path='team/:teamId/:meetingId' element={<MeetingResult/>} />
-        <Route path='meetingroom' element={<Meetingroom />} />
+        <Route path='team/:teamId/meetingroom' element={<Meetingroom />} />
         <Route path='oauth2/redirect/*' element={<OAuth2RedirectHandler />} />
         <Route path='*' element={<NotFound/>}></Route>
       </Routes>
