@@ -154,38 +154,60 @@ public class MeetingController {
     --> YYYYMM 기준으로 미팅참여횟수 조회
      */
     @GetMapping("/attender/date/{userId}")
-    public ResponseEntity<JSONObject> getAttenderDateByUserId(@PathVariable Long userId){
+    public ArrayList<JSONObject> getAttenderDateByUserId(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
-        List <UserHasMeeting> meeting = user.getUserHasMeetingList();
-        HashMap<String,Integer> hashMap = new HashMap<>();
+        List<UserHasMeeting> meeting = user.getUserHasMeetingList();
+        Map<Long, Integer> hashMap = new HashMap<>();
 
         //첫번째 값
-        if(meeting.size()>=1){
-            String [] dateSplitFirst =  String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
-            String yearFirst = dateSplitFirst[0];
+        if (meeting.size() >= 1) {
+            String[] dateSplitFirst = String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
+            String yearFirst = dateSplitFirst[0].substring(2);
             String monthFirst = dateSplitFirst[1];
-            String datesFirst = yearFirst+monthFirst;
-            hashMap.put(datesFirst,1);
+            Long datesFirst = Long.valueOf(yearFirst + monthFirst);
+            hashMap.put(datesFirst, 1);
         }
 
-        for (int i=1; i<meeting.size(); i++) {
-            String [] dateSplit =  String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
-            String year = dateSplit[0];
+        for (int i = 1; i < meeting.size(); i++) {
+            String[] dateSplit = String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
+            String year = dateSplit[0].substring(2);
             String month = dateSplit[1];
-            String dates = year+month;
+            Long dates = Long.valueOf(year + month);
 
-            if(hashMap.containsKey(dates)) {
+            if (hashMap.containsKey(dates)) {
                 int val = hashMap.get(dates);
                 hashMap.remove(dates);
-                hashMap.put(dates,val+1);
-            }
-            else hashMap.put(dates,1);
+                hashMap.put(dates, val + 1);
+            } else hashMap.put(dates, 1);
         }
 
+        // key순으로 정렬
+        Object [] mapKey = hashMap.keySet().toArray();
+        Arrays.sort(mapKey);
+
+        ArrayList<JSONObject> list = new ArrayList<>();
+        JSONObject temp = new JSONObject();
+        temp.put("argument","START");
+        temp.put("value", 0);
+        list.add(temp);
+
+        for (Long nkey : hashMap.keySet()) {
+            temp = new JSONObject();
+
+            String key1 = String.valueOf(nkey).substring(0,2);
+            String key2 = String.valueOf(nkey).substring(2,4);
+            temp.put("argument", key1+"년 "+key2+"월");
+            temp.put("value", hashMap.get(nkey));
+
+            list.add(temp);
+        }
+
+        return list;
+
         // hashmap을 json 객체로 변환
-        JSONObject json = new JSONObject(hashMap);
-        
-        return ResponseEntity.status(HttpStatus.OK).body(json);
+//        JSONObject json = new JSONObject(temp);
+
+//        return ResponseEntity.status(HttpStatus.OK).body(list);
     }
 
 
