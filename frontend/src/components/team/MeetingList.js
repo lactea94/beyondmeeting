@@ -4,10 +4,14 @@ import {
     Card,
     CardContent,
     Button,
+    CardHeader,
+    CardActions,
 } from '@mui/material';
-import CreateMeeting from './CreateMeeting'
+import { CreateMeeting } from './CreateMeeting'
 import { useEffect, useState } from 'react';
 import { getMeetingsByTeamId, getUsers } from '../../util/APIUtils';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHatCowboy, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 
 export function MeetingList() {
   const { state } = useLocation();
@@ -18,7 +22,7 @@ export function MeetingList() {
   const [users, setUsers] = useState([]);
   const [meetingList, setMeetingList] = useState(<Grid>회의를 생성하세요</Grid>);
   const [reLoad, setReload] = useState(true);
- 
+
   useEffect(() => {
     getUsers()
     .then(response => {
@@ -28,6 +32,46 @@ export function MeetingList() {
       console.log(error);
     });
   }, [reLoad]);
+
+  function meetingType(meetingType) {
+    if (meetingType === 'SIXHAT') {
+      return <FontAwesomeIcon icon={faHatCowboy} />
+    } else {
+      return <FontAwesomeIcon icon={faFaceGrin} />
+    }}
+
+  function toMeeting(url, meeting, user) {
+    if (meeting.endTime) {
+      return (
+        <NavLink
+          to={url.concat('/result')} 
+          state={{meeting: meeting}}
+        >
+          DETAIL
+        </NavLink>
+      )
+    } else if (meeting.meetingType === 'NORMAL') {
+      return (
+        <NavLink
+          to= {url.concat('/room')}
+          // to= {url.concat('/room/normal')}
+          state={{meeting: meeting, user: user}}
+        >
+          NOW ON...
+        </NavLink>
+      )
+    } else {
+      return (
+        <NavLink
+          to= {url.concat('/room')}
+          // to= {url.concat('/room/sixhat')}
+          state={{meeting: meeting, user: user}}
+        >
+          NOW ON...
+        </NavLink>
+      )
+    }
+  }
 
   useEffect(() => {
     getMeetingsByTeamId(teamId)
@@ -43,68 +87,81 @@ export function MeetingList() {
             }}
           >
             <Card>
+              <CardHeader
+                avatar={meetingType(meeting.meetingType)}
+              />
               <CardContent>
-                { meeting.endTime ? (
-                  <NavLink
-                    to={url.concat('/result')} 
-                    state={{meeting: meeting}}
-                  >
-                    {meeting.topic}
-                  </NavLink>
-                ) : (
-                  <NavLink
-                    to= {url.concat('/room')}
-                    state={{meeting: meeting, user: user}}
-                  >
-                    {meeting.topic}
-                  </NavLink>
-                  
-                )}
+                {meeting.topic}
               </CardContent>
+              <CardActions>
+                {toMeeting(url, meeting, user)}
+              </CardActions>
             </Card>
           </Grid>
         )}))
-    })).catch(((error) => {
-      console.log(error)
-    }));
-  }, [teamId]);
-
-  return (
-    <Grid
-      item
-      xs={12}
-      container
-      spacing={2}
-      sx={{
-        backgroundColor: '#009688',
-        mt: 2,
-        p: 2,
-      }}
-    >
-      <Grid item container>
-        {meetingList}
-      </Grid>
-      { roleType === 'LEADER' ? (
-        <Grid item container>
-          <NavLink
-            to='update'
-            state={{
-              teamId:teamId,
-              teamLeaderId:user.id,
-              users:users,
-              teamName:teamName
+      })).catch(((error) => {
+        console.log(error)
+      }));
+    }, [teamId, user]);
+    
+    return (
+      <Grid
+        container
+        spacing={2}
+        sx={{
+          p: 5,
+          color: '#FFFFFF'
+        }}
+      >
+        <Grid item xs={8}
+          container
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
+        >
+          <Grid item
+            sx={{
+              fontSize: '1.5rem',
             }}
           >
-            <Button
-              variant="contained"
-              sx={{textDecoration: 'none'}}
+            {teamName}
+          </Grid>
+          { roleType === 'LEADER' && (
+            <Grid item
             >
-              팀 관리
-            </Button>
-          </NavLink>
-          <CreateMeeting teamId={teamId} setReload={setReload}/>
+              <NavLink
+                to='update'
+                state={{
+                  teamId:teamId,
+                  teamLeaderId:user.id,
+                  users:users,
+                  teamName:teamName
+                }}
+              >
+                <Button variant="contained">
+                 팀 관리
+                </Button>
+              </NavLink>
+            </Grid>
+          )}
+          { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
         </Grid>
-      ) : (<div></div>)}
+        <Grid item xs={4}
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-end"  
+        >
+          <Grid item>
+            <FontAwesomeIcon icon={faHatCowboy}/> : 육색 모자
+          </Grid>
+          <Grid item>
+            <FontAwesomeIcon icon={faFaceGrin}/> : 일반
+          </Grid>
+        </Grid>
+      <Grid item xs={12} container>
+        {meetingList}
+      </Grid>
     </Grid>
   );
 };

@@ -1,5 +1,5 @@
-import TimeLog from './TimeLog'
-import Info from './Info'
+import TimeLog from './TimeLog';
+import Info from './Info';
 import './Profile.css';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../util/APIUtils';
@@ -9,8 +9,9 @@ import { Grid } from '@mui/material';
 
 export function Profile() {
   const [user, setUser] = useState('');
-  const [userHasMeetingList, setUserHasMeetingList] = useState('');
-  const [loading, setLoading] = useState(true)
+  const [userHasMeetingList, setUserHasMeetingList] = useState();
+  const [loading, setLoading] = useState(true);
+  const [hatInfo, setHatInfo] = useState(false);
 
   // useEffect(() => {
   //   if (userId)
@@ -31,30 +32,59 @@ export function Profile() {
   //     });
   // }, [userId]);
 
-    // if(loading) 
-    //   <LoadingIndicator></LoadingIndicator>
   useEffect(() => {
     getCurrentUser()
     .then(response => {
       setUser(response)
-      setUserHasMeetingList(user.userHasMeetingList)
-      // setLoading(false)
-      // console.log(response)
+      setLoading(false)
+      console.log(userHasMeetingList)
+      // console.log(response.userHasMeetingList)
     }).catch(error => {
       console.log(error)
-      // setLoading(false)
+      setLoading(false)
+      console.log(loading)
     });
   }, []);
 
   useEffect(() => {
+    if(user)
+    setUserHasMeetingList(user.userHasMeetingList)
+    console.log('ok')
+  },[user])
 
-  },[user]);
+  useEffect(() => {
+    if(userHasMeetingList > 1)
+    setHatInfo(true)
+  },[userHasMeetingList]);
+
+  useEffect(() => {
+    console.log(hatInfo)
+  },[hatInfo])
+  
 
 
+
+  // function Timelog () {
+  //   if(userHasMeetingList) {
+  //     return (
+  //       <div>
+  //         <TimeLog user={user} userHasMeetingList={userHasMeetingList}></TimeLog>
+  //       </div>
+  //     )
+  //     } else {
+  //     return (
+  //     <Grid item container xs={10} rowSpacing={5}>
+  //       <h1>프로필이 허전하네요 회의에 참여해봅시다.</h1>
+  //     </Grid>
+  //     )
+  //   }
+  // }
+  
   return (
   <Grid container columnSpacing={5}>
-    <Info user={user}></Info>
+    <Info className="kkwak" user={user}></Info>
     <TimeLog user={user} userHasMeetingList={userHasMeetingList}></TimeLog>
+
   </Grid>
   )
 };

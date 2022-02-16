@@ -47,6 +47,9 @@ function CreateTeam(props) {
               component="form"
               onSubmit={handleSubmit}
               onKeyUp={handelKeyPress}
+              spacing={2}
+              justifyContent="center"
+              alignItems="center"
               >
               <Grid item>
                 <TextField
