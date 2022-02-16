@@ -16,6 +16,7 @@ export function ManageTeam() {
   const [member, setMemeber] = useState({});
   const [submitMember, setSubmitMember] = useState(false);
   const [deleteMember, setDeleteMember] = useState(false);
+  const [isDeleted, setIsDeleted] = useState(false);
   
   const handleChangeTeamName = ({ target: {value} }) => setTeamName(value);
   
@@ -34,8 +35,15 @@ export function ManageTeam() {
   
   const handleDeleteTeam = () => {
     deleteTeam(teamId)
-    window.location.href = FRONT_BASE_URL + '/team'
+    setIsDeleted(true)
   }
+
+  useEffect(() => {
+    if (isDeleted) {
+      setIsDeleted(false)
+      window.location.href = FRONT_BASE_URL + '/team'
+    }
+  }, [isDeleted])
 
   useEffect(() => {
     getOneTeam(teamId)
