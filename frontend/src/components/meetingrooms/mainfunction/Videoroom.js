@@ -18,11 +18,13 @@ import
 
 
 export default function Videoroom() {
-  const [length, setLength] = useState(lenParticipant())
+  const [attendee, setAttendee] = useState(0)
+  
   useEffect(() => {
-    setLength(lenParticipant())
-    console.log(length)
-  }, [length])
+    const attend = document.getElementsByClassName('participant').length
+    setAttendee(attend)
+    console.log(attendee)
+  }, [])
   return (
     <Grid container id='participants' className="video-box"></Grid>
   );
