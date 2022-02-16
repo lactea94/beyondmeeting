@@ -20,7 +20,7 @@ import { WebRtcPeer } from 'kurento-utils';
 
 // var ws = new WebSocket('wss://localhost/groupcall');
 // var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
-var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
+var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');;
 var participants = {};
 var name;
 //----------------------
@@ -146,7 +146,8 @@ export function onExistingParticipants(msg) {
 	var participant = new Participant(name);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
-
+	console.log("video :",video);
+ 
 	var options = {
 						localVideo: video,
 						mediaConstraints: constraints,
