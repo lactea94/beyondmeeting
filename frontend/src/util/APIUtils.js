@@ -284,6 +284,19 @@ export function getAttendersByUserId(userId) {
         })
 }
 
+/** YYYYMM 기준으로 미팅참여횟수 조회 */
+export function getAttenderDateByUserId(userId) {
+    return axios
+        ({
+            method: "GET",
+            url: API_BASE_URL + "/attender/date/" + userId,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
+            }           
+        })
+}
+
 /** { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 return */
 export function getAttederWithHat(userId) {
     return axios
