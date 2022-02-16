@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState, useEffect }  from 'react';
 import './Videoroom.css';
+import { Grid } from '@mui/material'
 import 
   { getChannelName, 
     register, 
@@ -11,15 +12,20 @@ import
     receiveVideo, 
     onParticipantLeft, 
     onReceiveMsg, 
-    sendMessage 
+    sendMessage ,
+    lenParticipant
   } from './Kurento/conferenceroom.js';
 
 
 export default function Videoroom() {
-
+  const [attendee, setAttendee] = useState(0)
+  
+  useEffect(() => {
+    const attend = document.getElementsByClassName('participant').length
+    setAttendee(attend)
+    console.log(attendee)
+  }, [])
   return (
-    <div id='participants' className="video-box">
-
-    </div>
+    <Grid container id='participants' className="video-box"></Grid>
   );
 };

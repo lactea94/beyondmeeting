@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom'
 import {
+  Button,
   Card,
+  CardActions,
   CardContent,
+  CardHeader,
   Grid,
 } from '@mui/material';
+import StarsIcon from '@mui/icons-material/Stars';
 import { getCurrentUser } from '../../util/APIUtils';
 import CreateTeam from './CreateTeam';
 
@@ -22,27 +26,34 @@ export function TeamList() {
       console.log(error);
     }); 
   }, [reLoad]);
-  
+
   useEffect(() => {
     if (user)
       setTeams(user.userHasTeamList.map((data) => {
-        const url = `${data.team.id}`
+        const team = data.team
+        const url = `${team.id}`
         return (
           <Grid
-            key={data.team.id}
+            key={team.id}
             item xs={4}
             sx={{p:2}}
           >
             <Card>
-              <CardContent>
+              <CardHeader
+                avatar={(data.roleType === 'LEADER') && <StarsIcon/>}
+                title={team.teamName}
+              />
+              <CardActions>
                 <NavLink
                   to={url}
-                  id={data.team.id}
+                  id={team.id}
                   state={{data: data}}
                 >
-                  {data.team.teamName}
+                  <Button>
+                   DETAIL 
+                  </Button>
                 </NavLink>
-              </CardContent>
+              </CardActions>
             </Card>
           </Grid>
         )}));

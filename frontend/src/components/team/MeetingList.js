@@ -7,10 +7,7 @@ import {
 } from '@mui/material';
 import CreateMeeting from './CreateMeeting'
 import { useEffect, useState } from 'react';
-import axios from 'axios';
-import { API_BASE_URL, FRONT_BASE_URL } from '../../constants';
-import { getUsers } from '../../util/APIUtils';
-import { register } from '../meetingrooms/mainfunction/Kurento/conferenceroom';
+import { getMeetingsByTeamId, getUsers } from '../../util/APIUtils';
 
 export function MeetingList() {
   const { state } = useLocation();
@@ -33,7 +30,7 @@ export function MeetingList() {
   }, [reLoad]);
 
   useEffect(() => {
-    axios.get(API_BASE_URL + "/meeting/team/" + teamId)
+    getMeetingsByTeamId(teamId)
     .then((response => {
       setMeetingList(response.data.map(meeting => {
         const url = `${meeting.id}`
@@ -49,15 +46,15 @@ export function MeetingList() {
               <CardContent>
                 { meeting.endTime ? (
                   <NavLink
-                    to={url}
+                    to={url.concat('/result')} 
                     state={{meeting: meeting}}
                   >
                     {meeting.topic}
                   </NavLink>
                 ) : (
                   <NavLink
-                    to= 'meetingroom'
-                    state={{meeting: meeting}}
+                    to= {url.concat('/room')}
+                    state={{meeting: meeting, user: user}}
                   >
                     {meeting.topic}
                   </NavLink>
