@@ -122,7 +122,7 @@ public class CallHandler extends TextWebSocketHandler {
 
     Room room = roomManager.getRoom(roomName);//roomName으로 생성되어있는 room을 가져온다.
     final UserSession user = room.join(name, session);//name과 session을 room의 pipeline과 연결시켜 UserSession을 생성한다.
-    registry.register(user);//생성된 UserSession을 등록한다.
+    if(user!=null) registry.register(user);//생성된 UserSession을 등록한다.
   }
 
   private void leaveRoom(UserSession user) throws IOException {
