@@ -12,7 +12,6 @@ import {
   TextField
 } from '@mui/material'
 import { useState } from 'react';
-import { FRONT_BASE_URL } from '../../constants';
 import { createMeeting } from '../../util/APIUtils';
 import { ModalStyle } from './ModalStyle';
 
@@ -37,7 +36,7 @@ export function CreateMeeting(props) {
       });
     setOpen(false);
     setType('NORMAL');
-    window.location.href = FRONT_BASE_URL + '/team/' + teamid
+    window.location.reload()
   }
 
   const handelKeyPress = (event) => {
