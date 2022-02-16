@@ -55,6 +55,7 @@ export function MeetingList() {
       return (
         <NavLink
           to= {url.concat('/room')}
+          // to= {url.concat('/room/normal')}
           state={{meeting: meeting, user: user}}
         >
           NOW ON...
@@ -64,6 +65,7 @@ export function MeetingList() {
       return (
         <NavLink
           to= {url.concat('/room')}
+          // to= {url.concat('/room/sixhat')}
           state={{meeting: meeting, user: user}}
         >
           NOW ON...
