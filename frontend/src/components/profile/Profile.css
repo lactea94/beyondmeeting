@@ -12,7 +12,7 @@
 
 .sticky-info {
   position: fixed;
-  background-color: rgb(102, 103, 171);
+  background-color: #7b7cc2;
   width: 16.666%;
 }
 
@@ -23,6 +23,7 @@
   padding-top: 10vh;
   padding-bottom: 0vh;
 }
+
 .info-text2 {
   color: white;
   font-size: 1.2rem;
@@ -91,7 +92,7 @@ li p{
 
 .Card h3 {
   text-align: center;
-  padding-top: 10px;
+  /* padding-top: 10px; */
 
 }
 
@@ -110,10 +111,19 @@ img {
 }
 
 .chart-color {
-  background-color: #92d14f;
+  background-color: #333333;
 }
 /* --------------TimeLog--------------- */
 
 .font-color {
   color: white;
+}
+/* ---------piechart-------- */
+.kkwak-kkye {
+  padding-left : 2.4rem;
+  padding-right : 2.4rem;
+}
+
+.kkwak {
+  padding: 2rem;
 }
