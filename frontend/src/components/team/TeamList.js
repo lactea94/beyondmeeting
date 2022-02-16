@@ -91,10 +91,9 @@ export function TeamList() {
         <Grid item
           xs={8}
           container
-          sx={{
-            textAlign: 'center',
-            alignItems: 'center'
-          }}
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-start"
         >
           <Grid item
            sx={{
@@ -104,9 +103,7 @@ export function TeamList() {
             팀 목록 입니다...
           </Grid>
           <Grid item>
-            <CreateTeam
-              setReload={setReload}
-            />
+            <CreateTeam setReload={setReload}/>
           </Grid>
         </Grid>
         <Grid item

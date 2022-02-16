@@ -6,11 +6,10 @@ import {
     Button,
     CardHeader,
     CardActions,
-    Modal,
 } from '@mui/material';
 import { CreateMeeting } from './CreateMeeting'
 import { useEffect, useState } from 'react';
-import { getMeetingsByTeamId, getUsers, joinMeeting } from '../../util/APIUtils';
+import { getMeetingsByTeamId, getUsers } from '../../util/APIUtils';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHatCowboy, faFaceGrin } from "@fortawesome/free-solid-svg-icons";
 
