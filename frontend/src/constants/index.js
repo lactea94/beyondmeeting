@@ -1,5 +1,5 @@
 // 로컬 테스트
-// export const API_BASE_URL = 'http://localhost:8082';
+// export const API_BASE_URL = 'https://localhost:8082/api';
 // export const FRONT_BASE_URL = 'http://localhost:3000'
 // export const OAUTH2_REDIRECT_URI = 'http://localhost:3000/oauth2/redirect'
 
