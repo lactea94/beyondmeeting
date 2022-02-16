@@ -5,8 +5,8 @@ import com.beyondmeeting.backend.domain.dto.*;
 import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.*;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
-import net.minidev.json.JSONObject;
 import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -113,7 +113,43 @@ public class MeetingController {
         return ResponseEntity.status(HttpStatus.OK).body(user.getUserHasMeetingList());
     }
 
-    /*
+    /**
+     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 리스트 조회 (중복 제거)
+     *
+     * @param userId
+     * @return
+     */
+    @GetMapping("attender/hat/{userId}")
+    public ResponseEntity<ArrayList<HatInfo>> getAttenderWithHat(@PathVariable Long userId) {
+
+        User user = userRepository.findById(userId).get();
+        List<UserHasMeeting> targetList = user.getUserHasMeetingList();
+        Map<HatColor,Long> resultMap = new HashMap<>();
+        ArrayList<HatInfo> resultList = new ArrayList<>();
+
+        for (int n=0 ; n < targetList.size() ; n++) {
+
+            LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
+            LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
+
+            if (endTime != null) {
+
+                HatColor hatColor = targetList.get(n).getHat_color();
+                Long time = Duration.between(startTime, endTime).getSeconds();
+                if(resultMap.containsKey(hatColor)){
+                    resultMap.replace(hatColor,resultMap.get(hatColor)+time) ;
+                } else resultMap.put(hatColor,time);
+
+            } else continue;
+        }
+
+        for (HatColor hat: resultMap.keySet()) {
+            resultList.add(new HatInfo(hat, resultMap.get(hat)));
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(resultList);
+    }
+
+    /**
     내 유저 아이디로 미팅 참여 정보 조회
     --> YYYYMM 기준으로 미팅참여횟수 조회
      */
@@ -149,49 +185,7 @@ public class MeetingController {
         // hashmap을 json 객체로 변환
         JSONObject json = new JSONObject(hashMap);
         
-        
         return ResponseEntity.status(HttpStatus.OK).body(json);
-    }
-
-    /**
-     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 리스트 조회
-     *
-     * @param userId
-     * @return
-     */
-    @GetMapping("attender/hat/{userId}")
-    public ResponseEntity<List<HatInfo>> getAttenderWithHat(@PathVariable Long userId) {
-
-        // 찾고자 하는 유저객체를 userId 로 찾아서 user 에 저장
-        // attenders 정보가 저장된 user.getUserHasMeetingList 를 targetList 에 저장
-        // targetList 로부터 필요한 데이터만 가져와서 저장 후 리턴해줄 리스트를 resultList 선언
-        User user = userRepository.findById(userId).get();
-        List<UserHasMeeting> targetList = user.getUserHasMeetingList();
-        List<HatInfo> resultList = new ArrayList<>();
-
-        for (int n = 0; n < targetList.size(); n++) {
-
-            // endTime 이 null (= 종료되지 않은 회의) 이 아닌 로우만 찾아서,
-            // 해당 회의 durationTime 과 참여한 user 의 hatColor 을 hatInfo 객체에 저장 후,
-            // resultList 에 hatInfo 를 추가
-            LocalDateTime checkEndTime = targetList.get(n).getMeeting().getEndTime();
-            if (checkEndTime != null) {
-
-                // hatInfo 객체 생성
-                HatInfo hatInfo = new HatInfo();
-
-                // hatInfo.hatColor, hatInfo.DurationTime 값 셋팅
-                hatInfo.setHatColor(targetList.get(n).getHat_color());
-                LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
-                LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
-                hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
-
-                // resultList 에 hatInfo 저장
-                resultList.add(hatInfo);
-
-            } else continue;
-        }
-        return ResponseEntity.status(HttpStatus.OK).body(resultList);
     }
 
 
