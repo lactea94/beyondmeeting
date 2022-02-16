@@ -17,7 +17,24 @@
 .left-box {
   display: inline-block;
   height: 100%;
-  background-color: rgb(223, 162, 30);
+}
+
+.hat-info {
+  position: relative;
+}
+
+.hanger-image {
+  
+}
+
+.hat-box {
+  position: absolute;
+  top: 1%;
+  left: 23%;
+}
+
+.hat {
+  width: 70%;
 }
 
 .video-room {

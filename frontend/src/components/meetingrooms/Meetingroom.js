@@ -25,6 +25,7 @@ export const Meetingroom = () => {
   const topic = state.meeting.topic
   const meetingId = state.meeting.id
   const userName = state.user.name
+  const [isRegistered, setIsRegistered] = useState(false)
   const [openHatInfo, setOpenHatInfo] = useState(true);
   const [openChatInfo, setOpenChatInfo] = useState(false);
   const [openMemberInfo, setOpenMemberInfo] = useState(false);
@@ -54,7 +55,14 @@ export const Meetingroom = () => {
 
   useEffect(() => {
     register(userName, meetingId);
-  }, [])
+    setIsRegistered(true)
+  }, [userName, meetingId])
+
+  // useEffect(() => {
+  //   if (isRegistered) {
+      
+  //   }
+  // }, [isRegistered])
 
   useEffect(() => {
     if (openHatInfo === true && openChatInfo === true && openMemberInfo === true) {
