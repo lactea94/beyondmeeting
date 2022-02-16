@@ -7,7 +7,7 @@ import MultiCarouselPage from './MultiCarouselPage';
 
 export default function TimeLog(props) {
   const [userHasMeetingList, setUserHasMeetingList] = useState('');
-  const [hatTime, setHatTime] = useState([])// 순서는 정렬을 해서12/34/56 높은 순으로 3줄로 표현
+  const [hatTime, setHatTime] = useState([])
   const speakTime = hatTime.reduce(function add(sum, currValue) {
     return sum + currValue;
   }, 0); // 유저가 발언한 시간의 총 합 -> 초단위로 받음 reduce에 관한 -> 발언시간을 회의 참가 시간으로 변경
@@ -27,20 +27,20 @@ export default function TimeLog(props) {
     if(user)
     getAttederWithHat(user.id)
     .then(response => {
-      console.log(response)
+      // console.log(response)
       response.data.map((hat => {
         if (hat.hatColor === 'BLACK')
-        setBlackHat(blackHat+hat.durationTime)
+        setBlackHat(hat.durationTime)
         if (hat.hatColor === 'YELLOW')
-        setYellowHat(yellowHat+hat.durationTime)
+        setYellowHat(hat.durationTime)
         if (hat.hatColor === 'RED')
-        setRedHat(redHat + hat.durationTime)
+        setRedHat(hat.durationTime)
         if (hat.hatColor === 'GREEN')
-        setGreenHat(greenHat+hat.durationTime)
+        setGreenHat(hat.durationTime)
         if (hat.hatColor === 'BLUE')
-        setBlueHat(blueHat+hat.durationTime)
+        setBlueHat(hat.durationTime)
         if (hat.hatColor === 'WHITE')
-        setWhiteHat(whiteHat+hat.durationTime)
+        setWhiteHat(hat.durationTime)
       }))
     }).catch(error => {
       console.log(error)
@@ -60,11 +60,11 @@ export default function TimeLog(props) {
         ]
       )
   },[blackHat, blueHat, greenHat, redHat, whiteHat, yellowHat])
-  useEffect(() => {
-    if (hatTime)
-    console.log(hatTime)
-    // console.log(user)
-  }, [hatTime])
+  // useEffect(() => {
+  //   if (hatTime)
+  //   console.log(hatTime)
+  //   // console.log(user)
+  // }, [hatTime])
 
   function calHour(SToH) {
     return parseInt(SToH / 3600);
