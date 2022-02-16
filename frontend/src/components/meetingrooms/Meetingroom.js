@@ -32,7 +32,7 @@ export const Meetingroom = () => {
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
-  const [participants, setParticipants] = useState([])
+  const [participants, setParticipants] = useState({})
   const party = getParticipants()
 
 
@@ -121,9 +121,9 @@ export const Meetingroom = () => {
   }, [openHatInfo, openChatInfo, openMemberInfo])
 
   useEffect(() => {
+    console.log(party)
     setParticipants(party)
-  }, [party])
-  console.log(getParticipants())
+  }, [])
 
   return (
     <Grid className="room" container>
