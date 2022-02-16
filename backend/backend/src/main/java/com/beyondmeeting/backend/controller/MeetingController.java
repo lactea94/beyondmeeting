@@ -6,6 +6,7 @@ import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.*;
 import lombok.RequiredArgsConstructor;
+import net.minidev.json.JSONObject;
 import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 //@PreAuthorize("hasRole('USER')")
 @RestController
@@ -112,6 +111,46 @@ public class MeetingController {
     public ResponseEntity<List<UserHasMeeting>> getAttendersByUserId(@PathVariable Long userId){
         User user = userRepository.findById(userId).get();
         return ResponseEntity.status(HttpStatus.OK).body(user.getUserHasMeetingList());
+    }
+
+    /*
+    내 유저 아이디로 미팅 참여 정보 조회
+    --> YYYYMM 기준으로 미팅참여횟수 조회
+     */
+    @GetMapping("/attender/date/{userId}")
+    public ResponseEntity<JSONObject> getAttenderDateByUserId(@PathVariable Long userId){
+        User user = userRepository.findById(userId).get();
+        List <UserHasMeeting> meeting = user.getUserHasMeetingList();
+        HashMap<String,Integer> hashMap = new HashMap<>();
+
+        //첫번째 값
+        if(meeting.size()>=1){
+            String [] dateSplitFirst =  String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
+            String yearFirst = dateSplitFirst[0];
+            String monthFirst = dateSplitFirst[1];
+            String datesFirst = yearFirst+monthFirst;
+            hashMap.put(datesFirst,1);
+        }
+
+        for (int i=1; i<meeting.size(); i++) {
+            String [] dateSplit =  String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
+            String year = dateSplit[0];
+            String month = dateSplit[1];
+            String dates = year+month;
+
+            if(hashMap.containsKey(dates)) {
+                int val = hashMap.get(dates);
+                hashMap.remove(dates);
+                hashMap.put(dates,val+1);
+            }
+            else hashMap.put(dates,1);
+        }
+
+        // hashmap을 json 객체로 변환
+        JSONObject json = new JSONObject(hashMap);
+        
+        
+        return ResponseEntity.status(HttpStatus.OK).body(json);
     }
 
     /**
