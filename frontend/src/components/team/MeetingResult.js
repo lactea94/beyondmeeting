@@ -48,8 +48,8 @@ export function MeetingResult() {
                 alt={attender.user.name}
                 src={attender.user.imageUrl}
               />}
-              title={attender.user.name}
-              subheader={attender.user.email}
+            title={attender.user.name}
+            subheader={attender.user.email}
             sx = {{
               color: color
             }}
