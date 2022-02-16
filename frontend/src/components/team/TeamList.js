@@ -8,7 +8,6 @@ import {
   CardHeader,
   Grid,
 } from '@mui/material';
-import StarsIcon from '@mui/icons-material/Stars';
 import { getCurrentUser } from '../../util/APIUtils';
 import CreateTeam from './CreateTeam';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -76,6 +75,7 @@ export function TeamList() {
   return (
     <Grid
       container
+      alignItems="center"
       spacing={2}
       sx={{
         p:5
@@ -89,10 +89,18 @@ export function TeamList() {
         }}
       >
         <Grid item
-          xs={6}
+          xs={8}
           container
+          sx={{
+            textAlign: 'center',
+            alignItems: 'center'
+          }}
         >
-          <Grid item>
+          <Grid item
+           sx={{
+             fontSize: '1.5rem'
+           }}
+          >
             팀 목록 입니다...
           </Grid>
           <Grid item>
@@ -102,8 +110,11 @@ export function TeamList() {
           </Grid>
         </Grid>
         <Grid item
-          xs={6}
+          xs={4}
           container
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-end"
         >
           <Grid item>
             <FontAwesomeIcon icon={solidFaStar}/> : 팀장

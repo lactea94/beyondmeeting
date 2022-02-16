@@ -107,24 +107,27 @@ export function MeetingList() {
     
     return (
       <Grid
-      item
-      xs={12}
-      container
-      spacing={2}
-      sx={{
-        p: 5,
-        color: '#FFFFFF'
-      }}
-      >
-      <Grid item
-        xs={12}
         container
+        spacing={2}
+        sx={{
+          p: 5,
+          color: '#FFFFFF'
+        }}
       >
-        <Grid item xs={6} container>
+        <Grid item xs={8}
+          container
+          sx={{
+            textAlign: 'center',
+            alignItems: 'center'
+          }}
+        >
           <Grid item>
-            {teamName}
+          {teamName}
           </Grid>
           { roleType === 'LEADER' ? (
+          <Grid item
+            container
+          >
             <Grid item>
               <NavLink
                 to='update'
@@ -142,11 +145,17 @@ export function MeetingList() {
                   팀 관리
                 </Button>
               </NavLink>
-              <CreateMeeting teamId={teamId}/>
             </Grid>
-          ) : (<Grid item></Grid>)}
+            <CreateMeeting teamId={teamId}/>
+          </Grid>
+          ) : null}
         </Grid>
-        <Grid item xs={6} container>
+        <Grid item xs={4}
+          container
+          direction="column"
+          justifyContent="center"
+          alignItems="flex-end"  
+        >
           <Grid item>
             <FontAwesomeIcon icon={faHatCowboy}/> : 육색 모자
           </Grid>
@@ -154,8 +163,7 @@ export function MeetingList() {
             <FontAwesomeIcon icon={faFaceGrin}/> : 일반
           </Grid>
         </Grid>
-      </Grid>
-      <Grid item container>
+      <Grid item xs={12} container>
         {meetingList}
       </Grid>
     </Grid>
