@@ -5,6 +5,7 @@ import com.beyondmeeting.backend.domain.dto.*;
 import com.beyondmeeting.backend.login.model.User;
 import com.beyondmeeting.backend.login.repository.UserRepository;
 import com.beyondmeeting.backend.repository.*;
+import com.nimbusds.jose.shaded.json.JSONObject;
 import lombok.RequiredArgsConstructor;
 import org.apache.catalina.realm.UserDatabaseRealm;
 import org.springframework.http.HttpStatus;
@@ -13,9 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 //@PreAuthorize("hasRole('USER')")
 @RestController
@@ -115,40 +114,78 @@ public class MeetingController {
     }
 
     /**
-     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 return
+     * { 모자색깔, 해당 모자를 쓰고 참여한 회의 전체 시간 } 형태로 리스트 조회 (중복 제거)
      *
      * @param userId
      * @return
      */
     @GetMapping("attender/hat/{userId}")
-    public ResponseEntity<List<HatInfo>> getAttendersWithHat(@PathVariable Long userId){
+    public ResponseEntity<ArrayList<HatInfo>> getAttenderWithHat(@PathVariable Long userId) {
 
         User user = userRepository.findById(userId).get();
         List<UserHasMeeting> targetList = user.getUserHasMeetingList();
-        
-        List<HatInfo> resultList = new ArrayList<>();
+        Map<HatColor,Long> resultMap = new HashMap<>();
+        ArrayList<HatInfo> resultList = new ArrayList<>();
 
         for (int n=0 ; n < targetList.size() ; n++) {
 
-            LocalDateTime checkEndTime = targetList.get(n).getMeeting().getEndTime();
+            LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
+            LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
 
-            if (checkEndTime != null) {
+            if (endTime != null) {
 
-                HatInfo hatInfo = new HatInfo();
+                HatColor hatColor = targetList.get(n).getHat_color();
+                Long time = Duration.between(startTime, endTime).getSeconds();
+                if(resultMap.containsKey(hatColor)){
+                    resultMap.replace(hatColor,resultMap.get(hatColor)+time) ;
+                } else resultMap.put(hatColor,time);
 
-                // Hat Color set
-                hatInfo.setHatColor(targetList.get(n).getHat_color());
-
-                // calc Time set
-                LocalDateTime endTime = targetList.get(n).getMeeting().getEndTime();
-                LocalDateTime startTime = targetList.get(n).getMeeting().getStartTime();
-                hatInfo.setDurationTime(Duration.between(startTime, endTime).getSeconds());
-
-                resultList.add(hatInfo);
             } else continue;
         }
 
+        for (HatColor hat: resultMap.keySet()) {
+            resultList.add(new HatInfo(hat, resultMap.get(hat)));
+        }
         return ResponseEntity.status(HttpStatus.OK).body(resultList);
+    }
+
+    /**
+    내 유저 아이디로 미팅 참여 정보 조회
+    --> YYYYMM 기준으로 미팅참여횟수 조회
+     */
+    @GetMapping("/attender/date/{userId}")
+    public ResponseEntity<JSONObject> getAttenderDateByUserId(@PathVariable Long userId){
+        User user = userRepository.findById(userId).get();
+        List <UserHasMeeting> meeting = user.getUserHasMeetingList();
+        HashMap<String,Integer> hashMap = new HashMap<>();
+
+        //첫번째 값
+        if(meeting.size()>=1){
+            String [] dateSplitFirst =  String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
+            String yearFirst = dateSplitFirst[0];
+            String monthFirst = dateSplitFirst[1];
+            String datesFirst = yearFirst+monthFirst;
+            hashMap.put(datesFirst,1);
+        }
+
+        for (int i=1; i<meeting.size(); i++) {
+            String [] dateSplit =  String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
+            String year = dateSplit[0];
+            String month = dateSplit[1];
+            String dates = year+month;
+
+            if(hashMap.containsKey(dates)) {
+                int val = hashMap.get(dates);
+                hashMap.remove(dates);
+                hashMap.put(dates,val+1);
+            }
+            else hashMap.put(dates,1);
+        }
+
+        // hashmap을 json 객체로 변환
+        JSONObject json = new JSONObject(hashMap);
+        
+        return ResponseEntity.status(HttpStatus.OK).body(json);
     }
 
 
@@ -214,7 +251,7 @@ public class MeetingController {
         Long userId = meetingJoinParam.getUserId(); // input
         Long meetingId = meetingJoinParam.getMeetingId(); // input
         Long teamId = meetingRepository.findById(meetingId).get().getTeam().getId(); // meetingId 로 찾음
-        
+
         // JoinUserInfo 에 출력하기 위한 정보일 뿐 joinMeeting 로직 수행에는 크게 영향이 없다
         Long targetId = userHasTeamRepository.findAllByTeamAndUser(teamRepository.findById(teamId).get(), userRepository.findById(userId).get()).getId();
         String roleType = String.valueOf(userHasTeamRepository.findById(targetId).get().getRoleType());
@@ -265,7 +302,7 @@ public class MeetingController {
         // @RequestBody 에서 Long meetingId 를 파라미터로 넘겨 받았기 때문에 아래 행을 주석처리 함
         // 주석처리 했었는데 보니까 @RequestBody 에서는 무조건 Json 형태로 요청을 받을 수 있도록 객체로 받는게 좋은가 봄...
         Long meetingId = meetingFinishParam.getMeetingId();
-        
+
         // 파라미터로 받은 meetingId 값으로 meetingRepository 에서 meeting 객체 찾고 미팅 생성 후 null 값이였던 endTime 값을 셋팅
         Meeting meeting = meetingRepository.findById(meetingId).get();
         meeting.setEndTime(endTime);

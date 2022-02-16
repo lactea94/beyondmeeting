@@ -46,7 +46,8 @@ app:
     authorizedRedirectUris:
       - https://i6c101.p.ssafy.io:3000/oauth2/redirect
       - https://i6c101.p.ssafy.io/oauth2/redirect
-      - http://localhost:3000/oauth2/redirect
+      - https://localhost/oauth2/redirect
+      - https://localhost:3000/oauth2/redirect
       - myandroidapp://oauth2/redirect
       - myiosapp://oauth2/redirect
 
