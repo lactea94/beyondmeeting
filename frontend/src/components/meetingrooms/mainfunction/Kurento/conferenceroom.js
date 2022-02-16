@@ -71,6 +71,7 @@ ws.onmessage = function(message) {
 }
 
 export function lenParticipant() {
+	console.log(participants)
 	return Object.keys(participants).length
 }
 
