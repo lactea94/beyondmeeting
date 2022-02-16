@@ -20,7 +20,7 @@ import { WebRtcPeer } from 'kurento-utils';
 
 // var ws = new WebSocket('wss://localhost/groupcall');
 // var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
-var ws;
+var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
 var participants = {};
 var name;
 //----------------------
@@ -37,82 +37,44 @@ window.onbeforeunload = function() {
 	ws.close();
 };
 
-// ws.onmessage = function(message) {
-// 	var parsedMessage = JSON.parse(message.data);
-// 	console.info('Received message: ' + message.data);
+ws.onmessage = function(message) {
+	var parsedMessage = JSON.parse(message.data);
+	console.info('Received message: ' + message.data);
 
-// 	switch (parsedMessage.id) {
-// 	case 'existingParticipants':
-// 		onExistingParticipants(parsedMessage);
-// 		break;
-// 	case 'newParticipantArrived':
-// 		onNewParticipant(parsedMessage);
-// 		break;
-// 	case 'participantLeft':
-// 		onParticipantLeft(parsedMessage);
-// 		break;
-// 	case 'receiveVideoAnswer':
-// 		receiveVideoResponse(parsedMessage);
-// 		break;
-// 	case 'iceCandidate':
-// 		participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
-// 	        if (error) {
-// 		      console.error("Error adding candidate: " + error);
-// 		      return;
-// 	        }
-// 	    });
-// 	    break;
-// 	case 'sendChat':
-// 		onReceiveMsg(parsedMessage);
-// 		break;
-// 	default:
-// 		console.error('Unrecognized message', parsedMessage);
-// 	}
-// }
+	switch (parsedMessage.id) {
+	case 'existingParticipants':
+		onExistingParticipants(parsedMessage);
+		break;
+	case 'newParticipantArrived':
+		onNewParticipant(parsedMessage);
+		break;
+	case 'participantLeft':
+		onParticipantLeft(parsedMessage);
+		break;
+	case 'receiveVideoAnswer':
+		receiveVideoResponse(parsedMessage);
+		break;
+	case 'iceCandidate':
+		participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
+	        if (error) {
+		      console.error("Error adding candidate: " + error);
+		      return;
+	        }
+	    });
+	    break;
+	case 'sendChat':
+		onReceiveMsg(parsedMessage);
+		break;
+	default:
+		console.error('Unrecognized message', parsedMessage);
+	}
+}
+
+export function lenParticipant() {
+	return Object.keys(participants).length
+}
 
 export function register(userName, room) {
-	ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');
-
-	ws.onmessage = function(message) {
-		var parsedMessage = JSON.parse(message.data);
-		console.info('Received message: ' + message.data);
-
-		switch (parsedMessage.id) {
-		case 'existingParticipants':
-			onExistingParticipants(parsedMessage);
-			break;
-		case 'newParticipantArrived':
-			onNewParticipant(parsedMessage);
-			break;
-		case 'participantLeft':
-			onParticipantLeft(parsedMessage);
-			break;
-		case 'receiveVideoAnswer':
-			receiveVideoResponse(parsedMessage);
-			break;
-		case 'iceCandidate':
-			participants[parsedMessage.name].rtcPeer.addIceCandidate(parsedMessage.candidate, function (error) {
-						if (error) {
-						console.error("Error adding candidate: " + error);
-						return;
-						}
-				});
-				break;
-		case 'sendChat':
-			onReceiveMsg(parsedMessage);
-			break;
-		default:
-			console.error('Unrecognized message', parsedMessage);
-		}
-	}
-	// ws.onopen = (e) => {
-	// 	alert("[open] 커넥션이 만들어졌습니다.");
-	// 	alert("데이터를 서버에 전송해봅시다.");
-	// 	console.log(e)
-	// 	ws.send("My name is Bora");
-	// };
-	// name = document.getElementById('name').value;
-	// var room = document.getElementById('roomName').value;
 	name = userName;
 	var room = room;
 	
@@ -179,7 +141,7 @@ export function onExistingParticipants(msg) {
 			}
 		}
 	};
-	console.log(name + " registered in room " );
+	console.log(name + " registered in room ");
 	var participant = new Participant(name);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
