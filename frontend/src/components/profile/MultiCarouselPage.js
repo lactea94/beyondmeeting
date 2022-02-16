@@ -22,8 +22,8 @@ export default function MultiCarouselPage(props) {
   {
     return (
       <Grid>
-        <h2>{props.item.name}</h2>
-        <p>{props.item.description}</p>
+        <h2 className='font-color'>{props.item.name}</h2>
+        <p className='font-color'>{props.item.description}</p>
         {props.item.graph}
 
         <Button className="CheckButton">
@@ -34,25 +34,28 @@ export default function MultiCarouselPage(props) {
   }
 
   return (
-    <Grid item container xs={12} rowSpacing={5}>
+    <Grid item container xs={12} spacing={5}>
       <Grid item xs={6}>
-        <h2>모자 별 시간</h2>
-        <p>원그래프!</p>
-        <Piechart hatTime={hatTime}></Piechart>
-
+        <h2 className='font-color kkwak-kkye'>모자 별 시간</h2>
+          <p className='font-color kkwak-kkye'>원그래프!</p>
+        <div className='kkwak-kkye'>
+          <Piechart hatTime={hatTime}></Piechart>
+        </div>
+        <div className='kkwak-kkye'>
         <Button className="CheckButton">
           Check it out!
         </Button>
+        </div>
       </Grid>
-      {/* <Grid item xs={6}>
-        <h2>총 회의 횟수 : n회</h2>
-        <p>꺾은선 그래프!</p>
+      <Grid item xs={5.5}>
+        <h2 className='font-color'>총 회의 횟수 : n회</h2>
+        <p className='font-color'>꺾은선 그래프!</p>
         <LineChart></LineChart>
         <Button className="CheckButton">
           Check it out!
         </Button>
       </Grid>
-      <Grid item xs={6}>
+      {/* <Grid item xs={6}>
         {
           items.map( (item, i) => <Item key={i} item={item} /> )
         }
