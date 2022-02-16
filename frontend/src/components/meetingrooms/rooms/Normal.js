@@ -22,6 +22,7 @@ const Theme = styled.div`
 
 export function Normal() {
   const { state } = useLocation();
+  const [first, setFirst] = useState(true)
   const topic = state.meeting.topic;
   const userId = state.user.id;
   const meetingId = state.meeting.id;
@@ -53,10 +54,6 @@ export function Normal() {
   let [memberBoxStyle, setMemberBoxStyle] = useState({
     height: "0%"
   })
-
-  useEffect(() => {
-    window.location.reload()
-  }, [])
 
   useEffect(() => {
     register(userName, meetingId);
