@@ -3,12 +3,14 @@ import { Grid, Button } from '@mui/material';
 import LineChart from './LineChart';
 import Piechart from './PieChart';
 
-export default function MultiCarouselPage() {
+export default function MultiCarouselPage(props) {
+  const hatTime = props.hatTime
+  
   const items = [
   {
     name: "모자 별 시간",
     description: "원그래프!",
-    graph: Piechart(),
+    graph: <Piechart hatTime={hatTime}></Piechart>,
   },
   {
     name: "총 회의 횟수 : n회",
@@ -20,6 +22,7 @@ export default function MultiCarouselPage() {
   {
     return (
       <Grid>
+        <h1>{hatTime}</h1>
         <h2>{props.item.name}</h2>
         <p>{props.item.description}</p>
         {props.item.graph}

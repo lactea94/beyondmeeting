@@ -27,21 +27,20 @@ export default function TimeLog(props) {
     if(user)
     getAttederWithHat(user.id)
     .then(response => {
-      // console.log(response)
-      // eslint-disable-next-line array-callback-return
+      console.log(response)
       response.data.map((hat => {
-        if (hat.hatColor === 'RED' && redHat !== hat.durationTime)
-        setRedHat(redHat + hat.durationTime)
-        if (hat.hatColor === 'BLUE')
-        setBlueHat(blueHat+hat.durationTime)
         if (hat.hatColor === 'BLACK')
         setBlackHat(blackHat+hat.durationTime)
-        if (hat.hatColor === 'WHITE')
-        setWhiteHat(whiteHat+hat.durationTime)
         if (hat.hatColor === 'YELLOW')
         setYellowHat(yellowHat+hat.durationTime)
+        if (hat.hatColor === 'RED')
+        setRedHat(redHat + hat.durationTime)
         if (hat.hatColor === 'GREEN')
         setGreenHat(greenHat+hat.durationTime)
+        if (hat.hatColor === 'BLUE')
+        setBlueHat(blueHat+hat.durationTime)
+        if (hat.hatColor === 'WHITE')
+        setWhiteHat(whiteHat+hat.durationTime)
       }))
     }).catch(error => {
       console.log(error)
@@ -62,8 +61,8 @@ export default function TimeLog(props) {
       )
   },[blackHat, blueHat, greenHat, redHat, whiteHat, yellowHat])
   useEffect(() => {
-    // if (hatTime)
-    // console.log(hatTime)
+    if (hatTime)
+    console.log(hatTime)
     // console.log(user)
   }, [hatTime])
 
@@ -92,7 +91,7 @@ export default function TimeLog(props) {
       <Grid item xs={12}>
         <Grid className="timeLog">
           <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
-          {/* <h1>{userHasMeetingList[0].id}</h1> */}
+
         </Grid>
       </Grid>
       <Grid item xs={3}>
@@ -104,7 +103,7 @@ export default function TimeLog(props) {
         </Grid>
       </Grid>
       <Grid item xs={9}>
-        {MultiCarouselPage()}
+        <MultiCarouselPage hatTime={hatTime}></MultiCarouselPage>
       </Grid>
     </Grid>
   )
