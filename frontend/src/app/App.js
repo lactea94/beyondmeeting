@@ -22,8 +22,8 @@ function App() {
   }
     
   return (
-    <div className="App" style={ !location.pathname.includes("meetingroom") ? { paddingTop: 100 } : null }>
-      { !location.pathname.includes("meetingroom") && 
+    <div className="App" style={ !location.pathname.includes("room") ? { paddingTop: 100 } : null }>
+      { !location.pathname.includes("room") && 
         <Navbar
           authenticated={authenticated}
           setAuthenticated={setAuthenticated}
@@ -35,8 +35,8 @@ function App() {
         <Route path='team' element={<TeamList/>}></Route>
         <Route path='team/:teamId' element={<MeetingList/>}></Route>
         <Route path='team/:teamId/update' element={<ManageTeam/>}></Route>
-        <Route path='team/:teamId/:meetingId' element={<MeetingResult/>} />
-        <Route path='meetingroom' element={<Meetingroom />} />
+        <Route path='team/:teamId/:meetingId/room' element={<Meetingroom />} />
+        <Route path='team/:teamId/:meetingId/result' element={<MeetingResult/>} />
         <Route path='oauth2/redirect/*' element={<OAuth2RedirectHandler />} />
         <Route path='*' element={<NotFound/>}></Route>
       </Routes>

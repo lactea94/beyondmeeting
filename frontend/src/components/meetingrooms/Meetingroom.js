@@ -1,6 +1,7 @@
 import React from 'react';
 import './Meetingroom.css';
 import { useState, useEffect } from 'react';
+import { useLocation } from 'react-router-dom';
 import { Grid } from '@mui/material/';
 import styled from 'styled-components';
 import Hatinfo from './mainfunction/Hatinfo.js';
@@ -8,6 +9,7 @@ import Videoroom from './mainfunction/Videoroom.js';
 import Memberinfo from './mainfunction/Memberinfo.js';
 import Chat from './mainfunction/Chat.js';
 import Battombuttons from './buttons/Battombuttons';
+import { register } from './mainfunction/Kurento/conferenceroom';
 
 const Theme = styled.div`
   font-size: 18px;
@@ -19,13 +21,16 @@ const Theme = styled.div`
 `;
 
 export const Meetingroom = () => {
+  const { state } = useLocation()
+  const topic = state.meeting.topic
+  const meetingId = state.meeting.id
+  const userName = state.user.name
   const [openHatInfo, setOpenHatInfo] = useState(true);
   const [openChatInfo, setOpenChatInfo] = useState(false);
   const [openMemberInfo, setOpenMemberInfo] = useState(false);
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
-
 
   let [leftBoxStyle, setLeftBoxStyle] = useState({
     width: "18%"
@@ -46,6 +51,10 @@ export const Meetingroom = () => {
   let [memberBoxStyle, setMemberBoxStyle] = useState({
     height: "0%"
   })
+
+  useEffect(() => {
+    register(userName, meetingId);
+  }, [])
 
   useEffect(() => {
     if (openHatInfo === true && openChatInfo === true && openMemberInfo === true) {
@@ -103,7 +112,7 @@ export const Meetingroom = () => {
     <Grid className="room" container>
       <Grid className="theme-box" item xs={12}>
         <Theme>
-          회의 주제
+          {topic}
         </Theme>
       </Grid>
       <Grid className="main-func-box" item xs={12}>
