@@ -13,16 +13,33 @@ import { useState } from 'react'
 import { ACCESS_TOKEN } from '../constants';
 import { MeetingResult } from '../components/team/MeetingResult';
 
-function App() {
+
+
+export default function App() {
   const location = useLocation();
   const [authenticated, setAuthenticated] = useState(false)
-
   if (localStorage.getItem(ACCESS_TOKEN) && !authenticated) {
     setAuthenticated(true)
   }
+  function controlstyle () {
+    if(location.pathname.includes("profile")) {
+      return (
+        { paddingTop: 65 }
+      );
+    }
+    else if (!location.pathname.includes("room")) {
+      return(
+        { paddingTop: 100 }
+      );
+    } else {
+      return (
+        null
+      )
+    }
+  }
     
   return (
-    <div className="App" style={ !location.pathname.includes("room") ? { paddingTop: 100 } : null }>
+    <div className="App" style={controlstyle()}>
       { !location.pathname.includes("room") && 
         <Navbar
           authenticated={authenticated}
@@ -43,5 +60,3 @@ function App() {
     </div>
   );
 }
-
-export default App;

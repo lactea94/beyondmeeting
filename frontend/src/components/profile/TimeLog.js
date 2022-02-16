@@ -18,7 +18,9 @@ export default function TimeLog(props) {
   const [greenHat, setGreenHat] = useState(0)
   const [blueHat, setBlueHat] = useState(0)
   const [whiteHat, setWhiteHat] = useState(0)
+  const [hatInfo, setHatInfo] = useState(false)
   // https://react.vlpt.us/basic/16-useEffect.html -> 언마운트 마운트
+
   useEffect (() => {
     if (user)
     setUserHasMeetingList(user.userHasMeetingList)
@@ -46,6 +48,16 @@ export default function TimeLog(props) {
       console.log(error)
     });
   },[user]);
+
+  // useEffect(() => {
+  //   if(speakTime)
+  //   setHatInfo(true)
+  // },[speakTime]);
+
+  // useEffect(() => {
+  //   if(hatInfo)
+  //   console.log(2, hatInfo)
+  // },[hatInfo])
 
   useEffect(() => {
     if(yellowHat || redHat || blueHat || blackHat ||  greenHat || whiteHat)
@@ -86,25 +98,73 @@ export default function TimeLog(props) {
     }
     return result;
   };
-  return (
-    <Grid item container xs={10} rowSpacing={5}>
-      <Grid item xs={12}>
-        <Grid className="timeLog" sx={{mt:1}}>
-          <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
+  function didMeeting() {
+    if(speakTime) {
+      return (
+        <Grid item container xs={10} rowSpacing={5}>
+          <Grid item xs={12}>
+            <Grid className="timeLog" sx={{mt:1}}>
+              <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
 
+            </Grid>
+          </Grid>
+          <Grid item xs={3}>
+            <Grid className="Card">
+              <h3 className='font-color'> 모자 별 시간 </h3>
+              <ul>
+                {numRender()}
+              </ul>
+            </Grid>
+          </Grid>
+          <Grid item xs={9}>
+            <MultiCarouselPage hatTime={hatTime}></MultiCarouselPage>
+          </Grid>
+        </Grid>
+      );
+    } else {
+      return (
+      <Grid className='head-faraway' item container direction='column' xs={10} rowSpacing={5}>
+        <Grid className="timeLog" sx={{mt:1}}>
+          <br />
+          <br />
+          <br />
+          <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
+        </Grid>
+        <Grid className="timeLog2" rowSpacing={5} >
+          <br />
+          <br />
+          <br />
+          <h2 item className='font-color'>go to meeting~!!!</h2>
+          <br />
+          <br />
+          <br />
+          <Grid item className='font-color'>회의를 하게 되면</Grid>
+          <Grid item className='font-color'>채워집니다.</Grid>
         </Grid>
       </Grid>
-      <Grid item xs={3}>
-        <Grid className="Card">
-          <h3 className='font-color'> 모자 별 시간 </h3>
-          <ul>
-            {numRender()}
-          </ul>
-        </Grid>
-      </Grid>
-      <Grid item xs={9}>
-        <MultiCarouselPage hatTime={hatTime}></MultiCarouselPage>
-      </Grid>
-    </Grid>
+      )
+    }
+  }
+  return (
+    // <Grid item container xs={10} rowSpacing={5}>
+    //   <Grid item xs={12}>
+    //     <Grid className="timeLog" sx={{mt:1}}>
+    //       <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
+
+    //     </Grid>
+    //   </Grid>
+    //   <Grid item xs={3}>
+    //     <Grid className="Card">
+    //       <h3 className='font-color'> 모자 별 시간 </h3>
+    //       <ul>
+    //         {numRender()}
+    //       </ul>
+    //     </Grid>
+    //   </Grid>
+    //   <Grid item xs={9}>
+    //     <MultiCarouselPage hatTime={hatTime}></MultiCarouselPage>
+    //   </Grid>
+    // </Grid>
+    didMeeting()
   )
 }
