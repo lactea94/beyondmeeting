@@ -12,15 +12,17 @@ import {
   TextField
 } from '@mui/material'
 import { useState } from 'react';
+import { FRONT_BASE_URL } from '../../constants';
 import { createMeeting } from '../../util/APIUtils';
 import { ModalStyle } from './ModalStyle';
 
-function CreateMeeting(props) {
+export function CreateMeeting(props) {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const teamid = props.teamId
   const [meetingName, setMeetingName] = useState('');
-  const [type, setType] = useState('default');
+  const [type, setType] = useState('NORMAL');
 
   const handleChangeName = ({ target: {value} }) => setMeetingName(value);
   
@@ -28,16 +30,20 @@ function CreateMeeting(props) {
   
   const handleSubmit = (event) => {
     event.preventDefault()
-    createMeeting(
-      {
+    createMeeting({
         topic: meetingName,
         meetingType: type,
-        teamId: props.teamId
-      }
-      );
+        teamId: teamid
+      });
     setOpen(false);
-    props.setReload(true);
+    setType('NORMAL');
+    window.location.href = FRONT_BASE_URL + '/team/' + teamid
   }
+
+  const handelKeyPress = (event) => {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }};
 
   return (
     <Grid item>
@@ -51,6 +57,7 @@ function CreateMeeting(props) {
         >
           <form
             onSubmit={handleSubmit}
+            onKeyUp={handelKeyPress}
           >
             <CardHeader title="회의 생성">
             </CardHeader>
