@@ -73,10 +73,16 @@ export function lenParticipant() {
 	return Object.keys(participants).length
 }
 
+export function getParticipants() {
+	return participants;
+}
+
 export function register(userName, room) {
 	name = userName;
 	var room = room;
-	
+
+	console.log(lenParticipant())
+
 	var message = {
 		id : 'joinRoom',
 		name : name,
@@ -144,7 +150,6 @@ export function onExistingParticipants(msg) {
 	var participant = new Participant(name);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
-	console.log("video :",video);
  
 	let options = {
 						localVideo: video,
@@ -200,12 +205,12 @@ export function receiveVideo(sender) {
 		remoteVideo: video,
 		onicecandidate: participant.onIceCandidate.bind(participant),
 		configuration:{
-			iceServers:[{
-				"urls": 'turn:13.124.242.194:3478?transport=udp',
-				"username": 'username1',
-				"credential":'password1'
-			}]
-		}
+				iceServers:[{
+					"urls": 'turn:13.124.242.194:3478?transport=udp',
+					"username": 'username1',
+					"credential":'password1'
+				}]
+			}
     }
 
 	participant.rtcPeer = new WebRtcPeer.WebRtcPeerRecvonly(options,
@@ -230,6 +235,10 @@ export function onReceiveMsg(request) {
 	// var participant = participants[request.name];
 	// participant.dispose();
 	// delete participants[request.name];
+}
+
+export function mute(toggle) {
+	participants[name].rtcPeer.audioEnabled = toggle;
 }
 
 export default function sendMessage(message) {

@@ -9,7 +9,7 @@ import Videoroom from './mainfunction/Videoroom.js';
 import Memberinfo from './mainfunction/Memberinfo.js';
 import Chat from './mainfunction/Chat.js';
 import Battombuttons from './buttons/Battombuttons';
-import { register } from './mainfunction/Kurento/conferenceroom';
+import { register, getParticipants } from './mainfunction/Kurento/conferenceroom';
 
 const Theme = styled.div`
   font-size: 18px;
@@ -32,6 +32,9 @@ export const Meetingroom = () => {
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
+  const [participants, setParticipants] = useState([])
+  const party = getParticipants()
+
 
   let [leftBoxStyle, setLeftBoxStyle] = useState({
     width: "18%"
@@ -57,6 +60,7 @@ export const Meetingroom = () => {
     register(userName, meetingId);
     setIsRegistered(true)
   }, [userName, meetingId])
+
 
   // useEffect(() => {
   //   if (isRegistered) {
@@ -115,6 +119,11 @@ export const Meetingroom = () => {
       setMemberBoxStyle({ height: "0%" })
     }
   }, [openHatInfo, openChatInfo, openMemberInfo])
+
+  useEffect(() => {
+    setParticipants(party)
+  }, [party])
+  console.log(getParticipants())
 
   return (
     <Grid className="room" container>

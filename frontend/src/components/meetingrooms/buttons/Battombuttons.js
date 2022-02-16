@@ -3,7 +3,7 @@ import { IconButton, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { leaveRoom, register } from '../mainfunction/Kurento/conferenceroom';
+import { leaveRoom, register, mute } from '../mainfunction/Kurento/conferenceroom';
 
 
 const theme = createTheme({
@@ -40,8 +40,9 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             size="large"
             color="veryPeri"
             onClick={() => {
-              setMuted(!muted)
-              console.log("muted is", muted)
+              setMuted(!muted);
+              mute(muted);
+              console.log("muted is", muted);
             }}
           >
             음소거
