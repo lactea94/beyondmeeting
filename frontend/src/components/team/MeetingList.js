@@ -103,7 +103,7 @@ export function MeetingList() {
       })).catch(((error) => {
         console.log(error)
       }));
-    }, [teamId]);
+    }, [teamId, user]);
     
     return (
       <Grid
@@ -116,19 +116,20 @@ export function MeetingList() {
       >
         <Grid item xs={8}
           container
-          sx={{
-            textAlign: 'center',
-            alignItems: 'center'
-          }}
+          direction="row"
+          justifyContent="flex-start"
+          alignItems="center"
         >
-          <Grid item>
-          {teamName}
-          </Grid>
-          { roleType === 'LEADER' ? (
           <Grid item
-            container
+            sx={{
+              fontSize: '1.5rem',
+            }}
           >
-            <Grid item>
+            {teamName}
+          </Grid>
+          { roleType === 'LEADER' && (
+            <Grid item
+            >
               <NavLink
                 to='update'
                 state={{
@@ -138,17 +139,13 @@ export function MeetingList() {
                   teamName:teamName
                 }}
               >
-                <Button
-                  variant="contained"
-                  sx={{textDecoration: 'none'}}
-                >
-                  팀 관리
+                <Button variant="contained">
+                 팀 관리
                 </Button>
               </NavLink>
             </Grid>
-            <CreateMeeting teamId={teamId}/>
-          </Grid>
-          ) : null}
+          )}
+          { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
         </Grid>
         <Grid item xs={4}
           container
