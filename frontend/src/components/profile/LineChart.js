@@ -29,29 +29,12 @@ export default function LineChart() {
   }
 
         
-  // useEffect(() => {
-  //   getCurrentUser()
-  //        .then(response => {
-  //          setCurrentUserId(response.data.id)
-  //          console.log(response.data.id)     
-
-  //         setLoading(false)
-  //       }).catch(error => {
-  //         console.log(error)
-  //         setLoading(false)
-  //       });
-  //     }, []);
-
   useEffect(() => {
-
-    getAttenderDateByUserId(1)
+    getCurrentUser()
          .then(response => {
-           console.log(response.data)     
-          setCount(response.data)
-          console.log(count)
+           setCurrentUserId(response.id)
+           console.log(response.id)     
 
-          setData([...data,aaa])
-         
           setLoading(false)
         }).catch(error => {
           console.log(error)
@@ -59,30 +42,76 @@ export default function LineChart() {
         });
       }, []);
 
-      console.log(data)
-      console.log(count)
+  useEffect(() => {
+    if(currentUserId)
+    getAttenderDateByUserId(currentUserId)
+         .then(response => {
+           console.log(response.data)     
+          setCount(response.data)
+          // console.log(count)
+
+          // setData([...data,aaa])
+
+          setLoading(false)
+        }).catch(error => {
+          console.log(error)
+          setLoading(false)
+        });
+      }, [currentUserId]);
+
+      // console.log(data)
+      // console.log(count)
 
 // count가 바뀌고 data가 바뀌어야함.. 근데 왜 안되지?!
 
-      useEffect(() => {
 
-        // data 가 JSON객체 타입
-        var keys = Object.keys(count);
+useEffect(() => {
 
-        // for (var i=0; i<keys.length; i++) {
-          // var key = keys[i];
-        keys.forEach(function(key){ // for-each로 바꿈
-         
-          // data에 디비에서 가져온 count{"202002:4"} 를 합쳐준다.
-          setData([...data,"argument : " + key + ", value : " + count[key]])
+  console.log(count)
+  // data 가 JSON객체 타입
+  var keys = Object.keys(count);
+
+  // for (var i=0; i<keys.length; i++) {
+    // var key = keys[i];
+  keys.forEach(function(key){ // for-each로 바꿈
+   
+    // data에 디비에서 가져온 count{"202002:4"} 를 합쳐준다.
+    setData([...data,{argument :  key , value :   count[key] }])
+
+    console.log("argument : " + key + ", value : " + count[key])
+  }); 
+
+}, [count]);
+
+
+
+useEffect(() => {
+
+console.log(data)
+}, [data]);
+
+  //     useEffect(() => {
+
+  //       // data 가 JSON객체 타입
+  //       var keys = Object.keys(count);
+  //       let list = [];
+  //       // for (var i=0; i<keys.length; i++) {
+  //         // var key = keys[i];
+  //       keys.forEach(function(key){ // for-each로 바꿈
+  //         var obj = new Object()
+  //         obj.argument = key;
+  //         obj.value = count[key];
+  //         list.push(obj);
+  //         // data에 디비에서 가져온 count{"202002:4"} 를 합쳐준다.
+  //         // setData([...data,"{argument : " + key + ", value : " + count[key]]+"},")
   
-          console.log("argument : " + key + ", value : " + count[key])
-        }); 
-
-      }, []);
-
-      console.log(data)
-      console.log(count)
+  //         // console.log("argument : " + String(key) + ", value : " + count[key]+"},");
+  //       }); 
+  //       // console.log(list);
+  //     }, [count]);
+  //  // console.log(list);
+      // console.log(data)
+      // console.log(count)
 
     return (
   <Paper>
