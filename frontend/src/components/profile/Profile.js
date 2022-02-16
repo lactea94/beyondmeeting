@@ -1,5 +1,5 @@
-import TimeLog from './TimeLog'
-import Info from './Info'
+import TimeLog from './TimeLog';
+import Info from './Info';
 import './Profile.css';
 import { useEffect, useState } from 'react';
 import { getCurrentUser } from '../../util/APIUtils';
@@ -9,8 +9,9 @@ import { Grid } from '@mui/material';
 
 export function Profile() {
   const [user, setUser] = useState('');
-  const [userHasMeetingList, setUserHasMeetingList] = useState('');
-  const [loading, setLoading] = useState(true)
+  const [userHasMeetingList, setUserHasMeetingList] = useState();
+  const [loading, setLoading] = useState(true);
+  const [hatInfo, setHatInfo] = useState(false);
 
   // useEffect(() => {
   //   if (userId)
@@ -35,14 +36,33 @@ export function Profile() {
     getCurrentUser()
     .then(response => {
       setUser(response)
-      setUserHasMeetingList(user.userHasMeetingList)
-      // setLoading(false)
-      console.log(response.userHasMeetingList)
+      setLoading(false)
+      console.log(userHasMeetingList)
+      // console.log(response.userHasMeetingList)
     }).catch(error => {
       console.log(error)
-      // setLoading(false)
+      setLoading(false)
+      console.log(loading)
     });
   }, []);
+
+  useEffect(() => {
+    if(user)
+    setUserHasMeetingList(user.userHasMeetingList)
+    console.log('ok')
+  },[user])
+
+  useEffect(() => {
+    if(userHasMeetingList > 1)
+    setHatInfo(true)
+    console.log('is in')
+    console.log('----------------------')
+  },[userHasMeetingList]);
+
+  useEffect(() => {
+    console.log(hatInfo)
+  },[hatInfo])
+  
 
 
 
