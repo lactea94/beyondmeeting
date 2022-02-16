@@ -53,9 +53,8 @@ export function MeetingList() {
     } else if (meeting.meetingType === 'NORMAL') {
       return (
         <NavLink
-          to= {url.concat('/room')}
-          // to= {url.concat('/room/normal')}
-          state={{meeting: meeting, user: user}}
+          to={url.concat('/room/normal')}
+          state={{meeting: meeting, user: user, roleType: roleType}}
         >
           NOW ON...
         </NavLink>
@@ -63,9 +62,8 @@ export function MeetingList() {
     } else {
       return (
         <NavLink
-          to= {url.concat('/room')}
-          // to= {url.concat('/room/sixhat')}
-          state={{meeting: meeting, user: user}}
+          to={url.concat('/room/sixhat')}
+          state={{meeting: meeting, user: user, roleType: roleType}}
         >
           NOW ON...
         </NavLink>
