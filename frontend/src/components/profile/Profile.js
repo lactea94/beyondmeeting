@@ -55,8 +55,6 @@ export function Profile() {
   useEffect(() => {
     if(userHasMeetingList > 1)
     setHatInfo(true)
-    console.log('is in')
-    console.log('----------------------')
   },[userHasMeetingList]);
 
   useEffect(() => {
