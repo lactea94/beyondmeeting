@@ -27,8 +27,6 @@ var name;
 
 var chanId = 0;
 
-
-
 export function getChannelName () {
 	return "TestChannel" + chanId++;
 }
@@ -148,17 +146,17 @@ export function onExistingParticipants(msg) {
 	var video = participant.getVideoElement();
 	console.log("video :",video);
  
-	var options = {
+	let options = {
 						localVideo: video,
 						mediaConstraints: constraints,
 						onicecandidate: participant.onIceCandidate.bind(participant),
 		//----------------------
-						dataChannelConfig: {
-							id : getChannelName(),
-							// onopen : onOpen,
-							// onclose : onClosed
-						},
-						dataChannels : true,
+						// dataChannelConfig: {
+						// 	id : getChannelName(),
+						// 	// onopen : onOpen,
+						// 	// onclose : onClosed
+						// },
+						// dataChannels : true,
 		//----------------------
 	    			}
 	participant.rtcPeer = new WebRtcPeer.WebRtcPeerSendonly(options,
@@ -238,4 +236,8 @@ export default function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
 	ws.onopen = () => ws.send(jsonMessage);
+	if (ws.readyState === 1) {
+		ws.send(jsonMessage);
+		console.log("readyState:", ws.readyState);
+	}
 }
