@@ -31,30 +31,42 @@ export function Profile() {
   //     });
   // }, [userId]);
 
-    // if(loading) 
-    //   <LoadingIndicator></LoadingIndicator>
   useEffect(() => {
     getCurrentUser()
     .then(response => {
       setUser(response)
       setUserHasMeetingList(user.userHasMeetingList)
       // setLoading(false)
-      // console.log(response)
+      console.log(response.userHasMeetingList)
     }).catch(error => {
       console.log(error)
       // setLoading(false)
     });
   }, []);
 
-  useEffect(() => {
-
-  },[user]);
 
 
+  // function Timelog () {
+  //   if(userHasMeetingList) {
+  //     return (
+  //       <div>
+  //         <TimeLog user={user} userHasMeetingList={userHasMeetingList}></TimeLog>
+  //       </div>
+  //     )
+  //     } else {
+  //     return (
+  //     <Grid item container xs={10} rowSpacing={5}>
+  //       <h1>프로필이 허전하네요 회의에 참여해봅시다.</h1>
+  //     </Grid>
+  //     )
+  //   }
+  // }
+  
   return (
   <Grid container columnSpacing={5}>
-    <Info user={user}></Info>
+    <Info className="kkwak" user={user}></Info>
     <TimeLog user={user} userHasMeetingList={userHasMeetingList}></TimeLog>
+
   </Grid>
   )
 };

@@ -89,7 +89,7 @@ export default function TimeLog(props) {
   return (
     <Grid item container xs={10} rowSpacing={5}>
       <Grid item xs={12}>
-        <Grid className="timeLog">
+        <Grid className="timeLog" sx={{mt:1}}>
           <h1 className='font-color'>Time Log : {calHour(speakTime)}h {calMin(speakTime)}m {calSec(speakTime)}s</h1>
 
         </Grid>

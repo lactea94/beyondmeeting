@@ -3,7 +3,7 @@ import { Grid } from '@mui/material';
 export default function Info(props) {
 
   return (
-    <Grid item container xs={2}>
+    <Grid className='kkwak' item container xs={2}>
       <Grid item xs={12}>
         <div className="sticky-info profile-container">
           <div className="container">
