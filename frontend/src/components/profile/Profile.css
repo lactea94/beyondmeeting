@@ -29,7 +29,7 @@
   font-size: 1.2rem;
   /* display: inline-block; */
   padding-top: 4vh;
-  padding-bottom: 50vh;
+  padding-bottom: 100vh;
 }
 
 .info-text1:hover {
@@ -101,8 +101,14 @@ img {
   height: auto !important;
 }
 
+.font-color {
+  color: white;
+}
 
-
+.head-faraway {
+  padding-top: 5rem;
+  text-align: center;
+}
 
 .profile-info .profile-avatar img {
   width: 200px;
@@ -113,11 +119,7 @@ img {
 .chart-color {
   background-color: #333333;
 }
-/* --------------TimeLog--------------- */
 
-.font-color {
-  color: white;
-}
 /* ---------piechart-------- */
 .kkwak-kkye {
   padding-left : 2.4rem;
@@ -125,5 +127,5 @@ img {
 }
 
 .kkwak {
-  padding: 2rem;
+  padding: 0rem;
 }

@@ -36,8 +36,8 @@ export function Profile() {
     getCurrentUser()
     .then(response => {
       setUser(response)
-      setLoading(false)
-      console.log(userHasMeetingList)
+      // setLoading(false)
+      // console.log(userHasMeetingList)
       // console.log(response.userHasMeetingList)
     }).catch(error => {
       console.log(error)
@@ -49,17 +49,19 @@ export function Profile() {
   useEffect(() => {
     if(user)
     setUserHasMeetingList(user.userHasMeetingList)
-    console.log('ok')
+    // console.log('1')
   },[user])
 
   useEffect(() => {
-    if(userHasMeetingList > 1)
+    if(userHasMeetingList)
     setHatInfo(true)
+    // console.log('2', userHasMeetingList)
   },[userHasMeetingList]);
 
-  useEffect(() => {
-    console.log(hatInfo)
-  },[hatInfo])
+  // useEffect(() => {
+  //   if(hatInfo)
+  //   console.log('3', hatInfo)
+  // },[hatInfo])
   
 
 
