@@ -1,11 +1,11 @@
 import { Button, Card, Autocomplete, TextField, Grid } from '@mui/material'
 import { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
-import { FRONT_BASE_URL } from '../../constants';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { getOneTeam, inviteTeamMember, deleteTeam, deleteTeamMember, updateTeamName } from '../../util/APIUtils';
 
 export function ManageTeam() {
   const { state } = useLocation()
+  const navigate = useNavigate()
   const teamId = state.teamId
   const teamLeaderId = state.teamLeaderId
   const [teamName, setTeamName] = useState(state.teamName)
@@ -41,7 +41,7 @@ export function ManageTeam() {
   useEffect(() => {
     if (isDeleted) {
       setIsDeleted(false)
-      window.location.href = FRONT_BASE_URL + '/team'
+      navigate(-2)
     }
   }, [isDeleted])
 

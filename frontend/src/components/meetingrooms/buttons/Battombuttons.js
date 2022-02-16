@@ -3,7 +3,9 @@ import { IconButton, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { leaveRoom, register } from '../mainfunction/Kurento/conferenceroom';
+import { leaveRoom, mute } from '../mainfunction/Kurento/conferenceroom';
+import { useNavigate } from 'react-router-dom';
+import { finishMeeting } from '../../../util/APIUtils';
 
 
 const theme = createTheme({
@@ -14,10 +16,12 @@ const theme = createTheme({
   }
 })
 
-const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatInfo, openMemberInfo, setOpenMemberInfo, muted, setMuted, shareScreen, setShareScreen, exit, setExit }) => {
+const Battombuttons = (props) => {
+  const navigate = useNavigate()
   return (
     <ThemeProvider theme={theme}>
       <div className="left-bar">
+        { props.isSix &&
         <Button 
           className="hat-button"
           variant="outlined" 
@@ -25,12 +29,12 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
           size="large"
           color="veryPeri"
           onClick={() => {
-            setOpenHatInfo(!openHatInfo)
-            console.log("openHatInfo is", openHatInfo)
+            props.setOpenHatInfo(!props.openHatInfo)
+            console.log("openHatInfo is", props.openHatInfo)
             }}
         >
         모자
-        </Button>
+        </Button>}
       </div>
       <div className="middle-bar">
         <div className="mute-button-box">
@@ -40,8 +44,9 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             size="large"
             color="veryPeri"
             onClick={() => {
-              setMuted(!muted)
-              console.log("muted is", muted)
+              props.setMuted(!props.muted);
+              mute(props.muted);
+              console.log("muted is", props.muted);
             }}
           >
             음소거
@@ -54,20 +59,23 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             size="large"
             color="veryPeri"
             onClick={() => {
-              setShareScreen(!shareScreen);
-              console.log("shareScreen is", shareScreen);
-              register();
+              props.setShareScreen(!props.shareScreen);
+              console.log("shareScreen is", props.shareScreen);
             }}
-          >
+        >
             화면공유
           </Button>
         </div>
         <div className="exit-button-box">
           <IconButton
             onClick={() => {
-              setExit(!exit)
-              console.log("exit is", exit)
-              leaveRoom()
+              props.setExit(!props.exit);
+              console.log("exit is", props.exit);
+              leaveRoom();
+              if (props.roleType === 'LEADER') {
+                finishMeeting({meetingId: props.meetingId})
+              }
+              navigate(-1);
             }}
           >
             <CancelRoundedIcon className="exit-button"></CancelRoundedIcon>
@@ -82,8 +90,8 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             size="large"
             color="veryPeri"
             onClick={() => {
-              setOpenMemberInfo(!openMemberInfo)
-              console.log("openMemberInfo is", openMemberInfo)
+              props.setOpenMemberInfo(!props.openMemberInfo)
+              console.log("openMemberInfo is", props.openMemberInfo)
             }}
           >
             참여자
@@ -96,8 +104,8 @@ const Battombuttons = ({ openHatInfo, setOpenHatInfo, openChatInfo, setOpenChatI
             size="large"
             color="veryPeri"
             onClick={() => {
-              setOpenChatInfo(!openChatInfo)
-              console.log("openChatInfo is", openChatInfo)
+              props.setOpenChatInfo(!props.openChatInfo)
+              console.log("openChatInfo is", props.openChatInfo)
             }}
           >
             채팅

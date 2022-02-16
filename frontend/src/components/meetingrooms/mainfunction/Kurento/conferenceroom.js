@@ -37,7 +37,7 @@ window.onbeforeunload = function() {
 
 ws.onmessage = function(message) {
 	var parsedMessage = JSON.parse(message.data);
-	console.info('Received message: ' + message.data);
+	// console.info('Received message: ' + message.data);
 
 	switch (parsedMessage.id) {
 	case 'existingParticipants':
@@ -73,10 +73,16 @@ export function lenParticipant() {
 	return Object.keys(participants).length
 }
 
+export function getParticipants() {
+	return participants;
+}
+
 export function register(userName, room) {
 	name = userName;
 	var room = room;
-	
+
+	console.log(lenParticipant())
+
 	var message = {
 		id : 'joinRoom',
 		name : name,
@@ -112,7 +118,7 @@ export function onNewParticipant(request) {
 }
 
 export function receiveVideoResponse(result) {
-	console.log("receiveVideoResponse : "+result);
+	// console.log("receiveVideoResponse : "+result);
 	participants[result.name].rtcPeer.processAnswer (result.sdpAnswer, function (error) {
 		if (error) return console.error (error);
 	});
@@ -120,7 +126,7 @@ export function receiveVideoResponse(result) {
 
 export function callResponse(message) {
 	if (message.response !== 'accepted') {
-		console.info('Call not accepted by peer. Closing call');
+		// console.info('Call not accepted by peer. Closing call');
 		window.stop();
 	} else {
 		WebRtcPeer.processAnswer(message.sdpAnswer, function (error) {
@@ -140,11 +146,10 @@ export function onExistingParticipants(msg) {
 			}
 		}
 	};
-	console.log(name + " registered in room ");
+	// console.log(name + " registered in room ");
 	var participant = new Participant(name);
 	participants[name] = participant;
 	var video = participant.getVideoElement();
-	console.log("video :",video);
  
 	let options = {
 						localVideo: video,
@@ -200,12 +205,12 @@ export function receiveVideo(sender) {
 		remoteVideo: video,
 		onicecandidate: participant.onIceCandidate.bind(participant),
 		configuration:{
-			iceServers:[{
-				"urls": 'turn:13.124.242.194:3478?transport=udp',
-				"username": 'username1',
-				"credential":'password1'
-			}]
-		}
+				iceServers:[{
+					"urls": 'turn:13.124.242.194:3478?transport=udp',
+					"username": 'username1',
+					"credential":'password1'
+				}]
+			}
     }
 
 	participant.rtcPeer = new WebRtcPeer.WebRtcPeerRecvonly(options,
@@ -218,26 +223,30 @@ export function receiveVideo(sender) {
 }
 
 export function onParticipantLeft(request) {
-	console.log('Participant ' + request.name + ' left');
+	// console.log('Participant ' + request.name + ' left');
 	var participant = participants[request.name];
 	participant.dispose();
 	delete participants[request.name];
 }
 
 export function onReceiveMsg(request) {
-	console.log('receive from ' + request.name);
-	console.log('msg : ' + request.data);
+	// console.log('receive from ' + request.name);
+	// console.log('msg : ' + request.data);
 	// var participant = participants[request.name];
 	// participant.dispose();
 	// delete participants[request.name];
 }
 
+export function mute(toggle) {
+	participants[name].rtcPeer.audioEnabled = toggle;
+}
+
 export default function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
-	console.log('Sending message: ' + jsonMessage);
+	// console.log('Sending message: ' + jsonMessage);
 	ws.onopen = () => ws.send(jsonMessage);
 	if (ws.readyState === 1) {
 		ws.send(jsonMessage);
-		console.log("readyState:", ws.readyState);
+		// console.log("readyState:", ws.readyState);
 	}
 }
