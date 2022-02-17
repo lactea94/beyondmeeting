@@ -19,11 +19,10 @@ const theme = createTheme({
 const Battombuttons = (props) => {
   const navigate = useNavigate()
 
-  console.log(props.isSix)
   return (
     <ThemeProvider theme={theme}>
       <div className="left-bar">
-        { props.isSix &&
+        { (props.meetingType === 'SIXHAT') &&
         <Button 
           className="hat-button"
           variant="outlined" 
