@@ -41,7 +41,7 @@ export default function MultiCarouselPage(props) {
 useEffect(() => {
   getMyMeetingCount()
   .then(response => {
-    console.log(response.data)
+    // console.log(response.data)
     setCount(response.data)
   })
 }, []);
@@ -52,7 +52,7 @@ useEffect(() => {
 useEffect(() => {
   getHatLongTime()
   .then(response => {
-    console.log(response.data)
+    // console.log(response.data)
   setHatColor(response.data.hatColor)
   setDurationTime(response.data.durationTime)
   //  const hatTime = props.hatTime
