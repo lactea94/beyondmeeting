@@ -7,6 +7,7 @@ import {
   CardContent,
   CardHeader,
   Grid,
+  Pagination,
 } from '@mui/material';
 import { getCurrentUser } from '../../util/APIUtils';
 import CreateTeam from './CreateTeam';
@@ -39,7 +40,7 @@ export function TeamList() {
 
   useEffect(() => {
     if (user)
-      setTeams(user.userHasTeamList.map((data) => {
+      setTeams(user.userHasTeamList.reverse().map((data) => {
         const team = data.team
         const url = `${team.id}`
         return (
@@ -73,56 +74,60 @@ export function TeamList() {
   }, [user]);
 
   return (
-    <Grid
-      container
-      alignItems="center"
-      spacing={2}
-      sx={{
-        p:5
-      }}
+    <Grid container
+      justifyContent="center"
     >
       <Grid item
         container
-        xs={12}
+        spacing={2}
         sx={{
-          color: '#FFFFFF'
+          p:5,
+          width:"50rem"
         }}
       >
         <Grid item
-          xs={8}
           container
-          direction="column"
+          xs={12}
+          sx={{
+            color: '#FFFFFF',
+          }}
         >
           <Grid item
-           sx={{
-             fontSize: '1.5rem'
-           }}
+            xs={8}
+            container
+            direction="column"
           >
-            팀 목록 입니다...
+            <Grid item
+            sx={{
+              fontSize: '1.5rem'
+            }}
+            >
+              팀 목록 입니다...
+            </Grid>
+            <Grid item>
+              <CreateTeam setReload={setReload}/>
+            </Grid>
           </Grid>
-          <Grid item>
-            <CreateTeam setReload={setReload}/>
+          <Grid item
+            xs={4}
+            container
+            direction="column"
+            alignItems="flex-end"
+          >
+            <Grid item>
+              <FontAwesomeIcon icon={solidFaStar}/> : 팀장
+            </Grid>
+            <Grid item>
+              <FontAwesomeIcon icon={regularFaStar}/> : 팀원
+            </Grid>
           </Grid>
         </Grid>
         <Grid item
-          xs={4}
           container
-          direction="column"
-          alignItems="flex-end"
+          xs={12}
         >
-          <Grid item>
-            <FontAwesomeIcon icon={solidFaStar}/> : 팀장
-          </Grid>
-          <Grid item>
-            <FontAwesomeIcon icon={regularFaStar}/> : 팀원
-          </Grid>
+          {teams}
         </Grid>
-      </Grid>
-      <Grid item
-        container
-        xs={12}
-      >
-        {teams}
       </Grid>
     </Grid>
   );
