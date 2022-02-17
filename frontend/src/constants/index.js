@@ -6,8 +6,6 @@
 export const API_BASE_URL = 'https://i6c101.p.ssafy.io/api';
 export const OAUTH2_REDIRECT_URI = 'https://i6c101.p.ssafy.io/oauth2/redirect'
 
-// webRTC URL
-export const RTC_BASE_URL = 'https://i6c101.p.ssafy.io/meeting';
 
 // 로그인 토큰
 export const ACCESS_TOKEN = 'accessToken';
