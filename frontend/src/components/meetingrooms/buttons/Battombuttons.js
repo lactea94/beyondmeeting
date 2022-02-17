@@ -3,7 +3,7 @@ import { IconButton, Button } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { leaveRoom, mute } from '../mainfunction/Kurento/conferenceroom';
+import { leaveRoom, mute } from '../rooms/MeetingRoom.js';
 import { useNavigate } from 'react-router-dom';
 import { finishMeeting } from '../../../util/APIUtils';
 

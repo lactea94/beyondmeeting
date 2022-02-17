@@ -15,7 +15,7 @@
  *
  */
 
-import sendMessage from './conferenceroom.js'
+import sendMessage from '../../rooms/MeetingRoom.js'
 
 
 const PARTICIPANT_MAIN_CLASS = 'participant main';

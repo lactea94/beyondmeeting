@@ -14,6 +14,7 @@ import { joinMeeting } from '../../../util/APIUtils';
 //------conferenceroom--------------------------------------------------------------
 import Participant from '../mainfunction/Kurento/participant.js';
 import { WebRtcPeer } from 'kurento-utils';
+import Hatinfo from '../mainfunction/Hatinfo';
 
 
 var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');;
@@ -233,10 +234,19 @@ export function onReceiveMsg(request) {
 	// delete participants[request.name];
 }
 
+export function mute(toggle) {
+	participants[name].rtcPeer.audioEnabled = toggle;
+}
+
 export default function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
-	ws.onopen = () => ws.send(jsonMessage);
+	// ws.send(jsonMessage)
+	ws.onopen = () => {
+		ws.send(jsonMessage);
+		console.log("in onopen readyState:", ws.readyState);
+	}
+	console.log("readyState:", ws.readyState)
 	if (ws.readyState === 1) {
 		ws.send(jsonMessage);
 		console.log("readyState:", ws.readyState);
@@ -254,7 +264,7 @@ const Theme = styled.div`
   }
 `;
 
-export function Normal() {
+export function MeetingRoom() {
   const { state } = useLocation();
   const [first, setFirst] = useState(true)
   const topic = state.meeting.topic;
@@ -270,8 +280,12 @@ export function Normal() {
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
-  const [parti, setParti] = useState([])
+  const [participants, setParticipants] = useState([])
   const party = getParticipants()
+
+	let [leftBoxStyle, setLeftBoxStyle] = useState({
+    width: "18%"
+  })
 
   let [middleBoxStyle, setMiddleBoxStyle] = useState({
     width: "82%"
@@ -305,31 +319,59 @@ export function Normal() {
   }, [meetingId, userId])
 
   useEffect(() => {
-    if (openChatInfo && openMemberInfo) {
+    if (openHatInfo && openChatInfo && openMemberInfo) {
+      setLeftBoxStyle({ width: "18%" })
+      setMiddleBoxStyle({ width: "64%" })
+      setRightBoxStyle({ width: "18%" })
+      setChatBoxStyle({ height: "60%" })
+      setMemberBoxStyle({ height: "40%" })
+    } else if (openHatInfo && openChatInfo && !openMemberInfo) {
+      setLeftBoxStyle({ width: "18%" })
+      setMiddleBoxStyle({ width: "64%" })
+      setRightBoxStyle({ width: "18%" })
+      setChatBoxStyle({ height: "100%" })
+      setMemberBoxStyle({ height: "0%" })
+    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
+      setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "60%" })
       setMemberBoxStyle({ height: "40%" })
-    } else if (!openChatInfo && openMemberInfo) {
+    } else if (openHatInfo && !openChatInfo && openMemberInfo) {
+      setLeftBoxStyle({ width: "18%" })
+      setMiddleBoxStyle({ width: "64%" })
+      setRightBoxStyle({ width: "18%" })
+      setChatBoxStyle({ height: "0%" })
+      setMemberBoxStyle({ height: "100%" })
+    } else if (openHatInfo && !openChatInfo && !openMemberInfo) {
+      setLeftBoxStyle({ width: "18%" })
+      setMiddleBoxStyle({ width: "82%" })
+      setRightBoxStyle({ width: "0%" })
+      setChatBoxStyle({ height: "0%" })
+      setMemberBoxStyle({ height: "0%" })
+    } else if (!openHatInfo && !openChatInfo && openMemberInfo) {
+      setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
-    } else if (openChatInfo && !openMemberInfo) {
+    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
+      setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle( { width: "18%" })
       setChatBoxStyle({ height: "100%" })
       setMemberBoxStyle({ height: "0%" })
-    } else if (!openChatInfo && !openMemberInfo) {
+    } else if (!openHatInfo && !openChatInfo && !openMemberInfo) {
+      setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "100%" })
       setRightBoxStyle({ width: "0%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
     }
-  }, [openChatInfo, openMemberInfo])
+  }, [openHatInfo, openChatInfo, openMemberInfo])
 
   useEffect(() => {
-    setParti(party)
+    setParticipants(party)
   }, [participants])
   console.log(participants)
 
@@ -341,6 +383,12 @@ export function Normal() {
         </Theme>
       </Grid>
       <Grid className="main-func-box" item xs={12}>
+				{openHatInfo ? 
+          <div className="left-box" style={leftBoxStyle}>
+            <Hatinfo></Hatinfo>
+          </div>
+          : null
+        }
         <div className="video-room" style={middleBoxStyle}>
           <Videoroom></Videoroom>
         </div>
