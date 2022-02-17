@@ -1,3 +1,13 @@
 .hat {
   display: inline-block;
 }
+
+.hat-info {
+  position: relative;
+}
+
+.hat-box {
+  position: absolute;
+  top: 2%;
+  left: 30%;
+}
