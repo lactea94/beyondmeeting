@@ -92,8 +92,6 @@ export function TeamList() {
           xs={8}
           container
           direction="column"
-          justifyContent="center"
-          alignItems="flex-start"
         >
           <Grid item
            sx={{
@@ -110,7 +108,6 @@ export function TeamList() {
           xs={4}
           container
           direction="column"
-          justifyContent="center"
           alignItems="flex-end"
         >
           <Grid item>

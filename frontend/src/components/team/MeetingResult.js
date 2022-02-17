@@ -10,6 +10,7 @@ export function MeetingResult() {
   const [ message, setMessage ] = useState("")
   const startTime = meeting.startTime
   const endTime = meeting.endTime
+  
   function getYear(time) { return Number(time.slice(0, 4))}
   function getMonth(time) { return Number(time.slice(5, 7))}
   function getDay(time) { return Number(time.slice(8, 10))}
