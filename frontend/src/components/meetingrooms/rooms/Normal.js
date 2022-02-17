@@ -71,7 +71,7 @@ export function Normal() {
   }, [meetingId, userId])
 
   useEffect(() => {
-    if (openChatInfo && !openMemberInfo) {
+    if (openChatInfo && openMemberInfo) {
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "60%" })
