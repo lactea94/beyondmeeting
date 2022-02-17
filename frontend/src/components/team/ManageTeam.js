@@ -36,39 +36,45 @@ export function ManageTeam() {
   const [submitMember, setSubmitMember] = useState(false);
   const [deleteMember, setDeleteMember] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  const handleChangeTeamName = ({ target: {value} }) => setTeamName(value);
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
   
-  const handleSubmitTeamName = (event) => {
+  // 팀 이름 변경
+  function handleChangeTeamName({ target: {value} }) {setTeamName(value)};
+  
+  // 팀 이름 수정
+  function handleSubmitTeamName(event) {
     event.preventDefault()
     updateTeamName(teamId, {teamName:teamName})
   };
   
-  const handleChangeMember = (event, value) => setMemeber(value);
+  // 팀 멤버 변경
+  function handleChangeMember(event, value) {setMemeber(value)};
   
-  const handleSubmitMember = (event) => {
+  // 팀 멤버 초대
+  function handleSubmitMember(event) {
     event.preventDefault()
     inviteTeamMember({team: teamId, user: member.id})
     setSubmitMember(true)
   };
   
-  const handleDeleteTeam = () => {
+  // 팀 삭제
+  function handleDeleteTeam() {
     deleteTeam(teamId)
     setIsDeleted(true)
-  }
+  };
 
-  const handleGoback = () => {
-    navgate(-1)
-  }
+  // 뒤로 가기
+  function handleGoback() {navgate(-1)};
   
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(5);
-  
-  const handleChangePage = (event, newPage) => {
+  // pagination 이동
+  function handleChangePage(event, newPage) {
     console.log(newPage)
     setPage(newPage);
   };
 
-  const handleChangeRowsPerPage = (event) => {
+  // pagination 범위 지정
+  function handleChangeRowsPerPage(event) {
     setRowsPerPage(+event.target.value);
     setPage(0);
   };
