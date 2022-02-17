@@ -1,4 +1,22 @@
-import { Button, Card, Autocomplete, TextField, Grid, CardHeader, CardContent } from '@mui/material'
+import {
+  Button,
+  Card,
+  Autocomplete,
+  TextField,
+  Grid,
+  CardHeader,
+  CardContent,
+  CardActions,
+  TableContainer,
+  Table,
+  TableRow,
+  TableCell,
+  TableHead,
+  TableBody,
+  TablePagination
+} from '@mui/material'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faUserMinus, faStar } from "@fortawesome/free-solid-svg-icons";
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getOneTeam, inviteTeamMember, deleteTeam, deleteTeamMember, updateTeamName } from '../../util/APIUtils';
@@ -17,14 +35,13 @@ export function ManageTeam() {
   const [submitMember, setSubmitMember] = useState(false);
   const [deleteMember, setDeleteMember] = useState(false);
   const [isDeleted, setIsDeleted] = useState(false);
-  
   const handleChangeTeamName = ({ target: {value} }) => setTeamName(value);
   
   const handleSubmitTeamName = (event) => {
     event.preventDefault()
     updateTeamName(teamId, {teamName:teamName})
   };
-
+  
   const handleChangeMember = (event, value) => setMemeber(value);
   
   const handleSubmitMember = (event) => {
@@ -37,6 +54,19 @@ export function ManageTeam() {
     deleteTeam(teamId)
     setIsDeleted(true)
   }
+  
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+  
+  const handleChangePage = (event, newPage) => {
+    console.log(newPage)
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (event) => {
+    setRowsPerPage(+event.target.value);
+    setPage(0);
+  };
 
   useEffect(() => {
     if (isDeleted) {
@@ -44,7 +74,7 @@ export function ManageTeam() {
       navigate(-2)
     }
   }, [isDeleted])
-
+  
   useEffect(() => {
     getOneTeam(teamId)
     .then(response => {
@@ -55,35 +85,42 @@ export function ManageTeam() {
       console.log(error)
     })
   }, [submitMember, deleteMember, teamId])
-
+  
   useEffect(() => {
     if (currentTeam)
-      setCurrentTeamId(currentTeam.map(member => member.id))
-      setCurrentTeamList(currentTeam.map(member => {
+    setCurrentTeamId(currentTeam.map(member => member.id))
+      setCurrentTeamList(currentTeam.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map(member => {
         return (
-          <div
+          <TableRow
             key={member.id}
-          >
-            { member.email }
-            { member.id !== teamLeaderId ?
-              <Button
-                id={member.id}
-                onClick={(event) => {
-                  deleteTeamMember(teamId, event.target.id)
-                  setDeleteMember(true)
-                }}
-              >삭제</Button>
-            : null}
-          </div>
+            tabIndex={-1}
+            >          
+            <TableCell>{ member.name}</TableCell>
+            <TableCell>{ member.email }</TableCell>            
+            <TableCell align="center">
+              { member.id !== teamLeaderId ?
+                  <Button
+                  id={member.id}
+                    onClick={(event) => {
+                      deleteTeamMember(teamId, event.target.id)
+                      setDeleteMember(true)
+                    }}
+                  >
+                    <FontAwesomeIcon  icon={faUserMinus}/>
+                  </Button>
+                : <FontAwesomeIcon icon={faStar}/>}
+            </TableCell>
+          </TableRow>
         )
       }))
-  }, [currentTeam, teamId, teamLeaderId])
-  
+    }, [currentTeam, page, rowsPerPage, teamId, teamLeaderId])
+    
   return (
     <Card
       sx={{
-        mt:'10rem',
-        mx:'20rem'
+        mt: '5rem',
+        mx: 'auto',
+        width: '30rem'
       }}
     >
       <CardHeader
@@ -92,48 +129,46 @@ export function ManageTeam() {
       <CardContent>
         <Grid
           container
-          direction="row"
           alignItems="center"
-          component="form"
-          onSubmit={handleSubmitTeamName}
         >
-          <Grid item xs={5}>
-            <TextField
-              label="팀 이름"
-              defaultValue={teamName}
-              onChange={handleChangeTeamName}
-            />
-          </Grid>
-          <Grid item xs={1}>
-            <Button
-              type="submit"
-              variant="contained"
-            >
-              수정
-            </Button>
-          </Grid>
-          <Grid item xs={4}></Grid>
-          <Grid item xs={2}>
-            <Button
-              variant="contained"
-              onClick={handleDeleteTeam}
-            >
-              팀 삭제
-            </Button>
+          <Grid item
+            container
+            spacing={2}
+            alignItems="center"
+            component="form"
+            onSubmit={handleSubmitTeamName}
+          >
+            <Grid item>
+              <TextField
+                label="팀 이름"
+                size="small"
+                defaultValue={teamName}
+                onChange={handleChangeTeamName}
+              />
+            </Grid>
+            <Grid item>
+              <Button
+                type="submit"
+                variant="contained"
+              >
+                수정
+              </Button>
+            </Grid>
           </Grid>
         </Grid>
       </CardContent>
       <CardContent>
         <Grid
           container
-          alignItems="center"
           spacing={2}
+          alignItems="center"
           component="form"
           onSubmit={handleSubmitMember}
         >
           <Grid item>
             <Autocomplete
               options={users}
+              size="small"
               getOptionLabel={(option) => option.email}
               getOptionDisabled={(option) =>
                 currentTeamId.some(value => value===option.id)
@@ -158,7 +193,42 @@ export function ManageTeam() {
           </Grid>
         </Grid>
       </CardContent>
-      {currentTeamList}
+        <TableContainer>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>이름</TableCell>
+                <TableCell>e-mail</TableCell>
+                <TableCell></TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {currentTeamList}
+            </TableBody>
+          </Table>
+        </TableContainer>
+        <TablePagination
+          rowsPerPageOptions={[5, 10, 20]}
+          component="div"
+          count={currentTeam.length}
+          rowsPerPage={rowsPerPage}
+          page={page}
+          onPageChange={handleChangePage}
+          onRowsPerPageChange={handleChangeRowsPerPage}
+        />
+      <CardActions>
+        <Grid container
+          justifyContent="flex-end"
+        >
+          <Button
+            variant="contained"
+            color= 'warning'
+             onClick={handleDeleteTeam}
+          >
+            팀 삭제
+          </Button>
+        </Grid>
+      </CardActions>
     </Card>
   );
 };
