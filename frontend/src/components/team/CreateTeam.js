@@ -11,13 +11,13 @@ import { ModalStyle } from './ModalStyle';
 
 function CreateTeam(props) {
   const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  function handleOpen() {setOpen(true)};
+  function handleClose() {setOpen(false)};
   const [teamName, setTeamName] = useState('');
 
-  const handleChange = ({ target: {value} }) => setTeamName(value);
+  function handleChange({ target: {value} }) {setTeamName(value)};
 
-  const handleSubmit = (event) => {
+  function handleSubmit(event) {
     event.preventDefault();
     createTeam({teamName: teamName});
     setTeamName('');
@@ -25,7 +25,7 @@ function CreateTeam(props) {
     props.setReload(true);
   };
   
-  const handelKeyPress = (event) => {
+  function handelKeyPress(event) {
     if (event.key === "Enter") {
       handleSubmit();
     }
