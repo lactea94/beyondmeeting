@@ -92,10 +92,8 @@ export default function TimeLog(props) {
     for (let i = 0; i < hatTime.length; i++) {
       result.push(
       <li key={`모자${i}`}>
-        <div>
         <img src={require(`./img/모자${i}.png`)} alt=""></img>
         <p className='font-color'>Time Log : {calHour(hatTime[i]) } h {calMin(hatTime[i])} m {calSec(hatTime[i])}s</p>
-        </div>
       </li>);
     }
     return result;
