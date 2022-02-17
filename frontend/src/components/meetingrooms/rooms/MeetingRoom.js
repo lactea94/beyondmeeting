@@ -477,7 +477,7 @@ export function MeetingRoom() {
 						}
 						{openChatInfo ?
 							<div className="chat-box" item style={chatBoxStyle}>
-								{Chat(userId, meetingId)}
+								{Chat(meetingId)}
 							</div> 
 							: null
 						}
