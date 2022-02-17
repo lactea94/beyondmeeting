@@ -3,30 +3,41 @@ import './Hatinfo.css'
 import { ReactComponent as Hanger } from '../img/옷걸이.svg'
 
 
-export default function Hatinfo() {
-  function getColor(color) {
-    switch (color) {
-      case 'RED':
-        return '../img/모자2.png'
-      case 'GREEN':
-        return '../img/모자3.png'
-      case 'BLUE':
-        return '../img/모자4.png'
-      case 'WHITE':
-        return '../img/모자5.png'
-      case 'BLACK':
-        return '../img/모자0.png'
-      case 'YELLOW':
-        return '../img/모자1.png'
-      default:
-        return false
-    }
-  }
+export default function Hatinfo(props) {
+  // const [img, setImg] = useState('')
+
+  // useEffect(() => {
+  //   switch (props) {
+  //     case 'RED':
+  //       setImg('./img/모자2.png')
+  //       break; 
+  //     case 'GREEN':
+  //       setImg('./img/모자3.png')
+  //       break; 
+  //     case 'BLUE':
+  //       setImg('./img/모자4.png')
+  //       break; 
+  //     case 'WHITE':
+  //       setImg('./img/모자5.png')
+  //       break;
+  //     case 'BLACK':
+  //       setImg('./img/모자0.png')
+  //       break;
+  //     case 'YELLOW':
+  //       setImg('./img/모자1.png')
+  //       break;
+  //     default:
+  //       setImg(false)
+  //       break;
+  //   }
+  // }, [])
+  
   return (
     <div className="hat-info">
       <Hanger className='hanger-image' width='70%'></Hanger>
-      <div className='hat-box'>
-        {getColor() ? <img className='hat' src={require(getColor())} alt='모자'/> : null}
+      {props !== "NORMAL" ? <div className='hat-box'><img className='hat' src={require('./img/' + props + '.png')} alt='모자'/></div> : null}
+      <div className='info-box'>
+        
       </div>
     </div>
   );
