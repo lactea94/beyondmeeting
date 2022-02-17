@@ -1,0 +1,90 @@
+package com.beyondmeeting.backend.controller;
+
+import com.beyondmeeting.backend.domain.UserHasMeeting;
+import com.beyondmeeting.backend.login.model.User;
+import com.beyondmeeting.backend.login.repository.UserRepository;
+import com.beyondmeeting.backend.repository.MeetingRepository;
+import com.beyondmeeting.backend.repository.TeamRepository;
+import com.beyondmeeting.backend.repository.UserHasMeetingRepository;
+import com.beyondmeeting.backend.repository.UserHasTeamRepository;
+import com.nimbusds.jose.shaded.json.JSONObject;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RestController;
+
+import java.util.*;
+
+
+//@PreAuthorize("hasRole('USER')")
+@RestController
+@RequiredArgsConstructor
+public class ChartController {
+
+    private final MeetingRepository meetingRepository;
+    private final UserRepository userRepository;
+    private final TeamRepository teamRepository;
+    private final UserHasMeetingRepository userHasMeetingRepository;
+    private final UserHasTeamRepository userHasTeamRepository;
+
+    /**
+     내 유저 아이디로 미팅 참여 정보 조회
+     --> YYYYMM 기준으로 미팅참여횟수 조회
+     */
+    @GetMapping("/attender/date/{userId}")
+    public ArrayList<JSONObject> getAttenderDateByUserId(@PathVariable Long userId) {
+        User user = userRepository.findById(userId).get();
+        List<UserHasMeeting> meeting = user.getUserHasMeetingList();
+        Map<Long, Integer> hashMap = new HashMap<>();
+
+        //첫번째 값
+        if (meeting.size() >= 1) {
+            String[] dateSplitFirst = String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
+            String yearFirst = dateSplitFirst[0].substring(2);
+            String monthFirst = dateSplitFirst[1];
+            Long datesFirst = Long.valueOf(yearFirst + monthFirst);
+            hashMap.put(datesFirst, 1);
+        }
+
+        for (int i = 1; i < meeting.size(); i++) {
+            String[] dateSplit = String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
+            String year = dateSplit[0].substring(2);
+            String month = dateSplit[1];
+            Long dates = Long.valueOf(year + month);
+
+            if (hashMap.containsKey(dates)) {
+                int val = hashMap.get(dates);
+                hashMap.remove(dates);
+                hashMap.put(dates, val + 1);
+            } else hashMap.put(dates, 1);
+        }
+
+        // key순으로 정렬
+        Object [] mapKey = hashMap.keySet().toArray();
+        Arrays.sort(mapKey);
+
+        ArrayList<JSONObject> list = new ArrayList<>();
+        JSONObject temp = new JSONObject();
+        temp.put("argument","START");
+        temp.put("value", 0);
+        list.add(temp);
+
+        for (Long nkey : hashMap.keySet()) {
+            temp = new JSONObject();
+
+            String key1 = String.valueOf(nkey).substring(0,2);
+            String key2 = String.valueOf(nkey).substring(2,4);
+            temp.put("argument", key1+"년 "+key2+"월");
+            temp.put("value", hashMap.get(nkey));
+
+            list.add(temp);
+        }
+
+        return list;
+
+        // hashmap을 json 객체로 변환
+//        JSONObject json = new JSONObject(temp);
+
+//        return ResponseEntity.status(HttpStatus.OK).body(list);
+    }
+}
