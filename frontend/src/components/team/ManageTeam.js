@@ -22,6 +22,7 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { getOneTeam, inviteTeamMember, deleteTeam, deleteTeamMember, updateTeamName } from '../../util/APIUtils';
 
 export function ManageTeam() {
+  const navgate = useNavigate()
   const { state } = useLocation()
   const navigate = useNavigate()
   const teamId = state.teamId
@@ -53,6 +54,10 @@ export function ManageTeam() {
   const handleDeleteTeam = () => {
     deleteTeam(teamId)
     setIsDeleted(true)
+  }
+
+  const handleGoback = () => {
+    navgate(-1)
   }
   
   const [page, setPage] = useState(0);
@@ -134,6 +139,7 @@ export function ManageTeam() {
           <Grid item
             container
             spacing={2}
+            justifyContent="space-between"
             alignItems="center"
             component="form"
             onSubmit={handleSubmitTeamName}
@@ -142,6 +148,9 @@ export function ManageTeam() {
               <TextField
                 label="팀 이름"
                 size="small"
+                sx={{
+                  width:"22rem"
+                }}
                 defaultValue={teamName}
                 onChange={handleChangeTeamName}
               />
@@ -161,19 +170,22 @@ export function ManageTeam() {
         <Grid
           container
           spacing={2}
+          justifyContent="space-between"
           alignItems="center"
           component="form"
           onSubmit={handleSubmitMember}
         >
-          <Grid item>
+          <Grid item xs={9}>
             <Autocomplete
               options={users}
               size="small"
+              sx={{
+                width:"22rem"
+              }}
               getOptionLabel={(option) => option.email}
               getOptionDisabled={(option) =>
                 currentTeamId.some(value => value===option.id)
               }
-              sx={{ width: 300 }}
               renderInput={(params) => (
                 <TextField
                 {...params}
@@ -218,12 +230,18 @@ export function ManageTeam() {
         />
       <CardActions>
         <Grid container
-          justifyContent="flex-end"
+          justifyContent="space-between"
         >
           <Button
             variant="contained"
+            onClick={handleGoback}
+          >
+            뒤로가기
+          </Button>
+          <Button
+            variant="contained"
             color= 'warning'
-             onClick={handleDeleteTeam}
+            onClick={handleDeleteTeam}
           >
             팀 삭제
           </Button>
