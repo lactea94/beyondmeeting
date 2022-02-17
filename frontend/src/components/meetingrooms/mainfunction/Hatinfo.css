@@ -14,6 +14,8 @@
 
 .info-box {
   position: absolute;
-  top: 50%;
-  left: 10%;
+  top: 43%;
+  left: 23%;
+  width: 55%;
+  height: auto;
 }
