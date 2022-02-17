@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://13.124.242.194:3306/BeyondMeeting?serverTimezone=UTC&useUniCode=yes&characterEncoding=UTF-8
+    url: jdbc:mysql://13.124.242.194:3306/BeyondMeeting?serverTimezone=Asia/Seoul&useUniCode=yes&characterEncoding=UTF-8
     username: ssafy
     password: ssafy
     driver-class-name: com.mysql.cj.jdbc.Driver
