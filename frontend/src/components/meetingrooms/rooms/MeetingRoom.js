@@ -540,7 +540,7 @@ export function MeetingRoom() {
 						}
 						{openChatInfo ?
 							<div className="chat-box" item style={chatBoxStyle}>
-								<Chat></Chat>
+								{Chat(meetingId)}
 							</div> 
 							: null
 						}

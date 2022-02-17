@@ -1,7 +1,7 @@
 import { Avatar, Card, CardContent, CardHeader, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { getAttendersByMeetingId, getMeesagesByMeetingId } from "../../util/APIUtils"
+import { getAttendersByMeetingId, getMeesagesByMeetingId, getMessages } from "../../util/APIUtils"
 
 export function MeetingResult() {
   const { state } = useLocation()
@@ -64,7 +64,16 @@ export function MeetingResult() {
   useEffect(() => {
     getMeesagesByMeetingId(meeting.id)
     .then(response => {
-      setMessage(response.data)
+      setMessage(response.data.map(message => {
+        console.log(message)
+        return (
+          <div>
+            <p>{message.user.name}</p>
+            <p>{}</p>
+            <p>{}</p>
+          </div>
+        )
+      }))
     }).catch(error => {
       console.log(error)
     })
