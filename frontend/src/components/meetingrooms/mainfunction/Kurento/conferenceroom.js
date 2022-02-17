@@ -14,8 +14,7 @@
  * limitations under the License.
  *
  */
-import React from 'react'
-import { useState, useEffect } from 'react';
+
 import Participant from './participant.js';
 import { WebRtcPeer } from 'kurento-utils';
 
@@ -68,7 +67,7 @@ ws.onmessage = function(message) {
 		console.error('Unrecognized message', parsedMessage);
 	}
 }
-
+//-------------------------------mine
 export function lenParticipant() {
 	console.log(participants)
 	return Object.keys(participants).length
@@ -77,7 +76,7 @@ export function lenParticipant() {
 export function getParticipants() {
 	return participants;
 }
-
+//-------------------------------------
 export function register(userName, room) {
 	name = userName;
 	var room = room;
@@ -238,6 +237,11 @@ export function onReceiveMsg(request) {
 	// delete participants[request.name];
 }
 
+export function mute(toggle) {
+	participants[name].rtcPeer.audioEnabled = toggle;
+}
+
+
 export default function sendMessage(message) {
 	var jsonMessage = JSON.stringify(message);
 	console.log('Sending message: ' + jsonMessage);
@@ -246,16 +250,4 @@ export default function sendMessage(message) {
 		ws.send(jsonMessage);
 		console.log("readyState:", ws.readyState);
 	}
-}
-
-export const Conferenceroom = () => {
-	// const [parti, setParti] = useState({});
-	
-	useEffect(() => {
-		console.log(participants)
-	}, [participants])
-	
-	return (
-		getChannelName()
-	)
 }
