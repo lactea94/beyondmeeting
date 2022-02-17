@@ -99,19 +99,20 @@ useEffect(() => {
   if (hatColor === 'BLACK'){
     setImg( <img src={require('./img/모자0.png')} alt='cap'></img>)
     setDescription(
-      <Grid container> 
+      <div> 
       <br></br>
       <div>✔  비평가 </div> 
       <br></br>
       <div>✔  판사 역할, 비판적 판단 </div>
       <br></br>
       <div>✔  적합과 부적합의 지적</div>
-     </Grid>)
+     </div>)
     }
   if (hatColor === 'YELLOW'){
     setImg(<img src={require('./img/모자1.png')} alt='cap'></img>)
     setDescription(
       <div> 
+        <br></br>
         <div>✔ 당신은 주로 '낙관주의자' 입니다. </div> 
         <br></br>
         <div>✔ 당신은 주로 '긍정적인 사고'를 합니다. </div>
@@ -207,8 +208,8 @@ useEffect(() => {
                     <h2 id="unstyled-modal-title">내가 가장 좋아하는 모자는 <span style= {{color:hatColor}}> {hatColor}</span> 입니다. </h2>
                   </Grid>
 
-                <Grid item xs={8}>
-                  <Grid sx={{mt:2}}>
+                <Grid item xs={9}>
+                  <Grid sx={{mt:2}} >
                     <h4 id="unstyled-modal-description"> ⏰ {resultTime} 동안 회의를 했습니다. </h4>
                   </Grid>
                   <Grid sx={{mt:2}}>
@@ -216,7 +217,7 @@ useEffect(() => {
                   </Grid>
                 </Grid>
 
-                <Grid item xs={4}sx={{mt:4}}>
+                <Grid item xs={3}sx={{mt:4}}>
                   {img}
                 </Grid>
 
