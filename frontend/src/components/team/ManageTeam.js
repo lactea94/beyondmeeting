@@ -78,7 +78,7 @@ export function ManageTeam() {
       setIsDeleted(false)
       navigate(-2)
     }
-  }, [isDeleted])
+  }, [isDeleted, navigate])
   
   useEffect(() => {
     getOneTeam(teamId)
@@ -113,7 +113,7 @@ export function ManageTeam() {
                   >
                     <FontAwesomeIcon  icon={faUserMinus}/>
                   </Button>
-                : <FontAwesomeIcon icon={faStar}/>}
+                : <FontAwesomeIcon icon={faStar} color="#ffee58"/>}
             </TableCell>
           </TableRow>
         )
