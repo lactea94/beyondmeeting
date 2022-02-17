@@ -287,7 +287,11 @@ export function MeetingRoom() {
 	const [isSix, setIsSix] = useState(true);
 	const [hatColor, setHatColor] = useState('RED');
 	const handleClose = () => setOpen(false);
-  const party = getParticipants()
+  const party = getParticipants();
+	const [part, setPart] = useState({});
+	const getPart = (part) => {
+		setPart(part);
+	}
 
 	let [leftBoxStyle, setLeftBoxStyle] = useState({
     width: "18%"
@@ -466,7 +470,7 @@ export function MeetingRoom() {
 			<Grid className="main-func-box" item xs={12}>
 				{openHatInfo ? 
 					<div className="left-box" style={leftBoxStyle}>
-						<Hatinfo></Hatinfo>
+						{Hatinfo(hatColor)}
 					</div>
 					: null
 				}
@@ -477,7 +481,7 @@ export function MeetingRoom() {
 					<div className="right-box" style={rightBoxStyle}>
 						{openMemberInfo ? 
 							<div className="member-box" item style={memberBoxStyle}>
-								<Memberinfo></Memberinfo>
+								<Memberinfo part={part}></Memberinfo>
 							</div>
 							: null
 						}
@@ -502,6 +506,7 @@ export function MeetingRoom() {
 					exit={exit}  setExit={setExit} isSix={isSix} roleType={roleType}
 					participants = {participants}
 					parti={parti} setParti = {setParti}
+					part={part} getPart={getPart}
 				></Battombuttons>
 			</Grid>
 		</Grid>
