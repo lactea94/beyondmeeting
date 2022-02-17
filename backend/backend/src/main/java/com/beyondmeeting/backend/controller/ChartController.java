@@ -43,22 +43,22 @@ public class ChartController {
     public ArrayList<JSONObject> getAttenderDateByUserId(@PathVariable Long userId) {
         User user = userRepository.findById(userId).get();
         List<UserHasMeeting> meeting = user.getUserHasMeetingList();
-        Map<Long, Integer> hashMap = new HashMap<>();
+        Map<Integer, Integer> hashMap = new HashMap<>();
 
         //첫번째 값
         if (meeting.size() >= 1) {
             String[] dateSplitFirst = String.valueOf(meeting.get(0).getMeeting().getStartTime()).split("-");
-            String yearFirst = dateSplitFirst[0].substring(2);
-            String monthFirst = dateSplitFirst[1];
-            Long datesFirst = Long.valueOf(yearFirst + monthFirst);
+            Integer yearFirst = Integer.parseInt(dateSplitFirst[0].substring(2));
+            Integer monthFirst = Integer.parseInt(dateSplitFirst[1]);
+            Integer datesFirst = yearFirst*100 + monthFirst;
             hashMap.put(datesFirst, 1);
         }
 
         for (int i = 1; i < meeting.size(); i++) {
             String[] dateSplit = String.valueOf(meeting.get(i).getMeeting().getStartTime()).split("-");
-            String year = dateSplit[0].substring(2);
-            String month = dateSplit[1];
-            Long dates = Long.valueOf(year + month);
+            Integer year = Integer.parseInt(dateSplit[0].substring(2));
+            Integer month = Integer.parseInt(dateSplit[1]);
+            Integer dates = year*100 + month;
 
             if (hashMap.containsKey(dates)) {
                 int val = hashMap.get(dates);
@@ -68,22 +68,26 @@ public class ChartController {
         }
 
         // key순으로 정렬
-        Object [] mapKey = hashMap.keySet().toArray();
-        Arrays.sort(mapKey);
+//        Object [] mapKey = hashMap.keySet().toArray();
+//        Arrays.sort(mapKey);
 
-        List<Long> keysetList = new ArrayList<>(hashMap.keySet());
-        Collections.sort(keysetList, new Comparator<Long>() {
-            @Override
-            public int compare(Long o1, Long o2) {
-                return hashMap.get(o1).compareTo(hashMap.get(o2));
-            }
-        });
+        List<Integer> keysetList = new ArrayList<>(hashMap.keySet());
+        Collections.sort(keysetList);
+//        keysetList.sort(Collections.reverseOrder()); // 내림차순
+        
+        
+//        Collections.sort(keysetList, new Comparator<Integer>() {
+//            @Override
+//            public int compare(Integer o1, Integer o2) {
+//                return hashMap.get(o1).compareTo(hashMap.get(o2));
+//            }
+//        });
 //        HatColor longHat = keysetList.get(0);
 //        Long longHatTime = resultMap.get(longHat);
 
-        for(Long e : keysetList){
-            System.out.println(e+","+hashMap.get(e));
-        }
+//        for(Integer e : keysetList){
+//            System.out.println(e+","+hashMap.get(e));
+//        }
 
         ArrayList<JSONObject> list = new ArrayList<>();
         JSONObject temp = new JSONObject();
@@ -91,7 +95,7 @@ public class ChartController {
         temp.put("value", 0);
         list.add(temp);
 
-        for (Long nkey : keysetList) {
+        for (Integer nkey : keysetList) {
             temp = new JSONObject();
 
             String key1 = String.valueOf(nkey).substring(0,2);
