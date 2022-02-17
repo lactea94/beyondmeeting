@@ -123,7 +123,7 @@ export const Meetingroom = () => {
   useEffect(() => {
     console.log(party)
     setParticipants(party)
-  }, [])
+  }, [party])
 
   return (
     <Grid className="room" container>

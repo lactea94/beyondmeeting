@@ -9,7 +9,7 @@ import Videoroom from '../mainfunction/Videoroom.js';
 import Memberinfo from '../mainfunction/Memberinfo.js';
 import Chat from '../mainfunction/Chat.js';
 import Battombuttons from '../buttons/Battombuttons';
-import { register, getParticipants } from '../mainfunction/Kurento/conferenceroom';
+import { register, getParticipants, Conferenceroom } from '../mainfunction/Kurento/conferenceroom';
 
 const Theme = styled.div`
   font-size: 18px;
@@ -171,6 +171,7 @@ export function SixHat() {
           exit={exit}  setExit={setExit} isSix={true} roleType={roleType}
         ></Battombuttons>
       </Grid>
+      {Conferenceroom()}
     </Grid>
     );
 };
