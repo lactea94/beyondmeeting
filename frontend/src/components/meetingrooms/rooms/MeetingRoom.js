@@ -236,6 +236,7 @@ export function onReceiveMsg(request) {
 
 export function mute(toggle) {
 	participants[name].rtcPeer.audioEnabled = toggle;
+	
 }
 
 export default function sendMessage(message) {
@@ -277,6 +278,7 @@ export function MeetingRoom() {
   const [openHatInfo, setOpenHatInfo] = useState(true);
   const [openChatInfo, setOpenChatInfo] = useState(false);
   const [openMemberInfo, setOpenMemberInfo] = useState(false);
+  const [parti, setParti] = useState([]);
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
@@ -375,6 +377,13 @@ export function MeetingRoom() {
   }, [participants])
   console.log(participants)
 
+	// function setParti(parti){
+	// 	console.log("setParti : ",parti);
+	// 	<Memberinfo 
+	// 	state={{parti: parti}}>
+	// 	</Memberinfo>
+        
+	// }
   return (
     <Grid className="room" container>
       <Grid className="theme-box" item xs={12}>
@@ -419,6 +428,8 @@ export function MeetingRoom() {
           muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
           shareScreen={shareScreen} setShareScreen={setShareScreen}
           exit={exit}  setExit={setExit} isSix={false} roleType={roleType}
+					participants = {participants}
+					parti={parti} setParti = {setParti}
         ></Battombuttons>
       </Grid>
     </Grid>
