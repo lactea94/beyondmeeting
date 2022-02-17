@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
-import { getMeesagesByMeetingId } from '../../../util/APIUtils'
+import React from 'react'
 import './Chat.css'
 
 export default function Chat(meetingId) {
-
   return (
-    <div className="chat">Chat</div>
+    <div className="chat">
+      아이디어 보드
+    </div>
   )
 }
