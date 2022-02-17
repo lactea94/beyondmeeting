@@ -28,7 +28,7 @@ export default function LineChart() {
     getCurrentUser()
          .then(response => {
            setCurrentUserId(response.id)
-           console.log(response.id)     
+          //  console.log(response.id)     
 
           setLoading(false)
         }).catch(error => {
@@ -41,7 +41,7 @@ export default function LineChart() {
     if(currentUserId)
     getAttenderDateByUserId(currentUserId)
          .then(response => {
-           console.log(response.data)     
+          //  console.log(response.data)     
           setData(response.data)
           
           // setData([...data,aaa])
