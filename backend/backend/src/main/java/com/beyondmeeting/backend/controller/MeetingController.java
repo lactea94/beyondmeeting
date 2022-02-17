@@ -150,8 +150,8 @@ public class MeetingController {
     }
 
     /**
-    내 유저 아이디로 미팅 참여 정보 조회
-    --> YYYYMM 기준으로 미팅참여횟수 조회
+     내 유저 아이디로 미팅 참여 정보 조회
+     --> YYYYMM 기준으로 미팅참여횟수 조회
      */
     @GetMapping("/attender/date/{userId}")
     public ArrayList<JSONObject> getAttenderDateByUserId(@PathVariable Long userId) {
@@ -269,6 +269,16 @@ public class MeetingController {
     @PostMapping("meeting/join")
     public ResponseEntity<JoinUserInfo> joinMeeting(@RequestBody MeetingJoinParam meetingJoinParam) {
 
+        // ERROR: No serializer found for class org.hibernate.proxy.pojo.bytebuddy.ByteBuddyInterceptor and no properties
+        // SOLUTION : getById to findById
+        // List<UserHasMeeting> userList = meetingRepository.getById(meetingJoinParam.getMeetingId()).getUserHasMeetingList();
+        List<UserHasMeeting> userList = meetingRepository.findById(meetingJoinParam.getMeetingId()).get().getUserHasMeetingList();
+        List<Long> userIdList = new ArrayList<>();
+
+        for (int i = 0; i < userList.size(); i++) {
+            userIdList.add(userList.get(i).getUser().getId());
+        }
+
         // userId, meetingId 변수에 파라미터로 넘겨받은 MeetingJoinParam 값 저장
         Long userId = meetingJoinParam.getUserId(); // input
         Long meetingId = meetingJoinParam.getMeetingId(); // input
@@ -278,29 +288,45 @@ public class MeetingController {
         Long targetId = userHasTeamRepository.findAllByTeamAndUser(teamRepository.findById(teamId).get(), userRepository.findById(userId).get()).getId();
         String roleType = String.valueOf(userHasTeamRepository.findById(targetId).get().getRoleType());
 
-        // 유저가 가진 모자 색깔을 저장해줄 UserHasMeeting 객체 생성 및 값 셋팅
-        UserHasMeeting userHasMeeting = new UserHasMeeting();
-        userHasMeeting.setUser(userRepository.findById(userId).get());
-        userHasMeeting.setMeeting(meetingRepository.findById(meetingId).get());
-        userHasMeeting.setTeam(teamRepository.findById(teamId).get());
-        userHasMeeting.setHat_color(meetingJoinParam.getHatColor());
-        //userHasMeeting.setSpeaking_time(null); speakTime 기능 구현 후순위
+        // userId 중복 검증
+        if (userIdList.contains(userId)) {
+            try {
+                throw new Exception("userId 중복이 발생하여 예외를 강제로 발생시켰습니다.");
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                e.printStackTrace();
+            }
+            System.out.println("userId 중복이 발생하여 데이터베이스에 저장하지 않었습니다.");
+        }
 
-        // UserHasMeeting 데이터베이스에 반영
-        userHasMeetingRepository.save(userHasMeeting);
+        else {
+            // 유저가 가진 모자 색깔을 저장해줄 UserHasMeeting 객체 생성
+            UserHasMeeting userHasMeeting = new UserHasMeeting();
 
-        // return 해줄 joinUserInfo 객체 생성 (meeting 참여자의 roleType 와 hatColor 정보를 함께 가지고 있는 객체)
-        JoinUserInfo joinUserInfo = new JoinUserInfo();
+            // UserHasMeeting 객체에 값 셋팅
+            userHasMeeting.setUser(userRepository.findById(userId).get());
+            userHasMeeting.setMeeting(meetingRepository.findById(meetingId).get());
+            userHasMeeting.setTeam(teamRepository.findById(teamId).get());
+            userHasMeeting.setHat_color(meetingJoinParam.getHatColor());
+            //userHasMeeting.setSpeaking_time(null); speakTime 기능 구현 후순위
 
-        // JoinUserInfo 값 셋팅
-        joinUserInfo.setUser(userRepository.findById(userId).get());
-        joinUserInfo.setMeeting(meetingRepository.findById(meetingId).get());
-        joinUserInfo.setTeam(teamRepository.findById(teamId).get());
-        joinUserInfo.setHatColor(userHasMeeting.getHat_color());
-        joinUserInfo.setRoleType(RoleType.valueOf(roleType));
+            // UserHasMeeting 데이터베이스에 반영
+            userHasMeetingRepository.save(userHasMeeting);
 
-        // JoinUserInfo 객체 리턴
-        return ResponseEntity.status(HttpStatus.OK).body(joinUserInfo);
+            // return 해줄 joinUserInfo 객체 생성 (meeting 참여자의 roleType 와 hatColor 정보를 함께 가지고 있는 객체)
+            JoinUserInfo joinUserInfo = new JoinUserInfo();
+
+            // JoinUserInfo 값 셋팅
+            joinUserInfo.setUser(userRepository.findById(userId).get());
+            joinUserInfo.setMeeting(meetingRepository.findById(meetingId).get());
+            joinUserInfo.setTeam(teamRepository.findById(teamId).get());
+            joinUserInfo.setHatColor(userHasMeeting.getHat_color());
+            joinUserInfo.setRoleType(RoleType.valueOf(roleType));
+
+            // JoinUserInfo 객체 리턴
+            return ResponseEntity.status(HttpStatus.OK).body(joinUserInfo);
+        }
+        return ResponseEntity.status(HttpStatus.OK).body(null);
     }
 
     /**
