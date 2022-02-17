@@ -96,6 +96,7 @@ const Battombuttons = (props) => {
               console.log("openMemberInfo is", props.openMemberInfo)
               // props.setParti(props.participants)
               console.log(props.participants)
+              props.getPart(props.participants)
             }}
           >
             참여자
