@@ -118,6 +118,18 @@ export function register(userName, room) {
 
 }
 
+
+export function sendChat (chat, userId, meetingId) {
+	let data = {
+		id: "chat",
+		userId: userId,
+		meetingId: meetingId,
+		data: chat
+	}
+	sendMessage(data);
+}
+
+
 export function onNewParticipant(request) {
 	receiveVideo(request.name);
 }
@@ -238,7 +250,6 @@ export function onParticipantLeft(request) {
 export function onReceiveMsg(request) {
 	console.log('receive from ' + request.name);
 	console.log('msg : ' + request.data);
-	return request;
 	// var participant = participants[request.name];
 	// participant.dispose();
 	// delete participants[request.name];
@@ -321,62 +332,33 @@ export function MeetingRoom() {
     height: "0%"
   })
 
-
   useEffect(() => {
     register(userName, meetingId);
   }, [userName, meetingId])
 
   useEffect(() => {
-		if (openHatInfo && openChatInfo && openMemberInfo) {
+		if (openHatInfo && openMemberInfo) {
 			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "64%" })
       setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "60%" })
-      setMemberBoxStyle({ height: "40%" })
-    } else if (openHatInfo && openChatInfo && !openMemberInfo) {
-			setLeftBoxStyle({ width: "18%" })
-      setMiddleBoxStyle({ width: "64%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "100%" })
-      setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "0%" })
-      setMiddleBoxStyle({ width: "82%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "60%" })
-      setMemberBoxStyle({ height: "40%" })
-    } else if (openHatInfo && !openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "18%" })
-      setMiddleBoxStyle({ width: "64%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
-    } else if (openHatInfo && !openChatInfo && !openMemberInfo) {
+    } else if (openHatInfo && !openMemberInfo) {
 			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "0%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && !openChatInfo && openMemberInfo) {
+    } else if (!openHatInfo && openMemberInfo) {
 			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
-    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "0%" })
-      setMiddleBoxStyle({ width: "82%" })
-      setRightBoxStyle( { width: "18%" })
-      setChatBoxStyle({ height: "100%" })
-      setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && !openChatInfo && !openMemberInfo) {
+    } else if (!openHatInfo && !openMemberInfo) {
 			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "100%" })
       setRightBoxStyle({ width: "0%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
     }
-  }, [openHatInfo, openChatInfo, openMemberInfo])
+  }, [openHatInfo, openMemberInfo])
 	
   useEffect(() => {
 		setParticipants(party)
