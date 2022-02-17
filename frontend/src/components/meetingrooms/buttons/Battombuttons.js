@@ -1,11 +1,14 @@
-import React from 'react';
-import { IconButton, Button } from '@mui/material';
+import React, { useState } from 'react';
+import { IconButton, Button, Modal, Card, Grid, TextField } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
 import { leaveRoom, mute } from '../rooms/MeetingRoom.js';
 import { useNavigate } from 'react-router-dom';
 import { finishMeeting } from '../../../util/APIUtils';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
+import { ModalStyle } from '../rooms/ModalStyle';
 
 
 const theme = createTheme({
@@ -18,6 +21,13 @@ const theme = createTheme({
 
 const Battombuttons = (props) => {
   const navigate = useNavigate()
+
+  const [open, setOpen] = useState(false);
+  function handleOpen() {setOpen(true)};
+  function handleClose() {setOpen(false)};
+  const [message, setMessage] = useState('');
+
+  function handleChange({ target: {value} }) {setMessage(value)};
 
   return (
     <ThemeProvider theme={theme}>
@@ -50,22 +60,14 @@ const Battombuttons = (props) => {
               console.log("muted is", props.muted);
             }}
           >
-            음소거
+            { !props.muted ? (
+              <FontAwesomeIcon icon={faMicrophone} />
+              ) : (  
+              <FontAwesomeIcon icon={faMicrophoneSlash} />
+            )}
           </Button>
         </div>
         <div className="share-screen-button-box">
-        <Button 
-            className="share-screen-button" 
-            variant="outlined" 
-            size="large"
-            color="veryPeri"
-            onClick={() => {
-              props.setShareScreen(!props.shareScreen);
-              console.log("shareScreen is", props.shareScreen);
-            }}
-        >
-            화면공유
-          </Button>
         </div>
         <div className="exit-button-box">
           <IconButton
@@ -107,13 +109,48 @@ const Battombuttons = (props) => {
             variant="outlined"
             size="large"
             color="veryPeri"
-            onClick={() => {
-              props.setOpenChatInfo(!props.openChatInfo)
-              console.log("openChatInfo is", props.openChatInfo)
-            }}
+            onClick={handleOpen}
           >
             채팅
           </Button>
+          <Modal
+            open={open}
+            onClose={handleClose}
+          >
+            <Card
+              sx={ModalStyle()}
+            >
+              <Grid container direction="column" rowSpacing={2}>
+                <Grid item>팀 생성</Grid>
+                <Grid item container
+                  component="form"
+                  spacing={2}
+                  justifyContent="center"
+                  alignItems="center"
+                  // onSubmit={}
+                  >
+                  <Grid item>
+                    <TextField
+                      label="팀 이름"
+                      name="teamName"
+                      value={message}
+                      size="small"
+                      variant="outlined"
+                      onChange={handleChange}
+                    />
+                  </Grid>
+                  <Grid item>
+                    <Button
+                      type="submit"
+                      variant="contained"
+                    >
+                      생성
+                    </Button>
+                  </Grid>
+                </Grid>
+              </Grid>
+            </Card>
+          </Modal>
         </div>
       </div>
     </ThemeProvider>

@@ -2,7 +2,17 @@ import React from 'react';
 import './Meetingroom.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid } from '@mui/material/';
+import {
+	Grid,
+	Modal,
+	Button,
+	Card,
+	FormControl,
+	FormLabel,
+	FormControlLabel,
+	RadioGroup,
+	Radio
+} from '@mui/material/';
 import styled from 'styled-components';
 import Videoroom from '../mainfunction/Videoroom.js';
 import Memberinfo from '../mainfunction/Memberinfo.js';
@@ -14,7 +24,8 @@ import Battombuttons from '../buttons/Battombuttons';
 import Participant from '../mainfunction/Kurento/participant.js';
 import { WebRtcPeer } from 'kurento-utils';
 import Hatinfo from '../mainfunction/Hatinfo';
-
+import { getAttendersByMeetingId, joinMeeting } from '../../../util/APIUtils';
+import { ModalStyle } from './ModalStyle';
 
 var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');;
 var participants = {};
@@ -106,6 +117,18 @@ export function register(userName, room) {
 	//--------------------------------------------------------------
 
 }
+
+
+export function sendChat (chat, userId, meetingId) {
+	let data = {
+		id: "chat",
+		userId: userId,
+		meetingId: meetingId,
+		data: chat
+	}
+	sendMessage(data);
+}
+
 
 export function onNewParticipant(request) {
 	receiveVideo(request.name);
@@ -227,7 +250,6 @@ export function onParticipantLeft(request) {
 export function onReceiveMsg(request) {
 	console.log('receive from ' + request.name);
 	console.log('msg : ' + request.data);
-	return request;
 	// var participant = participants[request.name];
 	// participant.dispose();
 	// delete participants[request.name];
@@ -267,6 +289,7 @@ const Theme = styled.div`
 export function MeetingRoom() {
   const { state } = useLocation();
   const topic = state.meeting.topic;
+	const userId = state.user.id;
   const meetingId = state.meeting.id;
   const meetingType = state.meeting.meetingType;
   const userName = state.user.name;
@@ -281,7 +304,6 @@ export function MeetingRoom() {
   const [exit, setExit] = useState(false);
   const [participants, setParticipants] = useState([]);
 	const [open, setOpen] = useState(true);
-	const [isSix, setIsSix] = useState(true);
 	const [hatColor, setHatColor] = useState('RED');
 	const handleClose = () => setOpen(false);
   const party = getParticipants();
@@ -310,70 +332,170 @@ export function MeetingRoom() {
     height: "0%"
   })
 
-
   useEffect(() => {
     register(userName, meetingId);
   }, [userName, meetingId])
 
   useEffect(() => {
-		if (openHatInfo && openChatInfo && openMemberInfo) {
+		if (openHatInfo && openMemberInfo) {
 			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "64%" })
       setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "60%" })
-      setMemberBoxStyle({ height: "40%" })
-    } else if (openHatInfo && openChatInfo && !openMemberInfo) {
-			setLeftBoxStyle({ width: "18%" })
-      setMiddleBoxStyle({ width: "64%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "100%" })
-      setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "0%" })
-      setMiddleBoxStyle({ width: "82%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "60%" })
-      setMemberBoxStyle({ height: "40%" })
-    } else if (openHatInfo && !openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "18%" })
-      setMiddleBoxStyle({ width: "64%" })
-      setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
-    } else if (openHatInfo && !openChatInfo && !openMemberInfo) {
+    } else if (openHatInfo && !openMemberInfo) {
 			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "0%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && !openChatInfo && openMemberInfo) {
+    } else if (!openHatInfo && openMemberInfo) {
 			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
-    } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-			setLeftBoxStyle({ width: "0%" })
-      setMiddleBoxStyle({ width: "82%" })
-      setRightBoxStyle( { width: "18%" })
-      setChatBoxStyle({ height: "100%" })
-      setMemberBoxStyle({ height: "0%" })
-    } else if (!openHatInfo && !openChatInfo && !openMemberInfo) {
+    } else if (!openHatInfo && !openMemberInfo) {
 			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "100%" })
       setRightBoxStyle({ width: "0%" })
-      setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
     }
-  }, [openHatInfo, openChatInfo, openMemberInfo])
+  }, [openHatInfo, openMemberInfo])
 	
   useEffect(() => {
 		setParticipants(party)
   }, [participants, party])
   console.log(participants)
 	
+	function handleChangeHat (event) {
+		setHatColor(event.target.value)
+	}
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		console.log(meetingType)
+		if (meetingType === 'SIXHAT') {
+			joinMeeting({
+				meetingId: meetingId,
+				userId: userId,
+				hatColor: hatColor
+			})
+		} else {
+			joinMeeting({
+				meetingId: meetingId,
+				userId: userId,
+				hatColor: 'NORMAL'
+			})
+		}
+		setOpen(false);
+	}
+	
+	
+	function handelKeyPress (event) {
+		handleSubmit();	
+	};
+
+	const [temp, setTemp] = useState([])
+	const [users, setUsers] = useState([])
+	const [userIds, setUserIds] = useState([])
+
+	useEffect(() => {
+		getAttendersByMeetingId(meetingId)
+		.then(response => {
+			setTemp(response.data.map(data => {
+				return (
+					[...temp, data]
+				)
+			}))
+		})
+	}, [meetingId])
+
+	useEffect(() => {
+		if (temp)
+		setUsers(temp.map(data => {
+			return (
+				data[0].user
+			)
+		}))
+	}, [temp])
+
+	useEffect(() => {
+		if (users)
+		setUserIds(users.map(data => {
+			return (
+				data.id
+			)
+		}))
+	}, [users])
+
+	const  [hide, setHide] = useState(true)
+
+	useEffect(() => {
+		// console.log(userId, userIds)
+		for (const id of userIds) {
+			if (id === userId) {
+				setHide(false)
+				break;
+			}
+		}
+	}, [userId, userIds])
+
 	return (
 		<div>
+		{(meetingType === 'SIXHAT') ? (hide) && (
+			<Modal
+				open={open}
+				onClose={handleClose}
+				hideBackdrop={true}
+				disableEscapeKeyDown={true}
+			>
+				<Card
+					sx={ModalStyle()}
+					>
+					<Grid container>
+						<form
+							onSubmit={handleSubmit}
+							onKeyUp={handelKeyPress}
+							>
+							<FormControl>
+								<FormLabel>모자를 고르세요</FormLabel>
+								<RadioGroup
+									row
+									defaultValue="RED"
+									value={hatColor}
+									onChange={handleChangeHat}
+									>
+									<FormControlLabel value="RED" control={<Radio />} label="빨강" />
+									<FormControlLabel value="GREEN" control={<Radio />} label="초록" />
+									<FormControlLabel value="BLACK" control={<Radio />} label="검정" />
+									<FormControlLabel value="BLUE" control={<Radio />} label="파랑" />
+									<FormControlLabel value="WHITE" control={<Radio />} label="하양" />
+									<FormControlLabel value="YELLOW" control={<Radio />} label="노랑" />
+								</RadioGroup>
+								<Button size="small" type="submit">선택</Button>
+							</FormControl>
+						</form>
+					</Grid>
+				</Card>
+			</Modal>
+		) : (hide) &&
+		(<Modal
+			open={open}
+			onClose={handleClose}
+			hideBackdrop={true}
+			disableEscapeKeyDown={true}
+		>
+			<Card
+				sx={ModalStyle()}
+			>
+				<form
+					onSubmit={handleSubmit}
+				>
+					<FormControl>
+						<FormLabel>회의를 시작합니다.</FormLabel>
+						<Button size="small" type="submit">네!</Button>
+					</FormControl>
+				</form>
+			</Card>
+		</Modal>)}
 		<Grid className="room" container>
 			<Grid className="theme-box" item xs={12}>
 				<Theme>
@@ -400,7 +522,7 @@ export function MeetingRoom() {
 						}
 						{openChatInfo ?
 							<div className="chat-box" item style={chatBoxStyle}>
-								<Chat></Chat>
+								{Chat(meetingId)}
 							</div> 
 							: null
 						}

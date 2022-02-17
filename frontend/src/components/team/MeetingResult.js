@@ -1,7 +1,7 @@
-import { Avatar, Card, CardContent, CardHeader, Typography } from "@mui/material"
+import { Avatar, Card, CardContent, CardHeader, Grid, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useLocation } from "react-router-dom"
-import { getAttendersByMeetingId, getMeesagesByMeetingId } from "../../util/APIUtils"
+import { getAttendersByMeetingId, getMeesagesByMeetingId, getMessages } from "../../util/APIUtils"
 
 export function MeetingResult() {
   const { state } = useLocation()
@@ -14,9 +14,8 @@ export function MeetingResult() {
   function getYear(time) { return Number(time.slice(0, 4))}
   function getMonth(time) { return Number(time.slice(5, 7))}
   function getDay(time) { return Number(time.slice(8, 10))}
-  function getHour(time) { return Number(time.slice(11, 13))}
-  function getMinute(time) { return Number(time.slice(14, 16))}
-  function getSecond(time) { return Number(time.slice(17, 19))}
+  function getHour(time) { return (time.slice(11, 13))}
+  function getMinute(time) { return (time.slice(14, 16))}
   function getColor(color) {
     switch (color) {
       case 'RED':
@@ -64,7 +63,17 @@ export function MeetingResult() {
   useEffect(() => {
     getMeesagesByMeetingId(meeting.id)
     .then(response => {
-      setMessage(response.data)
+      setMessage(response.data.map(message => {
+        return (
+          <TableRow
+            key={message.id}
+          >
+            <TableCell>{message.user.name}</TableCell>
+            <TableCell align="center">{message.content}</TableCell>
+            <TableCell align="right">{getHour(message.send_time)}:{getMinute(message.send_time)}</TableCell>
+          </TableRow>
+        )
+      }))
     }).catch(error => {
       console.log(error)
     })
@@ -90,11 +99,11 @@ export function MeetingResult() {
         </Typography>
         <br/>
         <Typography>
-          시작 시간 : {getHour(startTime)}:{getMinute(startTime)}:{getSecond(startTime)}
+          시작 시간 : {getHour(startTime)}:{getMinute(startTime)}
         </Typography>
         <br/>
         <Typography>
-          종료 시간 : {getHour(endTime)}:{getMinute(endTime)}:{getSecond(endTime)}
+          종료 시간 : {getHour(endTime)}:{getMinute(endTime)}
         </Typography>
         <br/>
         <Typography>
@@ -103,8 +112,21 @@ export function MeetingResult() {
         {attenders}
         <br/>
         <Typography>
-          메시지
-          {/* {message} */}
+          아이디어 보드
+          <TableContainer>
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableCell>이름</TableCell>
+                  <TableCell align="center">아이디어</TableCell>
+                  <TableCell align="right">보낸 시간</TableCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {message}
+              </TableBody>
+            </Table>
+          </TableContainer>
         </Typography>
       </CardContent>
     </Card>
