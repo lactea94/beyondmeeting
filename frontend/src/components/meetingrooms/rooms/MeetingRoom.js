@@ -24,7 +24,7 @@ import Battombuttons from '../buttons/Battombuttons';
 import Participant from '../mainfunction/Kurento/participant.js';
 import { WebRtcPeer } from 'kurento-utils';
 import Hatinfo from '../mainfunction/Hatinfo';
-import { joinMeeting } from '../../../util/APIUtils';
+import { getAttendersByMeetingId, joinMeeting } from '../../../util/APIUtils';
 import { ModalStyle } from './ModalStyle';
 
 var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');;
@@ -411,9 +411,54 @@ export function MeetingRoom() {
 		handleSubmit();	
 	};
 
+	const [temp, setTemp] = useState([])
+	const [users, setUsers] = useState([])
+	const [userIds, setUserIds] = useState([])
+
+	useEffect(() => {
+		getAttendersByMeetingId(meetingId)
+		.then(response => {
+			setTemp(response.data.map(data => {
+				return (
+					[...temp, data]
+				)
+			}))
+		})
+	}, [meetingId])
+
+	useEffect(() => {
+		if (temp)
+		setUsers(temp.map(data => {
+			return (
+				data[0].user
+			)
+		}))
+	}, [temp])
+
+	useEffect(() => {
+		if (users)
+		setUserIds(users.map(data => {
+			return (
+				data.id
+			)
+		}))
+	}, [users])
+
+	const  [hide, setHide] = useState(true)
+
+	useEffect(() => {
+		// console.log(userId, userIds)
+		for (const id of userIds) {
+			if (id === userId) {
+				setHide(false)
+				break;
+			}
+		}
+	}, [userId, userIds])
+
 	return (
 		<div>
-		{(meetingType === 'SIXHAT') ? (
+		{(meetingType === 'SIXHAT') ? (hide) && (
 			<Modal
 				open={open}
 				onClose={handleClose}
@@ -449,26 +494,26 @@ export function MeetingRoom() {
 					</Grid>
 				</Card>
 			</Modal>
-		) :
-			<Modal
-				open={open}
-				onClose={handleClose}
-				hideBackdrop={true}
-				disableEscapeKeyDown={true}
+		) : (hide) &&
+		(<Modal
+			open={open}
+			onClose={handleClose}
+			hideBackdrop={true}
+			disableEscapeKeyDown={true}
+		>
+			<Card
+				sx={ModalStyle()}
 			>
-				<Card
-					sx={ModalStyle()}
+				<form
+					onSubmit={handleSubmit}
 				>
-					<form
-						onSubmit={handleSubmit}
-					>
-						<FormControl>
-							<FormLabel>회의를 시작합니다.</FormLabel>
-							<Button size="small" type="submit">네!</Button>
-						</FormControl>
-					</form>
-				</Card>
-			</Modal>}
+					<FormControl>
+						<FormLabel>회의를 시작합니다.</FormLabel>
+						<Button size="small" type="submit">네!</Button>
+					</FormControl>
+				</form>
+			</Card>
+		</Modal>)}
 		<Grid className="room" container>
 			<Grid className="theme-box" item xs={12}>
 				<Theme>
@@ -495,7 +540,7 @@ export function MeetingRoom() {
 						}
 						{openChatInfo ?
 							<div className="chat-box" item style={chatBoxStyle}>
-								<Chat></Chat>
+								{Chat(meetingId)}
 							</div> 
 							: null
 						}

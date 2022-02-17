@@ -60,7 +60,7 @@ export function CreateMeeting(props) {
             <CardContent>
               <TextField
                 required
-                label="회의 이름"
+                label="회의 주제"
                 value={meetingName}
                 onChange={handleChangeName}
               />
