@@ -193,14 +193,14 @@ useEffect(() => {
     <Grid item container xs={12} spacing={5}>
       <Grid item xs={6}>
         <h2 className='font-color kkwak-kkye'>모자 별 시간</h2>
-          <p className='font-color kkwak-kkye'>원그래프!</p>
+          <p className='font-color kkwak-kkye'>- 원 그래프</p>
         <div className='kkwak-kkye'>
           <Piechart hatTime={hatTime}></Piechart>
         </div>
 
         <div className='kkwak-kkye'>
         <Button className="CheckButton"  onClick={handleOpen} variant="contained" sx={{m:1}}>
-          Check it out!
+          자세히 보기
         </Button>
         <Modal open={open} onClose={handleClose}>
           <Card sx={ModalStyle()} >
@@ -236,11 +236,8 @@ useEffect(() => {
 
       <Grid item xs={5.5}>
         <h2 className='font-color'>총 회의 횟수 : {count}회</h2>
-        <p className='font-color'>꺾은선 그래프!</p>
+        <p className='font-color'>- 꺾은선 그래프</p>
         <LineChart></LineChart>
-        <Button className="CheckButton">
-          Check it out!
-        </Button>
       </Grid>
       {/* <Grid item xs={6}>
         {
