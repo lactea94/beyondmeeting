@@ -282,6 +282,7 @@ export function MeetingRoom() {
   const [exit, setExit] = useState(false);
   const [participants, setParticipants] = useState([]);
 	const [open, setOpen] = useState(true);
+	const [isSix, setIsSix] = useState(true);
 	const [hatColor, setHatColor] = useState('RED');
 	const handleClose = () => setOpen(false);
   const party = getParticipants()
@@ -313,6 +314,7 @@ export function MeetingRoom() {
 
   useEffect(() => {
 		if (meetingType === 'NORMAL')
+		setIsSix(false)
     joinMeeting({
       meetingId: meetingId,
       userId: userId,
@@ -477,7 +479,7 @@ export function MeetingRoom() {
 						openMemberInfo={openMemberInfo} setOpenMemberInfo={setOpenMemberInfo}
 						muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
 						shareScreen={shareScreen} setShareScreen={setShareScreen}
-						exit={exit}  setExit={setExit} isSix={false} roleType={roleType}
+						exit={exit}  setExit={setExit} isSix={isSix} roleType={roleType}
 					></Battombuttons>
 				</Grid>
 			</Grid>
