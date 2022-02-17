@@ -291,10 +291,6 @@ export function SixHat() {
     height: "0%"
   })
 
-  // useEffect(() => {
-  //   window.location.reload()
-  // }, [])
-
   useEffect(() => {
     register(userName, meetingId);
     setIsRegistered(true)
