@@ -42,11 +42,11 @@ public class Meeting extends TimeStamped {
     private Team team;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "meeting")
+    @OneToMany(mappedBy = "meeting",cascade = CascadeType.ALL)
     private List<Message> messageList = new ArrayList<>();
 
     @JsonIgnore
-    @OneToMany(mappedBy = "meeting")
+    @OneToMany(mappedBy = "meeting", cascade = CascadeType.ALL)
     private List<UserHasMeeting> userHasMeetingList = new ArrayList<>();
 
     // 아래 코드를 대신해서 cascade 를 작성한다 (parent : Meeting, child : UserHasMeeting)

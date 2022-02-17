@@ -299,4 +299,11 @@ public class MeetingController {
         meetingRepository.save(meeting);
         return ResponseEntity.status(HttpStatus.OK).body(meeting);
     }
+
+    @DeleteMapping("delete/meeting/{id}")
+    public Long deleteMeeting(@PathVariable Long id){
+        String name = meetingRepository.findById(id).get().getTopic();
+        meetingRepository.deleteById(id);
+        return id;
+    }
 }
