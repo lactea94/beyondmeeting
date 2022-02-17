@@ -71,13 +71,27 @@ public class ChartController {
         Object [] mapKey = hashMap.keySet().toArray();
         Arrays.sort(mapKey);
 
+        List<Long> keysetList = new ArrayList<>(hashMap.keySet());
+        Collections.sort(keysetList, new Comparator<Long>() {
+            @Override
+            public int compare(Long o1, Long o2) {
+                return hashMap.get(o1).compareTo(hashMap.get(o2));
+            }
+        });
+//        HatColor longHat = keysetList.get(0);
+//        Long longHatTime = resultMap.get(longHat);
+
+        for(Long e : keysetList){
+            System.out.println(e+","+hashMap.get(e));
+        }
+
         ArrayList<JSONObject> list = new ArrayList<>();
         JSONObject temp = new JSONObject();
         temp.put("argument","START");
         temp.put("value", 0);
         list.add(temp);
 
-        for (Long nkey : hashMap.keySet()) {
+        for (Long nkey : keysetList) {
             temp = new JSONObject();
 
             String key1 = String.valueOf(nkey).substring(0,2);
