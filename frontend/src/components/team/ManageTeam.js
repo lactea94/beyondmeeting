@@ -1,4 +1,4 @@
-import { Button, Card, Autocomplete, TextField, Grid } from '@mui/material'
+import { Button, Card, Autocomplete, TextField, Grid, CardHeader, CardContent } from '@mui/material'
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { getOneTeam, inviteTeamMember, deleteTeam, deleteTeamMember, updateTeamName } from '../../util/APIUtils';
@@ -80,56 +80,84 @@ export function ManageTeam() {
   }, [currentTeam, teamId, teamLeaderId])
   
   return (
-    <Card>
-      팀 관리
-      <Grid
-        component="form"
-        onSubmit={handleSubmitTeamName}
-      >
-        <TextField
-          label="팀 이름"
-          defaultValue={teamName}
-          onChange={handleChangeTeamName}
-        />
-        <Button
-          type="submit"
-          variant="contained"
+    <Card
+      sx={{
+        mt:'10rem',
+        mx:'20rem'
+      }}
+    >
+      <CardHeader
+        title='팀 관리'
+      />
+      <CardContent>
+        <Grid
+          container
+          direction="row"
+          alignItems="center"
+          component="form"
+          onSubmit={handleSubmitTeamName}
         >
-          수정
-        </Button>
-      </Grid>
-      <Grid
-        component="form"
-        onSubmit={handleSubmitMember}
-      >
-        <Autocomplete
-          options={users}
-          getOptionLabel={(option) => option.email}
-          getOptionDisabled={(option) =>
-            currentTeamId.some(value => value===option.id)
-          }
-          sx={{ width: 300 }}
-          renderInput={(params) => (
+          <Grid item xs={5}>
             <TextField
-            {...params}
-            label="팀원"
+              label="팀 이름"
+              defaultValue={teamName}
+              onChange={handleChangeTeamName}
             />
-            )}
-          onChange={handleChangeMember}
-        />
-        <Button
-          type="submit"
-          variant="contained"
+          </Grid>
+          <Grid item xs={1}>
+            <Button
+              type="submit"
+              variant="contained"
+            >
+              수정
+            </Button>
+          </Grid>
+          <Grid item xs={4}></Grid>
+          <Grid item xs={2}>
+            <Button
+              variant="contained"
+              onClick={handleDeleteTeam}
+            >
+              팀 삭제
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
+      <CardContent>
+        <Grid
+          container
+          alignItems="center"
+          spacing={2}
+          component="form"
+          onSubmit={handleSubmitMember}
         >
-          추가
-        </Button>
-      </Grid>
-      <Button
-        variant="contained"
-        onClick={handleDeleteTeam}
-      >
-        팀 삭제
-      </Button>
+          <Grid item>
+            <Autocomplete
+              options={users}
+              getOptionLabel={(option) => option.email}
+              getOptionDisabled={(option) =>
+                currentTeamId.some(value => value===option.id)
+              }
+              sx={{ width: 300 }}
+              renderInput={(params) => (
+                <TextField
+                {...params}
+                label="팀원"
+                />
+                )}
+              onChange={handleChangeMember}
+            />
+          </Grid>
+          <Grid item>
+            <Button
+              type="submit"
+              variant="contained"
+            >
+              추가
+            </Button>
+          </Grid>
+        </Grid>
+      </CardContent>
       {currentTeamList}
     </Card>
   );

@@ -113,9 +113,7 @@ export function MeetingList() {
       >
         <Grid item xs={8}
           container
-          direction="row"
-          justifyContent="flex-start"
-          alignItems="center"
+          direction="column"
         >
           <Grid item
             sx={{
@@ -124,25 +122,30 @@ export function MeetingList() {
           >
             {teamName}
           </Grid>
-          { roleType === 'LEADER' && (
-            <Grid item
-            >
-              <NavLink
-                to='update'
-                state={{
-                  teamId:teamId,
-                  teamLeaderId:user.id,
-                  users:users,
-                  teamName:teamName
-                }}
+          <Grid item
+            container
+            alignItems="center"
+          >
+            { roleType === 'LEADER' && (
+              <Grid item
               >
-                <Button variant="contained">
-                 팀 관리
-                </Button>
-              </NavLink>
-            </Grid>
-          )}
-          { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
+                <NavLink
+                  to='update'
+                  state={{
+                    teamId:teamId,
+                    teamLeaderId:user.id,
+                    users:users,
+                    teamName:teamName
+                  }}
+                >
+                  <Button variant="contained">
+                  팀 관리
+                  </Button>
+                </NavLink>
+              </Grid>
+            )}
+            { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
+          </Grid>
         </Grid>
         <Grid item xs={4}
           container
