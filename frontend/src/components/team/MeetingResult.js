@@ -104,7 +104,7 @@ export function MeetingResult() {
         <br/>
         <Typography>
           메시지
-          {message}
+          {/* {message} */}
         </Typography>
       </CardContent>
     </Card>

@@ -82,6 +82,9 @@ li p{
   padding-top: 70px;
 }
 
+.inLine {
+  display: inline-block;
+}
 /* -----------------TimeLog TAG--------------- */
 
 
@@ -128,4 +131,8 @@ img {
 
 .kkwak {
   padding: 0rem;
+}
+
+.longhatcolor {
+  font-size: 3rem;
 }

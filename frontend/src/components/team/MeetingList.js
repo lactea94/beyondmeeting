@@ -65,7 +65,7 @@ export function MeetingList() {
   useEffect(() => {
     getMeetingsByTeamId(teamId)
     .then((response => {
-      setMeetingList(response.data.map(meeting => {
+      setMeetingList(response.data.reverse().map(meeting => {
         const url = `${meeting.id}`
         return (
           <Grid
@@ -94,66 +94,71 @@ export function MeetingList() {
     }, [teamId, user]);
     
     return (
-      <Grid
-        container
-        spacing={2}
-        sx={{
-          p: 5,
-          color: '#FFFFFF'
-        }}
+      <Grid container
+        justifyContent="center"
       >
-        <Grid item xs={8}
+        <Grid item
           container
-          direction="column"
+          spacing={2}
+          sx={{
+            p: 5,
+            color: '#FFFFFF',
+            width:"50rem"
+          }}
         >
-          <Grid item
-            sx={{
-              fontSize: '1.5rem',
-            }}
-          >
-            {teamName}
-          </Grid>
-          <Grid item
+          <Grid item xs={8}
             container
-            alignItems="center"
+            direction="column"
           >
-            { roleType === 'LEADER' && (
-              <Grid item
-              >
-                <NavLink
-                  to='update'
-                  state={{
-                    teamId:teamId,
-                    teamLeaderId:user.id,
-                    users:users,
-                    teamName:teamName
-                  }}
+            <Grid item
+              sx={{
+                fontSize: '1.5rem',
+              }}
+            >
+              {teamName}
+            </Grid>
+            <Grid item
+              container
+              alignItems="center"
+            >
+              { roleType === 'LEADER' && (
+                <Grid item
                 >
-                  <Button variant="contained">
-                  팀 관리
-                  </Button>
-                </NavLink>
-              </Grid>
-            )}
-            { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
+                  <NavLink
+                    to='update'
+                    state={{
+                      teamId:teamId,
+                      teamLeaderId:user.id,
+                      users:users,
+                      teamName:teamName
+                    }}
+                  >
+                    <Button variant="contained">
+                    팀 관리
+                    </Button>
+                  </NavLink>
+                </Grid>
+              )}
+              { roleType === 'LEADER' && <CreateMeeting teamId={teamId}/> }
+            </Grid>
+          </Grid>
+          <Grid item xs={4}
+            container
+            direction="column"
+            justifyContent="center"
+            alignItems="flex-end"  
+          >
+            <Grid item>
+              <FontAwesomeIcon icon={faHatCowboy}/> : 육색 모자
+            </Grid>
+            <Grid item>
+              <FontAwesomeIcon icon={faFaceGrin}/> : 일반
+            </Grid>
+          </Grid>
+          <Grid item xs={12} container>
+            {meetingList}
           </Grid>
         </Grid>
-        <Grid item xs={4}
-          container
-          direction="column"
-          justifyContent="center"
-          alignItems="flex-end"  
-        >
-          <Grid item>
-            <FontAwesomeIcon icon={faHatCowboy}/> : 육색 모자
-          </Grid>
-          <Grid item>
-            <FontAwesomeIcon icon={faFaceGrin}/> : 일반
-          </Grid>
-        </Grid>
-      <Grid item xs={12} container>
-        {meetingList}
       </Grid>
-    </Grid>
   );
 };

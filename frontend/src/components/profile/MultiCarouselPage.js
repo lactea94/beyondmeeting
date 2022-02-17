@@ -75,7 +75,7 @@ function calSec(SToS) {
 
  useEffect(() => {
   if(calSec){
-    setResultTime(calHour(durationTime)+"시 "+calMin(durationTime)+"분 "+calSec(durationTime)+"초 ")
+    setResultTime(calHour(durationTime)+"시간 "+calMin(durationTime)+"분 "+calSec(durationTime)+"초 ")
   }
  }, [calSec]);
 
@@ -94,6 +94,9 @@ function calSec(SToS) {
 //setResultTime
 
 
+const s = "나는 주로 "
+const e = " 입니다."
+const h = " 합니다."
 useEffect(() => {
  
   if (hatColor === 'BLACK'){
@@ -101,11 +104,11 @@ useEffect(() => {
     setDescription(
       <div> 
       <br></br>
-      <div>✔  비평가 </div> 
+      <div>✔  {s}'비평가'{e} </div> 
       <br></br>
-      <div>✔  판사 역할, 비판적 판단 </div>
+      <div>✔  {s}'비판적 판단'을{h} </div>
       <br></br>
-      <div>✔  적합과 부적합의 지적</div>
+      <div>✔  {s}'적합과 부적합의 지적'을{h}</div>
      </div>)
     }
   if (hatColor === 'YELLOW'){
@@ -113,11 +116,11 @@ useEffect(() => {
     setDescription(
       <div> 
         <br></br>
-        <div>✔ 당신은 주로 '낙관주의자' 입니다. </div> 
+        <div>✔  {s}'낙관주의자'{e}</div> 
         <br></br>
-        <div>✔ 당신은 주로 '긍정적인 사고'를 합니다. </div>
+        <div>✔  {s}'긍정적인 사고'를 {h}</div>
         <br></br>
-        <div>✔ 당신은 주로 '타당성 검토'를 합니다.</div>
+        <div>✔ {s}'타당성 검토'를 {h}</div>
       </div>)
   }
   if (hatColor === 'RED'){
@@ -125,11 +128,11 @@ useEffect(() => {
     setDescription(
       <div> 
         <br></br>
-        <div>✔  직관주의자 </div> 
+        <div>✔  {s}'직관주의자'{e} </div> 
         <br></br>
-        <div>✔  본능, 육감 </div>
+        <div>✔  {s}'본능적'{e} </div>
         <br></br>
-        <div>✔  감정대로 진행</div>
+        <div>✔  {s}'감정적'{e}</div>
       </div>)
   }
   if (hatColor === 'GREEN'){
@@ -137,11 +140,11 @@ useEffect(() => {
     setDescription(
       <div> 
         <br></br>
-        <div>✔  아이디어뱅크 </div> 
+        <div>✔  {s}'아이디어 뱅크'{e} </div> 
         <br></br>
-        <div>✔  아이디어 </div>
+        <div>✔  {s}'창의적'{e} </div>
         <br></br>
-        <div>✔  </div>
+        <div>✔  {s}'가능성'을 봅니다. </div>
       </div>)
   }
   if (hatColor === 'BLUE'){
@@ -149,23 +152,24 @@ useEffect(() => {
     setDescription(
       <div> 
         <br></br>
-        <div>✔  사회자 </div> 
+        <div>✔  {s}'사회자'{e} </div> 
         <br></br>
-        <div>✔  창조적 사고, 새로운 아이디어 </div>
+        <div>✔  {s}'요약'{h} </div>
         <br></br>
-        <div>✔  가능성</div>
+        <div>✔  {s}'결정'{h}</div>
       </div>)
   }
   if (hatColor === 'WHITE'){
+  
     setImg( <img src={require('./img/모자5.png')} alt='cap'></img>)
     setDescription(
       <div> 
         <br></br>
-        <div>✔  분석가 </div> 
+        <div>✔  {s}'분석가'{e}</div> 
         <br></br>
-        <div>✔  객관적 </div>
+        <div>✔  {s}'객관적'{e}</div>
         <br></br>
-        <div>✔  중립적</div>
+        <div>✔  {s}'중립적'{e}</div>
       </div>)
   }
 }, [hatColor]);
@@ -205,7 +209,7 @@ useEffect(() => {
               <Box>
                 <Grid  item container xs={12}>
                   <Grid>
-                    <h2 id="unstyled-modal-title">내가 가장 좋아하는 모자는 <span style= {{color:hatColor}}> {hatColor}</span> 입니다. </h2>
+                    <h2 id="unstyled-modal-title">내가 가장 좋아하는 모자는 <span class = 'longhatcolor' style= {hatColor === "WHITE" ? { color: hatColor, '-webkit-text-stroke': '1px rgb(0, 0, 0)' } : { color: hatColor}}> {hatColor}</span> 입니다. </h2>
                   </Grid>
 
                 <Grid item xs={9}>

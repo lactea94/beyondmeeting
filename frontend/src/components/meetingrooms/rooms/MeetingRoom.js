@@ -315,179 +315,197 @@ export function MeetingRoom() {
   }, [userName, meetingId])
 
   useEffect(() => {
-		if (meetingType === 'NORMAL')
-		setIsSix(false)
-    joinMeeting({
-      meetingId: meetingId,
-      userId: userId,
-      hatColor: 'NORMAL'
-    }).catch(error => {
-      console.log(error)
-    })
-  }, [meetingId, meetingType, userId])
-
-  useEffect(() => {
-    if (openHatInfo && openChatInfo && openMemberInfo) {
-      setLeftBoxStyle({ width: "18%" })
+		if (openHatInfo && openChatInfo && openMemberInfo) {
+			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "64%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "60%" })
       setMemberBoxStyle({ height: "40%" })
     } else if (openHatInfo && openChatInfo && !openMemberInfo) {
-      setLeftBoxStyle({ width: "18%" })
+			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "64%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "100%" })
       setMemberBoxStyle({ height: "0%" })
     } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-      setLeftBoxStyle({ width: "0%" })
+			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "60%" })
       setMemberBoxStyle({ height: "40%" })
     } else if (openHatInfo && !openChatInfo && openMemberInfo) {
-      setLeftBoxStyle({ width: "18%" })
+			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "64%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
     } else if (openHatInfo && !openChatInfo && !openMemberInfo) {
-      setLeftBoxStyle({ width: "18%" })
+			setLeftBoxStyle({ width: "18%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "0%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
     } else if (!openHatInfo && !openChatInfo && openMemberInfo) {
-      setLeftBoxStyle({ width: "0%" })
+			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle({ width: "18%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "100%" })
     } else if (!openHatInfo && openChatInfo && openMemberInfo) {
-      setLeftBoxStyle({ width: "0%" })
+			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "82%" })
       setRightBoxStyle( { width: "18%" })
       setChatBoxStyle({ height: "100%" })
       setMemberBoxStyle({ height: "0%" })
     } else if (!openHatInfo && !openChatInfo && !openMemberInfo) {
-      setLeftBoxStyle({ width: "0%" })
+			setLeftBoxStyle({ width: "0%" })
       setMiddleBoxStyle({ width: "100%" })
       setRightBoxStyle({ width: "0%" })
       setChatBoxStyle({ height: "0%" })
       setMemberBoxStyle({ height: "0%" })
     }
   }, [openHatInfo, openChatInfo, openMemberInfo])
-
+	
   useEffect(() => {
-    setParticipants(party)
+		setParticipants(party)
   }, [participants, party])
   console.log(participants)
-
+	
 	function handleChangeHat (event) {
 		setHatColor(event.target.value)
 	}
 
 	function handleSubmit(event) {
 		event.preventDefault();
-		joinMeeting({
-			meetingId: meetingId,
-			userId: userId,
-			hatColor: hatColor
-		})
+		console.log(meetingType)
+		if (meetingType === 'SIXHAT') {
+			joinMeeting({
+				meetingId: meetingId,
+				userId: userId,
+				hatColor: hatColor
+			})
+		} else {
+			joinMeeting({
+				meetingId: meetingId,
+				userId: userId,
+				hatColor: 'NORMAL'
+			})
+		}
 		setOpen(false);
 	}
-
+	
+	
 	function handelKeyPress (event) {
-    if (event.key === "Enter") {
-      handleSubmit();
-    }};
-
-  return (
+		handleSubmit();	
+	};
+		
+	return (
 		<div>
-			{(meetingType === 'SIXHAT') && (
-				<Modal
-					open={open}
-					onClose={handleClose}
-				>
-					<Card
-						sx={ModalStyle()}
+		{(meetingType === 'SIXHAT') ? (
+			<Modal
+				open={open}
+				onClose={handleClose}
+				hideBackdrop={true}
+				disableEscapeKeyDown={true}
+			>
+				<Card
+					sx={ModalStyle()}
 					>
-						<Grid container>
-							<form
-								onSubmit={handleSubmit}
-								onKeyUp={handelKeyPress}
+					<Grid container>
+						<form
+							onSubmit={handleSubmit}
+							onKeyUp={handelKeyPress}
 							>
-								<FormControl>
-									<FormLabel>모자를 고르세요</FormLabel>
-									<RadioGroup
-										row
-										defaultValue="RED"
-										value={hatColor}
-										onChange={handleChangeHat}
+							<FormControl>
+								<FormLabel>모자를 고르세요</FormLabel>
+								<RadioGroup
+									row
+									defaultValue="RED"
+									value={hatColor}
+									onChange={handleChangeHat}
 									>
-										<FormControlLabel value="RED" control={<Radio />} label="빨강" />
-										<FormControlLabel value="GREEN" control={<Radio />} label="초록" />
-										<FormControlLabel value="BLACK" control={<Radio />} label="검정" />
-										<FormControlLabel value="BLUE" control={<Radio />} label="파랑" />
-										<FormControlLabel value="WHITE" control={<Radio />} label="하양" />
-										<FormControlLabel value="YELLOW" control={<Radio />} label="노랑" />
-									</RadioGroup>
-									<Button size="small" type="submit">선택</Button>
-								</FormControl>
-							</form>
-						</Grid>
-					</Card>
-				</Modal>
-			)}
-			<Grid className="room" container>
-				<Grid className="theme-box" item xs={12}>
-					<Theme>
-						{topic}
-					</Theme>
-				</Grid>
-				<Grid className="main-func-box" item xs={12}>
-					{openHatInfo ? 
-						<div className="left-box" style={leftBoxStyle}>
-							<Hatinfo></Hatinfo>
-						</div>
-						: null
-					}
-					<div className="video-room" style={middleBoxStyle}>
-						<Videoroom></Videoroom>
-					</div>
-					{openMemberInfo || openChatInfo ? 
-						<div className="right-box" style={rightBoxStyle}>
-							{openMemberInfo ? 
-								<div className="member-box" item style={memberBoxStyle}>
-									<Memberinfo></Memberinfo>
-								</div>
-								: null
-							}
-							{openChatInfo ?
-								<div className="chat-box" item style={chatBoxStyle}>
-									<Chat></Chat>
-								</div> 
-								: null
-							}
-						</div>
-						: null
-					}
-					
-				</Grid>
-				<Grid className="bottom-bar-box" item xs={12}>
-					<Battombuttons
-						openHatInfo={openHatInfo} setOpenHatInfo={setOpenHatInfo}
-						openChatInfo={openChatInfo} setOpenChatInfo={setOpenChatInfo}
-						openMemberInfo={openMemberInfo} setOpenMemberInfo={setOpenMemberInfo}
-						muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
-						shareScreen={shareScreen} setShareScreen={setShareScreen}
-						exit={exit}  setExit={setExit} isSix={isSix} roleType={roleType}
-						participants = {participants}
-						parti={parti} setParti = {setParti}
-					></Battombuttons>
-				</Grid>
+									<FormControlLabel value="RED" control={<Radio />} label="빨강" />
+									<FormControlLabel value="GREEN" control={<Radio />} label="초록" />
+									<FormControlLabel value="BLACK" control={<Radio />} label="검정" />
+									<FormControlLabel value="BLUE" control={<Radio />} label="파랑" />
+									<FormControlLabel value="WHITE" control={<Radio />} label="하양" />
+									<FormControlLabel value="YELLOW" control={<Radio />} label="노랑" />
+								</RadioGroup>
+								<Button size="small" type="submit">선택</Button>
+							</FormControl>
+						</form>
+					</Grid>
+				</Card>
+			</Modal>
+		) :
+			<Modal
+				open={open}
+				onClose={handleClose}
+				hideBackdrop={true}
+				disableEscapeKeyDown={true}
+			>
+				<Card
+					sx={ModalStyle()}
+				>
+					<form
+						onSubmit={handleSubmit}
+					>
+						<FormControl>
+							<FormLabel>회의를 시작합니다.</FormLabel>
+							<Button size="small" type="submit">네!</Button>
+						</FormControl>
+					</form>
+				</Card>
+			</Modal>}
+		<Grid className="room" container>
+			<Grid className="theme-box" item xs={12}>
+				<Theme>
+					{topic}
+				</Theme>
 			</Grid>
-		</div>
-    );
+			<Grid className="main-func-box" item xs={12}>
+				{openHatInfo ? 
+					<div className="left-box" style={leftBoxStyle}>
+						<Hatinfo></Hatinfo>
+					</div>
+					: null
+				}
+				<div className="video-room" style={middleBoxStyle}>
+					<Videoroom></Videoroom>
+				</div>
+				{openMemberInfo || openChatInfo ? 
+					<div className="right-box" style={rightBoxStyle}>
+						{openMemberInfo ? 
+							<div className="member-box" item style={memberBoxStyle}>
+								<Memberinfo></Memberinfo>
+							</div>
+							: null
+						}
+						{openChatInfo ?
+							<div className="chat-box" item style={chatBoxStyle}>
+								<Chat></Chat>
+							</div> 
+							: null
+						}
+					</div>
+					: null
+				}
+				
+			</Grid>
+			<Grid className="bottom-bar-box" item xs={12}>
+				<Battombuttons
+					openHatInfo={openHatInfo} setOpenHatInfo={setOpenHatInfo}
+					openChatInfo={openChatInfo} setOpenChatInfo={setOpenChatInfo}
+					openMemberInfo={openMemberInfo} setOpenMemberInfo={setOpenMemberInfo}
+					muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
+					shareScreen={shareScreen} setShareScreen={setShareScreen}
+					exit={exit}  setExit={setExit} isSix={isSix} roleType={roleType}
+					participants = {participants}
+					parti={parti} setParti = {setParti}
+				></Battombuttons>
+			</Grid>
+		</Grid>
+	</div>
+	);
 };
 
