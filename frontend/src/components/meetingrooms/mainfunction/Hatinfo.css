@@ -11,3 +11,9 @@
   top: 2%;
   left: 30%;
 }
+
+.info-box {
+  position: absolute;
+  top: 50%;
+  left: 10%;
+}
