@@ -18,6 +18,8 @@ const theme = createTheme({
 
 const Battombuttons = (props) => {
   const navigate = useNavigate()
+
+  console.log(props.isSix)
   return (
     <ThemeProvider theme={theme}>
       <div className="left-bar">
@@ -92,6 +94,8 @@ const Battombuttons = (props) => {
             onClick={() => {
               props.setOpenMemberInfo(!props.openMemberInfo)
               console.log("openMemberInfo is", props.openMemberInfo)
+              // props.setParti(props.participants)
+              console.log(props.participants)
             }}
           >
             참여자

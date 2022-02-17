@@ -23,11 +23,9 @@ export function CreateMeeting(props) {
   const [meetingName, setMeetingName] = useState('');
   const [type, setType] = useState('NORMAL');
 
-  const handleChangeName = ({ target: {value} }) => setMeetingName(value);
-  
-  const handleChangeType = (event) => setType(event.target.value);
-  
-  const handleSubmit = (event) => {
+  function handleChangeName ({ target: {value} }) {setMeetingName(value)};
+  function handleChangeType (event) {setType(event.target.value)};
+  function handleSubmit(event) {
     event.preventDefault()
     createMeeting({
         topic: meetingName,
@@ -38,8 +36,7 @@ export function CreateMeeting(props) {
     setType('NORMAL');
     window.location.reload()
   }
-
-  const handelKeyPress = (event) => {
+  function handelKeyPress(event) {
     if (event.key === "Enter") {
       handleSubmit();
     }};

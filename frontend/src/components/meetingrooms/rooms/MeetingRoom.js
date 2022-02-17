@@ -2,7 +2,7 @@ import React from 'react';
 import './Meetingroom.css';
 import { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Grid } from '@mui/material/';
+import { Grid, Modal, Button, Card, FormControl, FormLabel, FormControlLabel, RadioGroup, Radio } from '@mui/material/';
 import styled from 'styled-components';
 import Videoroom from '../mainfunction/Videoroom.js';
 import Memberinfo from '../mainfunction/Memberinfo.js';
@@ -15,6 +15,7 @@ import { joinMeeting } from '../../../util/APIUtils';
 import Participant from '../mainfunction/Kurento/participant.js';
 import { WebRtcPeer } from 'kurento-utils';
 import Hatinfo from '../mainfunction/Hatinfo';
+import { ModalStyle } from './ModalStyle';
 
 
 var ws = new WebSocket('wss://i6c101.p.ssafy.io/groupcall');;
@@ -236,6 +237,7 @@ export function onReceiveMsg(request) {
 
 export function mute(toggle) {
 	participants[name].rtcPeer.audioEnabled = toggle;
+	
 }
 
 export default function sendMessage(message) {
@@ -266,21 +268,25 @@ const Theme = styled.div`
 
 export function MeetingRoom() {
   const { state } = useLocation();
-  const [first, setFirst] = useState(true)
   const topic = state.meeting.topic;
   const userId = state.user.id;
   const meetingId = state.meeting.id;
+  const meetingType = state.meeting.meetingType;
   const userName = state.user.name;
   const roleType = state.roleType;
   const teamId = state.meeting.team.id;
-  const [isRegistered, setIsRegistered] = useState(false);
-  const [openHatInfo, setOpenHatInfo] = useState(true);
+  const [openHatInfo, setOpenHatInfo] = useState(false);
   const [openChatInfo, setOpenChatInfo] = useState(false);
   const [openMemberInfo, setOpenMemberInfo] = useState(false);
+  const [parti, setParti] = useState([]);
   const [muted, setMuted] = useState(true);
   const [shareScreen, setShareScreen] = useState(false);
   const [exit, setExit] = useState(false);
-  const [participants, setParticipants] = useState([])
+  const [participants, setParticipants] = useState([]);
+	const [open, setOpen] = useState(true);
+	const [isSix, setIsSix] = useState(true);
+	const [hatColor, setHatColor] = useState('RED');
+	const handleClose = () => setOpen(false);
   const party = getParticipants()
 
 	let [leftBoxStyle, setLeftBoxStyle] = useState({
@@ -303,12 +309,14 @@ export function MeetingRoom() {
     height: "0%"
   })
 
+
   useEffect(() => {
     register(userName, meetingId);
-    setIsRegistered(true)
   }, [userName, meetingId])
 
   useEffect(() => {
+		if (meetingType === 'NORMAL')
+		setIsSix(false)
     joinMeeting({
       meetingId: meetingId,
       userId: userId,
@@ -316,7 +324,7 @@ export function MeetingRoom() {
     }).catch(error => {
       console.log(error)
     })
-  }, [meetingId, userId])
+  }, [meetingId, meetingType, userId])
 
   useEffect(() => {
     if (openHatInfo && openChatInfo && openMemberInfo) {
@@ -372,56 +380,114 @@ export function MeetingRoom() {
 
   useEffect(() => {
     setParticipants(party)
-  }, [participants])
+  }, [participants, party])
   console.log(participants)
 
+	function handleChangeHat (event) {
+		setHatColor(event.target.value)
+	}
+
+	function handleSubmit(event) {
+		event.preventDefault();
+		joinMeeting({
+			meetingId: meetingId,
+			userId: userId,
+			hatColor: hatColor
+		})
+		setOpen(false);
+	}
+
+	function handelKeyPress (event) {
+    if (event.key === "Enter") {
+      handleSubmit();
+    }};
+
   return (
-    <Grid className="room" container>
-      <Grid className="theme-box" item xs={12}>
-        <Theme>
-          {topic}
-        </Theme>
-      </Grid>
-      <Grid className="main-func-box" item xs={12}>
-				{openHatInfo ? 
-          <div className="left-box" style={leftBoxStyle}>
-            <Hatinfo></Hatinfo>
-          </div>
-          : null
-        }
-        <div className="video-room" style={middleBoxStyle}>
-          <Videoroom></Videoroom>
-        </div>
-        {openMemberInfo || openChatInfo ? 
-          <div className="right-box" style={rightBoxStyle}>
-            {openMemberInfo ? 
-              <div className="member-box" item style={memberBoxStyle}>
-                <Memberinfo></Memberinfo>
-              </div>
-              : null
-            }
-            {openChatInfo ?
-              <div className="chat-box" item style={chatBoxStyle}>
-                <Chat></Chat>
-              </div> 
-              : null
-            }
-          </div>
-          : null
-        }
-        
-      </Grid>
-      <Grid className="bottom-bar-box" item xs={12}>
-        <Battombuttons
-          openHatInfo={openHatInfo} setOpenHatInfo={setOpenHatInfo}
-          openChatInfo={openChatInfo} setOpenChatInfo={setOpenChatInfo}
-          openMemberInfo={openMemberInfo} setOpenMemberInfo={setOpenMemberInfo}
-          muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
-          shareScreen={shareScreen} setShareScreen={setShareScreen}
-          exit={exit}  setExit={setExit} isSix={false} roleType={roleType}
-        ></Battombuttons>
-      </Grid>
-    </Grid>
+		<div>
+			{(meetingType === 'SIXHAT') && (
+				<Modal
+					open={open}
+					onClose={handleClose}
+				>
+					<Card
+						sx={ModalStyle()}
+					>
+						<Grid container>
+							<form
+								onSubmit={handleSubmit}
+								onKeyUp={handelKeyPress}
+							>
+								<FormControl>
+									<FormLabel>모자를 고르세요</FormLabel>
+									<RadioGroup
+										row
+										defaultValue="RED"
+										value={hatColor}
+										onChange={handleChangeHat}
+									>
+										<FormControlLabel value="RED" control={<Radio />} label="빨강" />
+										<FormControlLabel value="GREEN" control={<Radio />} label="초록" />
+										<FormControlLabel value="BLACK" control={<Radio />} label="검정" />
+										<FormControlLabel value="BLUE" control={<Radio />} label="파랑" />
+										<FormControlLabel value="WHITE" control={<Radio />} label="하양" />
+										<FormControlLabel value="YELLOW" control={<Radio />} label="노랑" />
+									</RadioGroup>
+									<Button size="small" type="submit">선택</Button>
+								</FormControl>
+							</form>
+						</Grid>
+					</Card>
+				</Modal>
+			)}
+			<Grid className="room" container>
+				<Grid className="theme-box" item xs={12}>
+					<Theme>
+						{topic}
+					</Theme>
+				</Grid>
+				<Grid className="main-func-box" item xs={12}>
+					{openHatInfo ? 
+						<div className="left-box" style={leftBoxStyle}>
+							<Hatinfo></Hatinfo>
+						</div>
+						: null
+					}
+					<div className="video-room" style={middleBoxStyle}>
+						<Videoroom></Videoroom>
+					</div>
+					{openMemberInfo || openChatInfo ? 
+						<div className="right-box" style={rightBoxStyle}>
+							{openMemberInfo ? 
+								<div className="member-box" item style={memberBoxStyle}>
+									<Memberinfo></Memberinfo>
+								</div>
+								: null
+							}
+							{openChatInfo ?
+								<div className="chat-box" item style={chatBoxStyle}>
+									<Chat></Chat>
+								</div> 
+								: null
+							}
+						</div>
+						: null
+					}
+					
+				</Grid>
+				<Grid className="bottom-bar-box" item xs={12}>
+					<Battombuttons
+						openHatInfo={openHatInfo} setOpenHatInfo={setOpenHatInfo}
+						openChatInfo={openChatInfo} setOpenChatInfo={setOpenChatInfo}
+						openMemberInfo={openMemberInfo} setOpenMemberInfo={setOpenMemberInfo}
+						muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
+						shareScreen={shareScreen} setShareScreen={setShareScreen}
+						exit={exit}  setExit={setExit} isSix={isSix} roleType={roleType}
+						participants = {participants}
+						parti={parti} setParti = {setParti}
+					></Battombuttons>
+				</Grid>
+			</Grid>
+		</div>
     );
 };
 
