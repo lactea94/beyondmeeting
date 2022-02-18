@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
-import { IconButton, Button, Modal, Card, Grid, TextField } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { IconButton, Button, Modal, Card, Grid, TextField, TableRow, TableCell, TableContainer, Table, TableHead, TableBody } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { ReactComponent as RedHat } from '../img/hat.svg';
 import CancelRoundedIcon from '@mui/icons-material/CancelRounded';
-import { leaveRoom, mute } from '../rooms/MeetingRoom.js';
+import { leaveRoom, mute, sendChat } from '../rooms/MeetingRoom.js';
 import { useNavigate } from 'react-router-dom';
-import { finishMeeting } from '../../../util/APIUtils';
+import { finishMeeting, getMeesagesByMeetingId } from '../../../util/APIUtils';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMicrophone, faMicrophoneSlash } from "@fortawesome/free-solid-svg-icons";
 import { ModalStyle } from '../rooms/ModalStyle';
@@ -23,11 +23,36 @@ const Battombuttons = (props) => {
   const navigate = useNavigate()
 
   const [open, setOpen] = useState(false);
+  const [open2, setOpen2] = useState(false);
   function handleOpen() {setOpen(true)};
+  function handleOpen2() {setOpen2(true)};
   function handleClose() {setOpen(false)};
+  function handleClose2() {setOpen2(false)};
   const [message, setMessage] = useState('');
 
+  function getHour(time) { return (time.slice(11, 13))}
+  function getMinute(time) { return (time.slice(14, 16))}
+
   function handleChange({ target: {value} }) {setMessage(value)};
+
+  useEffect(() => {
+    getMeesagesByMeetingId(props.meetingId)
+    .then(response => {
+      setMessage(response.data.map(message => {
+        return (
+          <TableRow
+            key={message.id}
+          >
+            <TableCell>{message.user.name}</TableCell>
+            <TableCell align="center">{message.content}</TableCell>
+            <TableCell align="right">{getHour(message.send_time)}:{getMinute(message.send_time)}</TableCell>
+          </TableRow>
+        )
+      }))
+    }).catch(error => {
+      console.log(error)
+    })
+  }, [props.meetingId])
 
   return (
     <ThemeProvider theme={theme}>
@@ -91,6 +116,7 @@ const Battombuttons = (props) => {
             className="member-button"
             variant="outlined"
             size="large"
+            style={{ display: 'none'}}
             color="veryPeri"
             onClick={() => {
               props.setOpenMemberInfo(!props.openMemberInfo)
@@ -103,55 +129,104 @@ const Battombuttons = (props) => {
             참여자
           </Button>
         </div>
-        <div className="chat-room-button-box">
-          <Button
-            className="chat-room-button"
-            variant="outlined"
-            size="large"
-            color="veryPeri"
-            onClick={handleOpen}
-          >
-            채팅
-          </Button>
-          <Modal
-            open={open}
-            onClose={handleClose}
-          >
-            <Card
-              sx={ModalStyle()}
+        <Grid container
+          spacing={2}
+          className="chat-room-button-box"
+        >
+          <Grid item>
+            <Button
+              className="chat-room-button"
+              variant="contained"
+              size="small"
+              color="veryPeri"
+              onClick={handleOpen}
             >
-              <Grid container direction="column" rowSpacing={2}>
-                <Grid item>팀 생성</Grid>
-                <Grid item container
-                  component="form"
-                  spacing={2}
-                  justifyContent="center"
-                  alignItems="center"
-                  // onSubmit={}
-                  >
-                  <Grid item>
-                    <TextField
-                      label="팀 이름"
-                      name="teamName"
-                      value={message}
-                      size="small"
-                      variant="outlined"
-                      onChange={handleChange}
-                    />
-                  </Grid>
-                  <Grid item>
-                    <Button
-                      type="submit"
-                      variant="contained"
+              아이디어
+            </Button>
+            <Modal
+              open={open}
+              onClose={handleClose}
+            >
+              <Card
+                sx={ModalStyle()}
+              >
+                <Grid container direction="column" rowSpacing={2}>
+                  <Grid item>아이디어 만들기</Grid>
+                  <Grid item container
+                    component="form"
+                    spacing={2}
+                    justifyContent="center"
+                    alignItems="center"
+                    onSubmit={(event => {
+                      event.preventDefault()
+                      sendChat(message, props.userId, props.meetingId)
+                      setMessage("")
+                      setOpen(false)
+                      window.location.reload()
+                    })}
                     >
-                      생성
-                    </Button>
+                    <Grid item>
+                      <TextField
+                        label="아이디어"
+                        name="idea"
+                        value={message}
+                        size="small"
+                        variant="outlined"
+                        onChange={handleChange}
+                      />
+                    </Grid>
+                    <Grid item>
+                      <Button
+                        type="submit"
+                        variant="contained"
+                      >
+                        생성
+                      </Button>
+                    </Grid>
                   </Grid>
                 </Grid>
-              </Grid>
-            </Card>
-          </Modal>
-        </div>
+              </Card>
+            </Modal>
+          </Grid>
+          <Grid item>
+            <Button
+              className="chat-room-button"
+              variant="contained"
+              size="small"
+              color="veryPeri"
+              onClick={handleOpen2}
+            >
+              보기
+            </Button>
+            <Modal
+              open={open2}
+              onClose={handleClose2}
+            >
+              <Card
+                sx={ModalStyle()}
+              >
+                <Grid container direction="column" rowSpacing={2}>
+                  <Grid item>아이디어 보드
+                    <TableContainer>
+                      <Table>
+                        <TableHead>
+                          <TableRow>
+                            <TableCell>이름</TableCell>
+                            <TableCell align="center">아이디어</TableCell>
+                            <TableCell align="right">보낸 시간</TableCell>
+                          </TableRow>
+                        </TableHead>
+                        <TableBody>
+                          {message}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  </Grid>
+                </Grid>
+              </Card>
+            </Modal>
+          </Grid>
+        </Grid>
       </div>
     </ThemeProvider>
   );

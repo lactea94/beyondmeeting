@@ -539,7 +539,7 @@ export function MeetingRoom() {
 					muted={muted} setMuted={setMuted} teamId={teamId} meetingId={meetingId}
 					shareScreen={shareScreen} setShareScreen={setShareScreen}
 					exit={exit}  setExit={setExit} meetingType={meetingType} roleType={roleType}
-					participants = {participants}
+					participants = {participants} userId={userId}
 					parti={parti} setParti = {setParti}
 					part={part} getPart={getPart}
 				></Battombuttons>
