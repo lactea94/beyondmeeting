@@ -111,27 +111,27 @@ const Battombuttons = (props) => {
         </div>
       </div>
       <div className="right-bar">
-        <div className="member-button-box">
-          <Button
-            className="member-button"
-            variant="outlined"
-            size="large"
-            color="veryPeri"
-            onClick={() => {
-              props.setOpenMemberInfo(!props.openMemberInfo)
-              console.log("openMemberInfo is", props.openMemberInfo)
-              // props.setParti(props.participants)
-              console.log(props.participants)
-              props.getPart(props.participants)
-            }}
-          >
-            참여자
-          </Button>
-        </div>
         <Grid container
           spacing={2}
           className="chat-room-button-box"
         >
+          <Grid item className="member-button-box">
+            <Button
+              className="member-button"
+              variant="contained"
+              size="small"
+              color="veryPeri"
+              onClick={() => {
+                props.setOpenMemberInfo(!props.openMemberInfo)
+                console.log("openMemberInfo is", props.openMemberInfo)
+                // props.setParti(props.participants)
+                console.log(props.participants)
+                props.getPart(props.participants)
+              }}
+            >
+              참여자
+            </Button>
+          </Grid>
           <Grid item>
             <Button
               className="chat-room-button"
