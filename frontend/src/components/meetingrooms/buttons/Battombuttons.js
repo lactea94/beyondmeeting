@@ -116,7 +116,6 @@ const Battombuttons = (props) => {
             className="member-button"
             variant="outlined"
             size="large"
-            style={{ display: 'none'}}
             color="veryPeri"
             onClick={() => {
               props.setOpenMemberInfo(!props.openMemberInfo)
